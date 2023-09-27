@@ -24,7 +24,7 @@ This is the GitHub repository for the UCL Mathematics module Theorem Proving in 
     
 (At this step VS Code may redirect you to login to GitHub so you can add it as a Trusted source.)
 
-  e) The repository name is "jt496/UCL_MATH0109"
+  e) The repository name is "jt496/UCLMATH0109"
 
 You will then need to choose a folder to store the code. You need to remember what this is!
 
