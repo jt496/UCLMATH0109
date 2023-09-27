@@ -48,3 +48,9 @@ by
 
 #check sum_lims
 
+
+/-
+Video - 1st pass talk about the actual maths proof
+      - 2nd pass talk about the colours of text and basic syntax, eg `:`, brackets (lack of), 
+        linebreaks, comments, `:=` `by, high level tactics 
+-/
