@@ -13,6 +13,7 @@ simply intended to show you what Lean can do.)
 
 -/
 
+
 def lim (x : ℕ → ℝ) (l : ℝ) : Prop := 
  ∀ ε > 0, ∃ K, ∀ n, n ≥ K → |x n - l| < ε 
 
