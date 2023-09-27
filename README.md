@@ -7,7 +7,7 @@ This is the GitHub repository for the UCL Mathematics module Theorem Proving in 
 
 1) Get a free GitHub account at https://github.com/
  
-2) Install everything (VS Code + Lean4 extension) by following steps 1-4 on this page
+2) Install everything (VS Code + Lean4 extension) by following steps 1-4 on the following page:
    https://lean-lang.org/lean4/doc/quickstart.html
 
 3) Logout of your machine and then login again.
