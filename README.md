@@ -15,8 +15,11 @@ This is the GitHub repository for the UCL Mathematics module Theorem Proving in 
 4) Clone the UCLMATH0109 repository by doing the following:
 
   a) Open VS Code
+  
   b) Click on "Source Control"
+  
   c) Click "Clone Repository"
+  
   d) Click "Clone from GitHub"
     
 (At this step VS Code may redirect you to login to GitHub so you can add it as a Trusted source.)
