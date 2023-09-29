@@ -65,14 +65,6 @@ the Infoview updates. -/
 -- 01
 example  (A : Type) (x : A) : A := 
 by
-/-
-If you place your cursor anywhere within this comment 
-the Infoview should display:
-1 goal
-A : Type
-x : A
-⊢ A
--/
   exact x
 -- place your cursor here to see `No goals`
 
@@ -132,27 +124,14 @@ Can you replace the `sorry` with something that will actually accomplish the goa
 -- 02
 example (A B C : Type) (x : A) (y : B) (z : C) : B :=
 by
-/- 
-1 goal
-A B C : Type
-x : A
-y : B
-z : C
-⊢ B
--/
   sorry
 
 -- 03
 example  (A B : Type) (f : A → B) (a : A) : B :=
 by
-/-
-1 goal
-A B : Type
-f : A → B
-a : A
-⊢ B
--/
-  exact f a
+  sorry
+
+
 /- 
 A different way to complete the same goal is to use the `apply` tactic.
 
@@ -162,39 +141,13 @@ of type B by applying f.
 -- 04
 example (A B : Type) (f : A → B) (a : A) : B :=
 by
-/-
-1 goal
-A B : Type
-f : A → B
-a : A
-⊢ B
--/
-  apply f
-/-
-Our goal has changed from `⊢ B` to `⊢ A`. 
-Since our goal is now `⊢ A` we can close it with `exact a` since `a : A`-/
-  exact a  
-
+  sorry
 
 -- 05
 example  (A B C : Type) (f : A  → B) (g : B → C) (a : A) : C :=
 by
--- goal `⊢ C`
-  apply g -- goal changes from `⊢ C` to `⊢ B` 
-  apply f -- goal changes from `⊢ B` to `⊢ A`
-  exact a -- done!
-
-
--- 06
-example (A B C D: Type) (f : A  → B) (g : B → C) (h : C → D) (a : A): D :=
-by
   sorry
 
--- 07
-example (A B C D E : Type)(f :A → B) (g: B → C) (h: D → E) (i : C → E) (x : A) : E:=
-by
-  sorry
- 
 
 
 /- So far our examples have involved applying functions to obtain new terms,
@@ -202,41 +155,23 @@ by
 
   In order to define a function we need a new tactic: `intro`    -/
 
--- 08 
+-- 06
 example (A: Type) : A → A :=
 by
-/-
-1 goal
-A : Type
-⊢ A → A 
--/
-  intro x -- Now we have a `x : A`, a term x of type A and our goal is now `⊢ A`
-/-
-1 goal
-A : Type
-x : A
-⊢ A
--/
-  exact x  
+  sorry
 
-
--- 09 
+-- 07
 example (A B: Type)(b : B) : A → B :=
 by
-  intro a -- greyed out variable since we don't use it
-  exact b
+  sorry
 
 
--- 10
+-- 08
 example  (A B C : Type) (f : A → B) (g : B → C) : A → C:=
 by
   sorry
 
 
--- 11
-example (A B C D: Type) (f : A → B) (g : C → D) : (A → B) → (C → D):=
-by
-  sorry
 /-
 # Now do sheet2A.lean
 -/
