@@ -24,9 +24,9 @@ This means that Lean ignores it.
 
 A single line comment starts with --
 
-A multi-line comment starts with /- and s with -/
+A multi-line comment starts with /- and ends with -/
 
-A doc-string comment starts with /-- and s with -/
+A doc-string comment starts with /-- and ends with -/
 
 Comments are our way of explaining what our code does.
 
@@ -66,7 +66,6 @@ the Infoview updates. -/
 example  (A : Type) (x : A) : A := 
 by
   exact x
--- place your cursor here to see `No goals`
 
 /-
 # Infoview: local context + goal ⊢ 
@@ -83,7 +82,7 @@ x : A
 The last line of the Infoview, containing the turnstile symbol `⊢`, is called 
 the **goal** and tells us the type of the term that Lean wants us to construct. 
 
-In our example the goal was:
+In our 1st example the goal was:
 
 ⊢ A
 
@@ -118,7 +117,6 @@ warn us that something is wrong and `sorry` is in bright red).
 Throughout this course you will encounter Lean code containing `sorry` that you will need to 
 edit, replacing the `sorry` with an actual proof of the required goal.
 
-Can you replace the `sorry` with something that will actually accomplish the goal? 
 -/
 
 -- 02
@@ -161,7 +159,7 @@ by
   sorry
 
 -- 07
-example (A B: Type)(b : B) : A → B :=
+example (A B: Type) (b : B) : A → B :=
 by
   sorry
 
@@ -170,6 +168,7 @@ by
 example  (A B C : Type) (f : A → B) (g : B → C) : A → C:=
 by
   sorry
+
 
 
 /-
