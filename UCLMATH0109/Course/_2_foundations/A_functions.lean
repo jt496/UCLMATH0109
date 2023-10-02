@@ -3,7 +3,7 @@ import Mathlib.Tactic.Basic
 /-
 ## What is Lean?   
 
-Lean is at least three things: 
+Lean is: 
 
 1) A programming language in which we can write proofs (and more);
 
@@ -14,8 +14,9 @@ Lean is at least three things:
 We will gradually introduce the Lean language and we will rely on its kernel to check 
 our code/proofs. We will also introduce the various tactics. 
 
-We will see our first tactic `exact` below.
+We will see our first tactic `exact` below. -/
 
+/-
 ## Comments 
 
 Everything in green or orange text is a comment. 
@@ -82,7 +83,7 @@ x : A
 The last line of the Infoview, containing the turnstile symbol `⊢`, is called 
 the **goal** and tells us the type of the term that Lean wants us to construct. 
 
-In our 1st example the goal was:
+In our example the goal was:
 
 ⊢ A
 
@@ -117,6 +118,7 @@ warn us that something is wrong and `sorry` is in bright red).
 Throughout this course you will encounter Lean code containing `sorry` that you will need to 
 edit, replacing the `sorry` with an actual proof of the required goal.
 
+Can you replace the `sorry` with something that will actually accomplish the goal? 
 -/
 
 -- 02
@@ -147,27 +149,50 @@ by
   sorry
 
 
+-- 06
+example (A B C D: Type) (f : A  → B) (g : B → C) (h : C → D) (a : A): D :=
+by
+  sorry
+
+-- 07
+example (A B C D E : Type)(f : A → B) (g : B → C) (h : D → E) (i : C → E) (x : A) : E:=
+by
+  sorry
+ 
 
 /- So far our examples have involved applying functions to obtain new terms,
  but what if our goal is to construct a function itself?
 
   In order to define a function we need a new tactic: `intro`    -/
 
--- 06
+-- 08 
 example (A: Type) : A → A :=
 by
   sorry
 
--- 07
-example (A B: Type) (b : B) : A → B :=
+
+-- 09 
+example (A B: Type)(b : B) : A → B :=
 by
   sorry
 
-
--- 08
+-- 10
 example  (A B C : Type) (f : A → B) (g : B → C) : A → C:=
 by
   sorry
+
+
+-- 11
+example (A B C D: Type) (f : A → B) (g : C → D) : (A → B) → (C → D):=
+by
+  sorry
+
+-- 12
+example (A B C : Type) (f : A → B → C) (x : A) (y : B) : C :=
+by
+  apply f
+  · sorry
+  · sorry
 
 
 
