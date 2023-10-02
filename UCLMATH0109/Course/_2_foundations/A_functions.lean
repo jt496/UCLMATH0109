@@ -124,12 +124,12 @@ Can you replace the `sorry` with something that will actually accomplish the goa
 -- 02
 example (A B C : Type) (x : A) (y : B) (z : C) : B :=
 by
-  sorry
+  exact y
 
 -- 03
 example  (A B : Type) (f : A → B) (a : A) : B :=
 by
-  sorry
+  exact f a
 
 
 /- 
@@ -141,23 +141,32 @@ of type B by applying f.
 -- 04
 example (A B : Type) (f : A → B) (a : A) : B :=
 by
-  sorry
+  apply f
+  exact a
 
 -- 05
 example  (A B C : Type) (f : A  → B) (g : B → C) (a : A) : C :=
 by
-  sorry
+  apply g
+  apply f
+  exact a
 
 
 -- 06
 example (A B C D: Type) (f : A  → B) (g : B → C) (h : C → D) (a : A): D :=
 by
-  sorry
+  apply h
+  apply g
+  apply f
+  exact a
 
 -- 07
 example (A B C D E : Type)(f : A → B) (g : B → C) (h : D → E) (i : C → E) (x : A) : E:=
 by
-  sorry
+  apply i
+  apply g
+  apply f
+  exact x
  
 
 /- So far our examples have involved applying functions to obtain new terms,
@@ -168,32 +177,37 @@ by
 -- 08 
 example (A: Type) : A → A :=
 by
-  sorry
+  intro x
+  exact x
 
 
 -- 09 
 example (A B: Type)(b : B) : A → B :=
 by
-  sorry
+  intro _
+  exact b
 
 -- 10
 example  (A B C : Type) (f : A → B) (g : B → C) : A → C:=
 by
-  sorry
-
+  intro a
+  apply g
+  apply f
+  exact a
+  
 
 -- 11
 example (A B C D: Type) (f : A → B) (g : C → D) : (A → B) → (C → D):=
 by
-  sorry
+  intro _
+  exact g
 
 -- 12
 example (A B C : Type) (f : A → B → C) (x : A) (y : B) : C :=
 by
   apply f
-  · sorry
-  · sorry
-
+  · exact x
+  · exact y
 
 
 /-
