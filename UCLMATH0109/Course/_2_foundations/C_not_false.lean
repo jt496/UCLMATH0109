@@ -28,7 +28,7 @@ by
 Since **any** proposition `Q` follows from a contradiction we can always replace any goal
 `⊢ Q` by `⊢ False` the Lean tactic for this is `exfalso`
 -/
-example (hf: False ) : Q :=
+example (Q : Prop) (hf : False ) : Q :=
 by
   -- Change the goal from `⊢ P` to `⊢ False`
   exfalso
