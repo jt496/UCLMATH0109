@@ -27,6 +27,7 @@ every term x of type A, the proposition `P x` is true.
 
 If we have `h : ∀a, P a` in the local context and our goal is `⊢ P b`, where `b : A`
  then `apply h` will close the goal. -/
+ 
 -- 01
 example (h : ∀a, P a) (b : A): P b:=
 by
@@ -34,21 +35,11 @@ by
 
 /-
 If we have the goal `⊢ ∀ x, Q x` then we can start our proof with `intro x`
--/
--- 02
-example : ∀ x, P x ∨ ¬ P x:=
-by
-  intro x 
-  -- ⊢ P x ∨ ¬P x 
-  by_cases hx : P x
-  · left; exact hx
-  · right; exact hx
 
-/-
 If we want to use `h : ∀a, P a` for a particular value of `b : A`, but the goal is
  not of the form `⊢ P b` then we can use `specialize h b` to change `h` to `h : P b`
 -/
--- 03
+-- 02
 example (hp : ∀a, P a) (hq : ∀a, Q a) : ∀x, (P x ∧ Q x) :=
 by
   intro x
@@ -69,7 +60,7 @@ there exists a term x of type A, such that the proposition `P x` is true.
 If our goal is `⊢ ∃x, P x`  and we know that `a : A` is a term satisfying `P a`
 then we can tell Lean to `use a` to close the goal. 
 -/
--- 04
+-- 03
 example (x : A) (hx: P x) : ∃ a, P a:=
 by
   use x 
@@ -81,7 +72,7 @@ will give us `x : A` and `hx : P x` in our local context.
 [Notice how similar this is to `obtain ⟨hp,hq⟩ := h` when `h : P ∧ Q`]
 
 -/
--- 05
+-- 04
 example (h : ∃ a, P a) : ∃ b, P b ∨ Q b:=
 by
   obtain ⟨a, ha⟩ := h
@@ -105,7 +96,7 @@ this takes the negation of the goal and adds it as a hypothesis to the
 local context and changes the goal to `False`
 -/
 
--- 06
+-- 05
 example (hpq: ∀x y, P x → Q y) : (∀z, Q z) ∨ (∀z,¬ P z) :=
 by
   by_contra h 
@@ -117,18 +108,6 @@ by
   obtain ⟨hq,hp⟩:=h
   obtain ⟨b, hb⟩:= hq
   obtain ⟨a, ha⟩:= hp
-  apply hb (hpq a b ha)
-
--- 06' In fact we could combine all the `obtain` steps:
-example (hpq: ∀x y, P x → Q y) : (∀z, Q z) ∨ (∀z,¬ P z) :=
-by
-  by_contra h 
-  -- Goal is now `⊢ False`, and we have a new hypothesis
-  -- `h : ¬((∀ (z : A), Q z) ∨ ∀ (z : A), ¬P z)` 
-  -- We can simplify `h` by pushing the negation inside 
-  push_neg at h
-  -- Now have `h : (∃ (z : A), ¬Q z) ∧ ∃ (z : A), P z`
-  obtain ⟨⟨b,hb⟩,a,ha⟩:=h
   apply hb (hpq a b ha)
 
 
