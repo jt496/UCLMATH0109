@@ -1,5 +1,10 @@
 import Mathlib.Tactic
 
+/-
+Use the tactics described in _2_foundations/B_or_and_imp.lean
+to complete the following proofs.
+-/
+
 
 -- 01 `∧` is symmetric
 example (h : P ∧ Q) : Q ∧ P :=
@@ -30,7 +35,6 @@ by
   | inr hq => 
     cases hpr with
     | inl hp => 
-      
       sorry
     | inr hr => 
       right
@@ -137,6 +141,7 @@ Lean follows the convention that it only displays brackets if they are required
 In the next example our goal is `⊢ P ∨ Q ∨ R` so we first need to know whether 
 `∨` is left- or right-associative. 
 -/
+
 -- 06 
 example (hpq: P ∨ Q) (hqr: Q ∨ R) : P ∨ Q ∨ R :=
 by -- Place your cursor here and then hover over the
@@ -152,7 +157,7 @@ by -- Place your cursor here and then hover over the
     | inr hr => 
       sorry
     
-variable (P Q R: Prop)
+variable (P Q R : Prop)
 -- So `∨` is right-associative
 #check P ∨ (Q ∨ R) -- P ∨ Q ∨ R : Prop
 /-
