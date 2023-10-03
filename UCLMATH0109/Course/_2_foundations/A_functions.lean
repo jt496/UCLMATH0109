@@ -124,8 +124,8 @@ Can you replace the `sorry` with something that will actually accomplish the goa
 -- 02
 example (A B C : Type) (x : A) (y : B) (z : C) : B :=
 by
-  exact y
-
+  sorry
+  
 -- 03
 example  (A B : Type) (f : A → B) (a : A) : B :=
 by
@@ -155,18 +155,12 @@ by
 -- 06
 example (A B C D: Type) (f : A  → B) (g : B → C) (h : C → D) (a : A): D :=
 by
-  apply h
-  apply g
-  apply f
-  exact a
+  sorry
 
 -- 07
 example (A B C D E : Type)(f : A → B) (g : B → C) (h : D → E) (i : C → E) (x : A) : E:=
 by
-  apply i
-  apply g
-  apply f
-  exact x
+  sorry
  
 
 /- So far our examples have involved applying functions to obtain new terms,
@@ -190,17 +184,21 @@ by
 -- 10
 example  (A B C : Type) (f : A → B) (g : B → C) : A → C:=
 by
-  intro a
-  apply g
-  apply f
-  exact a
+  sorry
   
 
 -- 11
 example (A B C D: Type) (f : A → B) (g : C → D) : (A → B) → (C → D):=
 by
-  intro _
-  exact g
+  sorry
+
+/-
+## Multiple goals
+
+In our next example our goal is construct a term of type `C`. 
+We have `f : A → B → C` and if we `apply f` we will get two goals.   
+The `dot` notation below `·` allows us to focus on in one in turn.
+-/
 
 -- 12
 example (A B C : Type) (f : A → B → C) (x : A) (y : B) : C :=
