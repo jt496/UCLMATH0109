@@ -23,18 +23,15 @@ So `(P : Prop)` is Lean for `P is a proposition`.
 
 This means that `P` is a valid mathematical statement which may be true or false. 
 
+
 # Proof of (P : Prop) is (hp : P)
 
 If `(P : Prop)` then a proof of P in Lean is a term `hp` of type `P`, 
 ie `(hp : P)`. 
-
 -/
 
 example (P : Prop) (hp : P) : P :=
 by
--- Our goal is `⊢ P` which requires a term of type P
--- Since  `hp : P` we can complete the proof with exact hp
-
   exact hp
 
 
@@ -69,21 +66,13 @@ We indicate which by using `left` for `P`and `right` for Q.
 
 example (P Q : Prop) (hp : P) : Q ∨ P :=
 by
-  -- Goal `⊢ Q ∨ P`
-  -- We have a proof of P in the local context `hp : P`
-  right 
-  -- Goal is now `⊢ P`
+  right
   exact hp
 
 
 example (hq : Q) : Q ∨ P :=
 by
-  -- Goal `⊢ Q ∨ P` 
-  -- We have a proof of Q in the local context `hq : P`
-  left 
-  -- Goal is now `⊢ Q`
-  exact hq
-
+  sorry
 
 
 /-
@@ -95,17 +84,12 @@ in which `hq : Q`
 example (hpq : P ∨ Q) : Q ∨ P :=
 by
   cases hpq with
-  | inl hp => 
-  -- Now have goal `⊢ Q ∨ P` 
-  -- we have `hp : P` in the first local context
-    right 
-    exact hp 
-  | inr hq => 
-  -- Now have goal `⊢ Q ∨ P` 
-  -- we have `hqq: Q` in the first local context
-    left  
-    exact hq
- 
+  | inl h => 
+    right
+    exact h
+  | inr h => 
+    sorry
+
 
 /-
 # And : P ∧ Q (tactics: constructor / dot notation)
@@ -124,13 +108,8 @@ We can then use ` · ` to focus on each goal in turn.
 example (hp : P) (hq: Q) : P ∧ Q:=
 by
   constructor
-  -- Now have 2 goals `⊢ P` and `⊢ Q`
-  -- it is good style to focus on one goal at a time
-  -- we can do this using the ` · ` command (type \. )
-  · exact hp -- closes the first goal
-  · exact hq -- closes the second goal
-
-
+  · exact hp
+  · exact hq
 /-
 
 If we have a hypothesis `h : P ∧ Q` then `h.1 : P` and `h.2 : Q`
@@ -141,13 +120,10 @@ We can also use `obtain ⟨hp,hq⟩:=h` to convert `h: P ∧ Q` into `hp : P` an
 
 example (h: P ∧ Q) : Q ∧ P :=
 by
-  obtain ⟨hp,hq⟩ := h
+  obtain ⟨hp, hq⟩ :=h
   constructor
-   -- Now have 2 goals `⊢ Q` and `⊢ P`
-  · exact hq -- closes the first goal
-  · exact hp -- closes the second goal
-
-
+  · exact hq 
+  · exact hp
 
 /-
 # Implies: P → Q  (tactics: intro / apply)
@@ -171,9 +147,7 @@ is true.
 
 example : P ∧ Q → P :=
 by
--- We assume we have a proof hpq of `P ∧ Q`
   intro hpq
--- We can  use dot notation to  decompose `hpq : P ∧ Q` into `hp : P` and `hq : Q` 
   exact hpq.1
 
 /-
@@ -183,9 +157,8 @@ In Lean if we have a hypothesis `h : P → Q` in the local context and our goal 
  then we can use `apply h` to change our goal to `⊢ P`.
 -/
 
-example (hpq : P → Q) (hp : P) : Q :=
+example (P Q : Prop) (hpq : P → Q) (hp : P) : Q :=
 by
-  -- We use `apply himp` to change our goal from `⊢ Q` to `⊢ P`
   apply hpq
   exact hp
 
@@ -197,6 +170,7 @@ Lean notation for `P iff Q` is `P ↔ Q`. This means that `P` and `Q` are equiva
 (ie they have the same truth value).
 
 We can treat `P ↔ Q` like an `and` statement. 
+
 If our goal is `⊢ P ↔ Q` then `constructor` will convert this into two goals: `⊢ P → Q` and `⊢ Q → P`
 
 We can use `obtain ⟨hpq,hqp⟩:=h` to convert `h : P ↔ Q` into `hpq: P → Q` and `hqp : Q → P`
@@ -208,18 +182,11 @@ If we have `h: P ↔ Q` in the local context then `h.1 : P → Q` and `h.2 : Q �
 example : (P ↔ Q) ↔ (P → Q) ∧ (Q → P):=
 by
   constructor
-  · intro h
-    obtain ⟨hpq,hqp⟩:=h
-    constructor 
-    · exact hpq
-    · exact hqp
   · intro hpq 
-    constructor 
+    constructor
     · exact hpq.1
     · exact hpq.2
-
-
-
+  · sorry
 /-
 # Now do sheet2B.lean 
 -/
