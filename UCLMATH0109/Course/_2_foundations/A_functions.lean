@@ -176,7 +176,7 @@ by
 
 
 -- 09 
-example (A B: Type)(b : B) : A → B :=
+example (A B: Type) minor edit(b : B) : A → B :=
 by
   intro _
   exact b
