@@ -36,8 +36,8 @@ by
 /-
 If we have the goal `⊢ ∀ x, Q x` then we can start our proof with `intro x`
 
-If we want to use `h : ∀a, P a` for a particular value of `b : A`, but the goal is
- not of the form `⊢ P b` then we can use `specialize h b` to change `h` to `h : P b`
+If we want to use `h : ∀a, P a` for a particular value of `b : A`, then we can use 
+`specialize h b` to change `h` to `h : P b`
 -/
 -- 02
 example (hp : ∀a, P a) (hq : ∀a, Q a) : ∀x, (P x ∧ Q x) :=
@@ -52,7 +52,7 @@ by
 
 
 /-
-# Existential ∃  (tactics: use / cases)
+# Existential ∃  (tactics: use / obtain)
 
 If `P : A → Prop` is a predicate, then the existential quantifier `∃x, P x` says that 
 there exists a term x of type A, such that the proposition `P x` is true.
@@ -91,7 +91,7 @@ More generally we can use `push_neg` to move negations inside a goal.
 
 We can also use it to simplify a hypothesis `h` with `push_neg at h`
 
-Lean also has a proof by contradiction tactic `by_contra h`, 
+Lean also has a proof by contradiction tactic: `by_contra h`, 
 this takes the negation of the goal and adds it as a hypothesis to the 
 local context and changes the goal to `False`
 -/
