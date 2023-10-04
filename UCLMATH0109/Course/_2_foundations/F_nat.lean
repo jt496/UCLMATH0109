@@ -40,11 +40,13 @@ lemma succ_eq_add_one (n : N) :  n.succ = n + 1  :=
 by 
   rfl
 
+  --- Ask Richard about why I need this...
 lemma zero_eq_zero : zero = 0 :=
 by
   rfl
 
-lemma succ_zero_eq_one : succ 0 = 1 :=
+  --- Ask Richard about why I need this...
+lemma one_eq_succ_zero :  1 = succ 0 :=
 by
   rfl
 
@@ -56,8 +58,6 @@ by
 lemma add_succ (a b : N) : a + b.succ = (a + b).succ:=
 by
   rfl
-
-
 
 /-
 # New tactic for N: induction 
@@ -128,7 +128,6 @@ by
     rw [add_succ, ih ,succ_add]
   
 
-
 /-
 Multiplication is also defined inductively in Lean.
 -/
@@ -142,7 +141,6 @@ instance : Mul N where
 lemma mul_zero (n : N) : n * 0 = 0:=
 by
   rfl
-
 
 
 lemma mul_succ (m n : N) : m * n.succ = m * n + m:=
@@ -169,12 +167,12 @@ by
 
 lemma mul_one (n : N) : n * 1 = n:=
 by
-  rw [← succ_zero_eq_one,mul_succ,mul_zero,zero_add]
+  rw [one_eq_succ_zero,mul_succ,mul_zero,zero_add]
 
 
 lemma one_mul (n : N) : 1 * n = n:=
 by
-  rw [← succ_zero_eq_one,succ_mul,zero_mul,zero_add]
+  rw [one_eq_succ_zero,succ_mul,zero_mul,zero_add]
 
 
 lemma mul_add (a b c: N) : a*(b + c) = a*b + a*c:=
@@ -188,32 +186,54 @@ by
  
 lemma add_mul (a b c: N) : (b + c)*a = b*a +c*a:=
 by
-  sorry
+   induction a with
+  | zero =>
+    rw [zero_eq_zero, mul_zero,mul_zero,mul_zero,zero_add]
+  | succ n ih => 
+    rw [mul_succ,mul_succ,mul_succ,ih, add_assoc,add_assoc,add_comm b,add_comm b,add_assoc]
 
 
-lemma Mul_comm (a b : N) : a * b = b * a :=
+lemma mul_comm (a b : N) : a * b = b * a :=
 by
-  sorry
+  induction a with
+  | zero => 
+    rw [zero_eq_zero,zero_mul,mul_zero]
+  | succ n ih => 
+    rw [succ_mul,mul_succ,ih]
 
 
-lemma Mul_assoc (a b c : N) : a * b * c = a * (b * c):=
+lemma mul_assoc (a b c : N) : a * b * c = a * (b * c):=
 by
-  sorry
+  induction c with
+  | zero => 
+    rw [zero_eq_zero,mul_zero,mul_zero,mul_zero]
+  | succ n ih => 
+    rw [mul_succ,mul_succ,ih,mul_add]
 
 
-lemma Pow_zero (n : N) : n ^ 0 = 1:=
+/-
+Powers are also defined inductively in Lean.
+-/
+def pow : N → N → N
+| _ , 0      =>   1                 --  a ^ 0 = 1
+| a , succ b => a*(pow a b)         --  a ^ (b + 1) = a*(a ^ b)   -/
+
+instance : Pow N N where
+  pow := pow
+
+
+lemma pow_zero (n : N) : n ^ 0 = 1:=
 by
-  sorry
+  rfl
 
 
-lemma Pow_succ (a b : N) : a^b.succ= a* a^b:=
+lemma pow_succ (a b : N) : a^b.succ= a* a^b:=
 by
-  sorry
-
+  rfl
 
 lemma Pow_one (n : N) : n ^ 1 = n:=
 by 
-  sorry
+  rw [one_eq_succ_zero,pow_succ,pow_zero,mul_one]
 
 
 /-
@@ -222,80 +242,38 @@ by
 We don't need induction to prove our next result, but we do need to consider the cases of zero and 
 successor separately. The `cases n` tactic does exactly this.   -/
 
-lemma Zero_pow (n : N) (h : n ≠ 0): 0 ^ n = 0:=
+lemma zero_pow (n : N) (h : n ≠ 0): 0 ^ n = 0:=
 by
-  cases n with n hn,
-  {
-    sorry
-  },
-  {
-    sorry
-  },
+  cases n with
+  | zero => contradiction
+  | succ n =>
+    rw [pow_succ,zero_mul]
 
-
-
-lemma One_pow (n : N) : 1 ^ n = 1:=
+lemma one_pow (n : N) : 1 ^ n = 1:=
 by
-  sorry
+  induction n with
+  | zero => rfl
+  | succ n ih => 
+    rw [pow_succ,ih,mul_one]
 
-
-
-lemma Pow_add (a b c: N): a^(b + c)=a^b*a^c:=
+lemma pow_add (a b c: N): a^(b + c)=a^b*a^c:=
 by
-  induction c with c hc,
-  {
-    sorry
-  },
-  {
-    sorry
-  },
+  induction c with
+  | zero =>
+    rw [zero_eq_zero,pow_zero,mul_one,add_zero]
+  | succ n ih => 
+    rw [add_succ,pow_succ,pow_succ,ih,mul_comm ,mul_comm a,← mul_assoc,mul_comm]
+  
 
-
-lemma Pow_mul (a b c : N) : a^(b * c) = (a^b)^c :=
+lemma pow_mul (a b c : N) : a^(b * c) = (a^b)^c :=
 by
-  sorry
+  induction c with
+  | zero => 
+    rw [zero_eq_zero,mul_zero,pow_zero,pow_zero]
+  | succ n ih => 
+    rw [pow_succ,mul_succ,pow_add,ih,mul_comm]
+    
 
-
-
-lemma Two_eq_one_add_one : 2 = 1 + 1:=
-by
-  sorry
-
-
-lemma Two_mul (n : N) : 2*n = n + n:=
-by
-  sorry
-
-
-lemma Three_mul (n : N) : 3*n = n + n + n:=
-by
-  have : 3 = 2 + 1, {
-    sorry
-  },
-  sorry
-
-
-lemma Pow_two (n : N) : n^2 = n*n:=
-by
-  sorry
-
-
-lemma Add_sq (a b : N) : (a + b)^2 = a^2 + 2*a*b + b^2 :=
-by
-  sorry
-
-
-lemma Pow_three (n : N) : n^3 = n*n*n:=
-by
-  have : 3 = 2 + 1, {
-    sorry
-  },
-  sorry
-
-
-lemma Add_cube (a b : N) : (a + b)^3 = a^3 + 3*a^2*b + 3*a*b^2 + b^3:=
-by
-  sorry -- ring
 
 
 
