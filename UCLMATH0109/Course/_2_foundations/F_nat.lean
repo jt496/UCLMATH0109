@@ -4,7 +4,7 @@ import Mathlib.Tactic
 namespace UCL
 
 /-
-In Lean the natural numbers `N` are defined as follows:
+In Lean the natural numbers `ℕ` are defined as follows:
 
 This means that there are two ways to construct a natural number `n:N`
 Either `n` is `zero` or it is the successor of a previously constructed 
@@ -17,10 +17,8 @@ inductive N
 
 open N
 
-
 instance : Zero N where
   zero := zero  
-
 
 
 def add : N → N → N
@@ -49,25 +47,10 @@ by
 lemma succ_zero_eq_one : succ 0 = 1 :=
 by
   rfl
-/- 
-We are now proving lemmas/theorems that already exist in `Mathlib`.
-
-To avoid clashes we will use the same names as `Mathlib` but they will be Capitalised.
-
-We won't use high level tactics such as `norm_num` or `linarith` but we will 
-need to use earlier results as we progress (mainly with `rw` and `apply` tactics).   
-
-For a much more complete tour of the natural numbers check out the Nural Numbers Game:
-
-https://www.ma.imperial.ac.uk/~buzzard/xena/natural_number_game/
-
--/
 
 lemma add_zero (n : N) : n + 0 = n :=
 by
   rfl
- 
-
 
 /-- a + (b + 1) = (a + b) + 1 -/
 lemma add_succ (a b : N) : a + b.succ = (a + b).succ:=
@@ -196,16 +179,14 @@ by
 
 lemma mul_add (a b c: N) : a*(b + c) = a*b + a*c:=
 by
-  induction a with a ha,
-  {
-    sorry
-  },
-  {
-    sorry
-  },
+  induction a with
+  | zero =>
+    rw [zero_eq_zero, zero_mul,zero_mul,zero_mul,zero_add]
+  | succ n ih => 
+    rw [succ_mul,succ_mul,succ_mul,ih, add_assoc,add_assoc,add_comm b,add_comm b,add_assoc]
 
  
-lemma Add_mul (a b c: N) : (b + c)*a = b*a +c*a:=
+lemma add_mul (a b c: N) : (b + c)*a = b*a +c*a:=
 by
   sorry
 
