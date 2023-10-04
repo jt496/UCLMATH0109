@@ -17,38 +17,43 @@ inductive N
 
 open N
 
-instance : Zero N where
-  zero := zero  
+-- instance : Zero N where
+--   zero := zero  
 
+instance : OfNat N 0 where
+  ofNat := zero
 
 def add : N → N → N
 | a , 0   => a                    --  a + 0 := a
-| a , succ b => succ (add a b)       --  a + (b + 1) := (a + b) + 1
+| a , succ b => succ (add a b)    --  a + (b + 1) := (a + b) + 1
 
----------- The next few lines 
+
 instance : Add N where
   add := add
 
 
-instance : One N where
-  one := succ 0 
+-- instance : One N where
+--   one := succ 0 
 
-
--- We will use the `dot` notation for the successor function.
-/--  n + 1 = n.succ -/
-lemma succ_eq_add_one (n : N) :  n.succ = n + 1  :=
-by 
-  rfl
+instance : OfNat N 1 where
+  ofNat := succ 0
 
   --- Ask Richard about why I need this...
 lemma zero_eq_zero : zero = 0 :=
 by
   rfl
 
-  --- Ask Richard about why I need this...
+  --- and this...
 lemma one_eq_succ_zero :  1 = succ 0 :=
 by
   rfl
+
+-- We can use `dot` notation for the successor function.
+/--  n + 1 = n.succ -/
+lemma succ_eq_add_one (n : N) :  n.succ = n + 1  :=
+by 
+  rfl
+
 
 lemma add_zero (n : N) : n + 0 = n :=
 by
@@ -231,7 +236,7 @@ lemma pow_succ (a b : N) : a^b.succ= a* a^b:=
 by
   rfl
 
-lemma Pow_one (n : N) : n ^ 1 = n:=
+lemma pow_one (n : N) : n ^ 1 = n:=
 by 
   rw [one_eq_succ_zero,pow_succ,pow_zero,mul_one]
 
@@ -274,6 +279,23 @@ by
     rw [pow_succ,mul_succ,pow_add,ih,mul_comm]
     
 
+instance : OfNat N 2 where
+  ofNat := succ 1
+
+lemma two_eq_succ_one : 2 = succ 1:=
+by
+  rfl
+
+lemma two_mul (n : N) : 2 * n = n + n :=
+by
+  rw [two_eq_succ_one,succ_mul,one_mul]
 
 
+lemma pow_two (n : N) : n^2 = n*n:=
+by
+  rw [two_eq_succ_one,pow_succ,pow_one]
 
+lemma add_sq (a b : N) : (a + b)^2 = a^2 + 2*a*b + b^2 :=
+by
+  rw [pow_two,mul_add,add_mul,two_mul,pow_two,pow_two,add_mul,mul_comm b,
+      add_mul,add_assoc,add_assoc,add_assoc]
