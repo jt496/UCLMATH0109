@@ -14,8 +14,8 @@ If two terms are identical we say that they are **syntactically equal**
 
 If our goal is a syntactic equality: `⊢ a = a` then `rfl` will complete the proof.-/
 
---01 a synactic equality 
-example (i j : ℕ): i + j = i + j :=
+-- 01 a synactic equality 
+example (i j : ℕ) : i + j = i + j :=
 by
   rfl
 
@@ -33,16 +33,17 @@ term by unfolding definitions.
 If our goal is `⊢ a = b`, where `a` and `b` are definitionally equal, then `rfl` 
 will also complete the proof.
 -/
--- 01 
+-- 02
 example : 1 + 1 = 2 :=
 by
   rfl
 
 
--- 02
+-- 03
 example (n : ℕ) : n + 0 = n :=
 by
   rfl
+
 
 /-
 The reason that `rfl` works in the last example is that `n + 0` is defined to be `n`
@@ -60,26 +61,30 @@ Unfortunately `0 + n` is not defined to be `n`,
 
 /-
 Those of you who have played the Natural Numbers Game will know that
-in Lean ℕ addition is defined inductively on the 2nd argument:
+in Lean ℕ is defined `inductively` by 
 
- a + 0 => a
- a + (succ b) => succ (a + b)
+inductive Nat where
+  | zero : Nat
+  | succ (n : Nat) : Nat
 
-So 
-0 + 2 = 0 + (succ 1) => succ (0 + 1) => succ (succ (0 + 0)) => succ (succ 0) = 2
--/
+So `succ 0` is what we call `1` and `succ 1` is `2` etc. 
 
+Addition is then defined inductively on the 2nd argument:
 
-/-
+def Nat.add : Nat → Nat → Nat
+  | a, Nat.zero   => a
+  | a, Nat.succ b => Nat.succ (Nat.add a b)
+
+0 + 2 = 0 + (succ 1) => succ (0 + 1) = succ (0 + succ 0) => succ (succ (0 + 0)) => succ (succ 0) = 2
+
 It is still true that `0 + n = n` but this is a theorem not a definition!
 
 This is an example of a `propositional equality`, and since it is not a definitional
 equality `rfl` will fail. -/
--- 03 
+
+-- 04 
 example  : 0 + n = n :=
 by
- -- rfl -- does not work!
- -- we need to use a theorem (more on these later)
   exact zero_add n
 
 /- 
@@ -87,13 +92,13 @@ by
 definitions and applying reflexivity (note that `=` is just one example of a reflexive relation
 another common one is `↔`)
 -/
--- 04 iff is rflexive 
+-- 05 iff is reflexive 
 example (P : Prop) : P ↔ P :=
 by
   rfl
 
 
--- 05 the definition of `a ∣ b` in ℕ is `∃ k, b = a * k` 
+-- 06 the definition of `a ∣ b` in ℕ is `∃ k, b = a * k` 
 example : 2 ∣ n ↔ ∃ k, n = 2 * k:=
 by
   rfl
@@ -116,8 +121,8 @@ of `a` by `b` in the goal.
 For this to work the occurence of `a` in the goal must be syntactically equal to a.
 -/
 
--- 06
-example (i j : ℕ) (h1: i = j) (h2 : j = k) : i = k :=
+-- 07
+example  (h1: i = j) (h2 : j = k) : i = k :=
 by
   rw [h1]
   exact h2
@@ -128,7 +133,7 @@ in the local context matches the goal, if it finds one then it closes the goal.
 
 The `a` in `rwa` is short for `assumption`
 -/
--- 07 
+-- 08 
 example  (h1: i = j) (h2 : j = k) : i = k :=
 by
   rwa [h1]
@@ -139,10 +144,11 @@ We can group a sequence of rewrites together as follows `rw [h1, h2]`
 After every `rw` Lean will try to use `rfl` to close the goal. 
 This explains why the following proof ends so abruptly!
 -/
--- 08
+-- 09
 example  (h1: i = j + k) (h2 : j = k + k) : i = k + k + k:=
 by
-  rw [h1, h2] 
+  rw [h1,h2]
+
 
 
 /-
@@ -152,22 +158,26 @@ If `h : a = b` then `rw [h]`  replaces `a` by `b` in the goal.
 
 We can also do `rw [← h]` to replace `b` by `a` in the goal.
 
+-/
+-- 10 
+example  (h1 : i = j) ( h2: j = k) (h3 : m = k) (h4 : n = m) : n = i :=
+by
+  rwa [h1, h2,← h3]
+
+/-
+
 If `h2` is another term in the local context then `rw [h] at h2` replaces
 `a` by `b` in `h2`.
 
 -/
--- 09 
-example  (h1 : i = j) ( h2: j = k) (h3 : m = k) (h4 : n = m) : n = i :=
-by
-  rwa [h1,h2, ← h3]
 
-
--- 10
+-- 11
 example (h1 : i = j) ( h2: j = k) (h3 : m = k) (h4 : n = m) : i = n :=
 by
-  rw [← h4] at h3 
+  rw [← h4] at h3
   rw [← h3] at h2
   rwa [h1]
+
 
 end
 
@@ -186,12 +196,12 @@ since Lean now needs to decide how to choose values for `i` and `j`.
 -/
 section
 variable (k m n : ℕ)
--- 11 
+-- 12 
 example (hcomm : ∀ (i j : ℕ), i + j = j + i) : 7 + n = n + 7 :=
 by
-  rw [hcomm] 
+  rw [hcomm]
 
--- 12
+-- 13
 example (hcomm: ∀ (i j : ℕ), i + j = j + i) : k + m + n = n + (m + k) :=
 by
   -- Original goal ⊢ k + m + n = n + (m + k)
@@ -210,7 +220,7 @@ by
     The goal is a `Prop` asserting `=` so we place this at the top of the 
     tree and then look at each side separately.
     On the LHS we have `k + m + n`, but remember that Lean does not display the implied 
-    brackets `(k + m) + n`, so the  first `+` it sees is between `(k+m)` and `n`.
+    brackets `(k + m) + n`, so the  first `+` it sees is between `(k + m)` and `n`.
 
     Lean looks at the tree from top down, taking the left branch first until it finds
     a place were `rw [hcomm]` can be performed
@@ -241,19 +251,15 @@ the 1st `+` in the goal -->  `+`        +
  
   [If you place your cursor inside the `rw [hcomm k]` you can see the rw performed] 
  
-  The goal is now closed by rfl since the two sides of the equality are identical.
+  The goal is now closed by rfl since the two sides of the equality are identical.  -/
 
-  One point this last example misses is that once Lean decides on the values to use in a `rw`
-  it then treats this a standard substitution, so it will replace all occurences that match
-  this particular choice. The next example shows how this works  -/
-
-example (hcomm: ∀ (i j : ℕ), i + j = j + i) : (k + m) + (k + m) = (m + k) + (m + k) :=
+-- 14
+example (hcomm: ∀ (i j : ℕ), i + j = j + i) : (k + m) + (k + m) + (k + a) = (m + k) + (m + k) + (a + k):=
 by
-/- In the following rewrite Lean is given `i = k` and then needs to choose a value for `j`
-   so it can do the rewrite `hcomm k j`
-   It finds `j = m` and then performs the command `rw [hcomm k m]` which 
-   changes both occurences of `k + m`  -/ 
-  rw  [hcomm k]
+  rw [hcomm k,hcomm k]
+
+
+
 
 end
 
