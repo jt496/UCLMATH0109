@@ -7,3 +7,5 @@ variable (f : ℕ → ℕ)
 /-
 TODO write some simple questions using rfl and rw (but not using theorems from Mathlib)
 -/
+
+#check f

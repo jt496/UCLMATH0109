@@ -59,10 +59,14 @@ Unfortunately `0 + n` is not defined to be `n`,
 #print Nat.add
 
 /-
-Those of you who have played the Natural Numbers Game will recall that
+Those of you who have played the Natural Numbers Game will know that
 in Lean ℕ addition is defined inductively on the 2nd argument:
+
  a + 0 => a
  a + (succ b) => succ (a + b)
+
+So 
+0 + 2 = 0 + (succ 1) => succ (0 + 1) => succ (succ (0 + 0)) => succ (succ 0) = 2
 -/
 
 
