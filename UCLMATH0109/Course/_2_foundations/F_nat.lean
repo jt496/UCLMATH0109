@@ -4,7 +4,7 @@ namespace NotNat
 
 /-
 
-## The Natural numbers and named theorems 
+## The Natural numbers and named theorems (tactics: induction / cases)
 
 In this file we (re)define the natural numbers and prove some basic results.
 
@@ -16,11 +16,13 @@ If we want to use a theorem then it needs to have a name that we can refer to.
 
 As we prove theorems in this file they become available for us to use.
 
-
 We will use `N` to denote the natural numbers rather than `ℕ` so that we can't 
 accidentally use results from Mathlib.
 
-The names of the results we prove are identical to those in Mathlib for ℕ.
+The names of the theorems we prove are identical to those in Mathlib for ℕ. 
+
+You may notice that they are named in a very consistent way.
+
 
 For a much more complete introduction see the Natural Numbers Game in Lean 4:
 
