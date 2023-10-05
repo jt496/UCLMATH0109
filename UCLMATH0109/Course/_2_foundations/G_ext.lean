@@ -33,7 +33,7 @@ What does it mean to say that two functions `f g : A → B` are equal?
 
 `Function extensionality` is the principle that `f = g` iff `∀a, f a = g a` 
 
-Equality of functions does require their internal definitions to agree, they
+Equality of functions does not require their internal definitions to agree, they
 simply need to agree on all inputs.
 
 The Lean tactic we need is `ext`
@@ -71,7 +71,7 @@ If `A : Type` then we can form the type of subsets of A, called `Set A`
 Two sets are equal iff they contain exactly the same elements.
 
 Applying the `ext` tactic allows us to prove set identities using the tactics introduced to 
-prove basic results in logic, we simply need to interpret the set-notation.
+prove basic results in logic.
 -/
 
 -- 04
