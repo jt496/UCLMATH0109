@@ -4,7 +4,7 @@ namespace NotNat
 
 /-
 
-## The Natural numbers and named theorems (tactics: induction / cases)
+## The Natural numbers and named theorems (new tactics: induction / injection / cases)
 
 In this file we (re)define the natural numbers and prove some basic results.
 
@@ -45,7 +45,10 @@ We should think of this as saying there is a first natural number `zero` and giv
 natural number `n` we can construct its successor `succ n` (we would usually call this `n + 1`)
 
 Built-in to this definition is the fact that `zero` is not equal to `succ n` for any n
-and `succ m = succ n` implies that `m = n` (i.e. `succ` is injective).   -/
+and `succ m = succ n` implies that `m = n` (i.e. `succ` is injective).   
+
+This is part of Lean's internal definition of an `inductive` type.
+-/
 
 inductive N
 | zero : N
