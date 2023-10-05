@@ -1,6 +1,6 @@
 import Mathlib.Tactic
 variable (A : Type)
-variable (a b c : A)
+--variable (a b c : A)
 variable (P Q : A → Prop)
 
 /-
@@ -29,7 +29,7 @@ If we have `h : ∀a, P a` in the local context and our goal is `⊢ P b`, where
  then `apply h` will close the goal. -/
  
 -- 01
-example (h : ∀a, P a) (b : A): P b:=
+example (h : ∀a, P a) : P b:=
 by
   apply h
 
