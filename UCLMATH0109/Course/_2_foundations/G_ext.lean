@@ -33,7 +33,7 @@ What does it mean to say that two functions `f g : A → B` are equal?
 
 `Function extensionality` is the principle that `f = g` iff `∀a, f a = g a` 
 
-Equality of functions does not require their internal definitions to agree, they
+Equality of functions does not require their internal definitions to be identical, they
 simply need to agree on all inputs.
 
 The Lean tactic we need is `ext`
