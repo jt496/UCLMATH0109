@@ -3,6 +3,7 @@ import Mathlib.Tactic
 namespace NotNat
 
 /-
+
 ## The Natural numbers and named theorems 
 
 In this file we (re)define the natural numbers and prove some basic results.
@@ -54,7 +55,7 @@ open N  -- this allows us to use `zero` and `succ` that we just defined
 
 /- Feel free to ignore the next few lines.  We will discuss instances later in term -/
 -----------------------------------------------------------------------------------------
---- these instances allow us to use `0, 1, 2` to mean `zero, succ zero, succ (succ zero)` 
+--- These instances allow us to use `0, 1, 2` to mean `zero, succ zero, succ (succ zero)` 
 instance : OfNat N 0 where
   ofNat := zero
   
@@ -104,9 +105,10 @@ by
 /-
 # New tactic for N: induction 
 
-If we want to prove `∀ (n : N), P n` then we can use 
-`induction n` which requires us to prove two things: 
+If we want to prove `∀ (n : N), P n` then we can use `induction n` 
+which requires us to prove two things: 
 `P 0` and `P n →  P n.succ`
+
 -/
 
 theorem zero_add (n : N) : 0 + n = n :=
@@ -262,7 +264,7 @@ Powers are also defined inductively in Lean.
 
 def pow : N → N → N
 | _ , 0      =>   1              --  a ^ 0 = 1
-| a , succ b => a * (pow a b)    --  a ^ (b + 1) = a*(a ^ b)   -/
+| a , succ b => a * (pow a b)    --  a ^ (b + 1) = a * (a ^ b)   -/
 
 
 -- This allows us to use the notation `a ^ b`
