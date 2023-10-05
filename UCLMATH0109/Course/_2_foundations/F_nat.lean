@@ -1,14 +1,14 @@
 import Mathlib.Tactic
 
-
-
 /-
 
 ## The Natural numbers and named theorems (new tactics: induction / injection / cases)
 
 In this file we (re)define the natural numbers and prove some basic results.
 
-We also introduce `named` theorems. Most of our previous proofs were of `examples`.
+We also introduce `named` theorems. 
+
+Most of our previous proofs were of `examples`.
 
 An example is simply an anonymous theorem (i.e. a theorem with no name). 
 
@@ -74,8 +74,8 @@ instance : OfNat N 2 where
 
 /-- Addition is defined inductively on the 2nd argument -/
 def add : N → N → N
-| a , 0   => a                    --  a + 0 := a
-| a , succ b => succ (add a b)    --  a + (b + 1) := (a + b) + 1
+| a , 0   => a                    --  a + 0 = a
+| a , succ b => succ (add a b)    --  a + (b + 1) = (a + b) + 1
 
 
 -- This allows us to use the notation `a + b`
@@ -92,11 +92,13 @@ theorem one_eq_succ_zero :  1 = succ 0 :=
 by
   rfl
 
+
 -- We can use `dot` notation for the successor function.
 /--  n + 1 = n.succ -/
 theorem succ_eq_add_one (n : N) :  n.succ = n + 1  :=
 by 
   rfl
+
 
 theorem add_zero (n : N) : n + 0 = n :=
 by
@@ -122,24 +124,27 @@ by
   | zero => 
     rfl
   | succ n ih => 
-    rw [add_succ, ih]
+    rw [add_succ,ih]
+
+  
   
 
 theorem succ_add (a b : N) : a.succ + b = (a + b).succ:=
 by
   induction b with
-  | zero => rfl
+  | zero => 
+    rfl
   | succ n ih => 
-    rw [add_succ,add_succ, ih]
-
+    rw [add_succ, ih, add_succ]
+ 
 
 /- Digression: how do we know that 0 ≠ 1? 
 This is one of the axioms of the natural numbers (Peano arithmetic)
 and it is built into Lean's model of N.  -/
 
 theorem succ_ne_zero (n : N) : n.succ ≠ 0 :=
-by 
-  intro h
+by
+  intro hf
   contradiction
 
 
@@ -152,36 +157,26 @@ by
 
 /- Our next result says that `+` is `associative`
 
-In Lean `a + b + c` is defined as `(a + b) + c` so whenever you see an expression such as `a + b + c + d`
-you need to remember how this is read by Lean: `((a + b) + c) + d`
+In Lean `a + b + c` is defined as `(a + b) + c` so whenever you see an expression such as 
+`a + b + c + d` you need to remember how this is read by Lean : `((a + b) + c) + d`
 
 We know that the brackets aren't required, but in Lean you need to prove this.
 -/
 
 theorem add_assoc (a b c : N) : (a + b) + c = a + (b + c):=
 by
-  induction c with
-  | zero => rfl
-  | succ n ih => 
-    rw [add_succ, ih, add_succ, add_succ]
-
+  sorry 
 
 theorem add_comm (m n : N) : m + n = n + m :=
 by
-  induction n with
-  | zero =>
-    rw [zero_eq_zero, zero_add]
-    rfl
-  | succ n ih => 
-    rw [add_succ, ih ,succ_add]
-  
+  sorry
 
 /-
 Multiplication is also defined inductively in Lean, again on the 2nd argument.
 -/
 
 def mul : N → N → N
-| _ , 0      =>   0                --  a * 0 := 0
+| _ , 0      =>   0                --  a * 0 = 0
 | a , succ b => (mul a b) + a      --  a * (b + 1) = (a * b) + a  -/
 
 
@@ -191,77 +186,46 @@ instance : Mul N where
 
 theorem mul_zero (n : N) : n * 0 = 0:=
 by
-  rfl
+  sorry
 
 /-- m * (n + 1)= m * n + m -/
 theorem mul_succ (m n : N) : m * n.succ = m * n + m:=
 by
-  rfl
+  sorry
 
 /--  (n + 1) * m = n * m + m -/
 theorem succ_mul (m n : N) : n.succ * m =  n * m + m:=
 by
-  induction m with
-  | zero => rfl
-  | succ m ih => 
-    rw [mul_succ,mul_succ,ih,add_succ,add_succ]
-    rw [add_assoc,add_comm m,add_assoc] 
-
+  sorry
 
 theorem zero_mul (n : N) : 0 * n = 0:=
 by
-  induction n with
-  | zero => rfl
-  | succ n ih => 
-    rw [mul_succ,ih]
-    rfl
+  sorry
 
 
 theorem mul_one (n : N) : n * 1 = n:=
 by
-  rw [one_eq_succ_zero,mul_succ,mul_zero,zero_add]
-
+  sorry
 
 theorem one_mul (n : N) : 1 * n = n:=
 by
-  rw [one_eq_succ_zero,succ_mul,zero_mul,zero_add]
-
+  sorry
 
 theorem mul_add (a b c: N) : a * (b + c) = a * b + a * c:=
 by
-  induction a with
-  | zero =>
-    rw [zero_eq_zero, zero_mul,zero_mul,zero_mul,zero_add]
-  | succ n ih => 
-    rw [succ_mul,succ_mul,succ_mul,ih, add_assoc,add_assoc,add_comm b,add_comm b,add_assoc]
-
+  sorry
  
 theorem add_mul (a b c: N) : (b + c) * a = b * a + c * a:=
 by
-   induction a with
-  | zero =>
-    rw [zero_eq_zero, mul_zero,mul_zero,mul_zero,zero_add]
-  | succ n ih => 
-    rw [mul_succ,mul_succ,mul_succ,ih, add_assoc,add_assoc,add_comm b,add_comm b,add_assoc]
-
+  sorry
 
 theorem mul_comm (a b : N) : a * b = b * a :=
 by
-  induction a with
-  | zero => 
-    rw [zero_eq_zero,zero_mul,mul_zero]
-  | succ n ih => 
-    rw [succ_mul,mul_succ,ih]
-
+  sorry
 
 theorem mul_assoc (a b c : N) : a * b * c = a * (b * c):=
 by
-  induction c with
-  | zero => 
-    rw [zero_eq_zero,mul_zero,mul_zero,mul_zero]
-  | succ n ih => 
-    rw [mul_succ,mul_succ,ih,mul_add]
- 
+  sorry
 
 /-
 Powers are also defined inductively in Lean.
@@ -279,17 +243,16 @@ instance : Pow N N where
 
 theorem pow_zero (n : N) : n ^ 0 = 1 :=
 by
-  rfl
+  sorry
 
 /-- a ^ (b + 1) = a * a ^ b -/
 theorem pow_succ (a b : N) : a ^ b.succ = a * a ^ b:=
 by
-  rfl
+  sorry
 
 theorem pow_one (n : N) : n ^ 1 = n:=
 by 
-  rw [one_eq_succ_zero,pow_succ,pow_zero,mul_one]
-
+  sorry
 
 /-
 # New use of tactic : cases 
@@ -300,9 +263,12 @@ successor separately. The `cases n` tactic does exactly this.   -/
 theorem zero_pow (n : N) (h : n ≠ 0) : 0 ^ n = 0:=
 by
   cases n with
-  | zero => contradiction
-  | succ n =>
+  | zero => 
+    contradiction
+  | succ n => 
     rw [pow_succ,zero_mul]
+  
+ 
 
 /-
  Now do sheet2F. 
