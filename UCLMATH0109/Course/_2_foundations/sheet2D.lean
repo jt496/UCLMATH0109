@@ -45,7 +45,7 @@ by
   sorry
 
 -- 06
-example : (∀ x, P x) → (∃x,¬ Q x) → ∃ (a b : A), ¬ (P a → Q b):=
+example : (∀ x, P x) → (∃x, ¬ Q x) → ∃ (a b : A), ¬ (P a → Q b):=
 by
   sorry
 

@@ -1,6 +1,6 @@
 import Mathlib.Tactic
 
-namespace NotNat
+
 
 /-
 
@@ -8,7 +8,7 @@ namespace NotNat
 
 In this file we (re)define the natural numbers and prove some basic results.
 
-We also introduce `named` theorems. Most of our previous proofs were `examples`.
+We also introduce `named` theorems. Most of our previous proofs were of `examples`.
 
 An example is simply an anonymous theorem (i.e. a theorem with no name). 
 
@@ -55,7 +55,7 @@ inductive N
 | succ (n : N) : N
 
 
-open N  -- this allows us to use `zero` and `succ` that we just defined
+namespace N  -- this allows us to use `zero` and `succ` that we just defined
 
 
 /- Feel free to ignore the next few lines.  We will discuss instances later in term -/
@@ -144,7 +144,7 @@ by
 
 
 -- Lean also knows that the successor function is injective (by definition)
-theorem succ.inj (n m : N) : n.succ = m.succ → n = m :=
+theorem succ_inj (n m : N) : n.succ = m.succ → n = m :=
 by
   intro h
   injection h
@@ -304,54 +304,6 @@ by
   | succ n =>
     rw [pow_succ,zero_mul]
 
-theorem one_pow (n : N) : 1 ^ n = 1:=
-by
-  induction n with
-  | zero => rfl
-  | succ n ih => 
-    rw [pow_succ,ih,mul_one]
-
-theorem pow_add (a b c: N) : a ^ (b + c) = a ^ b * a ^ c :=
-by
-  induction c with
-  | zero =>
-    rw [zero_eq_zero,pow_zero,mul_one,add_zero]
-  | succ n ih => 
-    rw [add_succ,pow_succ,pow_succ,ih,mul_comm ,mul_comm a,← mul_assoc,mul_comm]
-  
-
-theorem pow_mul (a b c : N) : a ^ (b * c) = (a ^ b) ^ c :=
-by
-  induction c with
-  | zero => rfl
-  | succ n ih => 
-    rw [pow_succ,mul_succ,pow_add,ih,mul_comm]
-    
-
-theorem two_eq_succ_one : 2 = succ 1 :=
-by
-  rfl
-
-theorem two_mul (n : N) : 2 * n = n + n :=
-by
-  rw [two_eq_succ_one,succ_mul,one_mul]
-
-
-theorem pow_two (n : N) : n ^ 2 = n * n:=
-by
-  rw [two_eq_succ_one,pow_succ,pow_one]
-
-
-theorem add_sq (a b : N) : (a + b) ^ 2 = a ^ 2 + 2 * a * b + b ^ 2 :=
-by
-  rw [pow_two,mul_add,add_mul,two_mul,pow_two,pow_two,add_mul,
-      mul_comm b,add_mul,add_assoc,add_assoc,add_assoc]
-
-theorem pow_pow (a b c : N) : (a ^ b) ^ c = a ^(b * c) :=
-by
-  induction c with
-  | zero =>
-    rfl 
-  | succ n ih => 
-    rw [pow_succ, ih, mul_succ, pow_add,mul_comm ]
- 
+/-
+ Now do sheet2F. 
+-/
