@@ -83,7 +83,7 @@ instance : Add N where
   add := add
  
 
-theorem zero_eq_zero : zero = 0 :=
+theorem zero_eq : zero = 0 :=
 by
   rfl
 
