@@ -1,12 +1,9 @@
 import Mathlib
-
 /-
 "Mathlib" is a huge database of mathematical theorems all written in lean.
 It currently has well over 3000 files, each containing many theorems.
 The first line of this file allows us to use any theorem in Mathlib.
--/
 
-/-
 Often, we are faced with proving a very simple goal, which is almost certainly
 already in Mathlib. Typing `exact?` will search Mathlib and try to find the
 theorem that we need.
