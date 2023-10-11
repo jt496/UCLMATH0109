@@ -61,3 +61,27 @@ example (f : ℕ → ℝ) (h : StrictMono (2 * f)) : StrictMono (f + f):=
 by
   sorry
 
+/-
+If the goal is `⊢ A ∼ B` where `∼` is a symmetric relation then `symm` changes the goal to `⊢ B ∼ A`
+
+If `h : A ∼ B` is in the local context then `h.symm` is `B ∼ A`
+
+The most common use of this is with `=`
+-/
+
+example (a b : ℕ) (h : a = b) : b = a :=
+by
+  sorry
+
+  
+example (a b c : ℕ) (h1 : a = b) (h2 : c = b) : a = c :=
+by
+  sorry
+/-
+If the goal is `⊢ A ∼ B` where `∼` is a transitive relation, then `trans C` converts this into two goals,
+`⊢ A ∼ C` and `⊢ C ∼ B` 
+-/  
+
+example (s t u : Set ℕ) (h1: s ⊆ t) (h2 : t ⊆ u) : s ⊆ u:=
+by
+  sorry
