@@ -15,8 +15,6 @@ Mathlib has a number of higher-level tactics:
 `linarith` proves results that follow from linear (in)equalities
 `nlinarith` is a version that can handle some non-linear arithmetic
 
-`exact?` searchs Mathlib for a result that will close the goal.
-`apply?` gives suggestions for a lemma to apply when `exact?` fails.
 -/
 
 lemma sq_add (a b : ℝ) : (a + b)^2 = a^2 + 2*a*b + b^2  :=
@@ -34,6 +32,14 @@ lemma pow_four_add (a b : ℝ) : (a + b)^4 = a^4 + 4*a^3*b+ 6*a^2*b^2 + 4*a*b^3 
 by 
   sorry
 
+/-
+Beware that in `ℕ` subtraction is truncated (so a - b = 0 if a ≤ b). 
+`ring` can still be useful in `ℕ` but it sometimes fails badly
+-/
+
+lemma nat_add_sub (a b : ℕ) : a + b - b = a:=
+by
+  sorry
 
 /- 
 If we have a goal that is involves numerical expressions then `norm_num` may be able to close it.
@@ -71,19 +77,4 @@ example (a b : ℝ) : 0 ≤ (a + b)^2 - 2*a*b :=
 by
   sorry
 
-/-
-`exact?` and `apply?` will both search Mathlib for results that will help you close your
-current goal. 
 
-`exact?` will either close the goal or suggest you try `apply?`
-`apply?` will either close the goal or suggest possible results that might help
--/
-
-
-example (a b : ℕ) : a + b - b = a:=
-by
-  sorry
-
-example (a b c : ℕ) (h : c < a)  : 0 < a + b - c := 
-by
-  sorry
