@@ -1,8 +1,8 @@
 import Mathlib.Tactic
 
 /-
-`refine` is like `exact` except that we can any explicit argument that we don't 
-currently have in our local context by  `?_` and Lean will add this as a new goal. 
+`refine` is like `exact` except that we can replace any explicit argument that we don't 
+currently have in our local context by `?_` and Lean will add this as a new goal. 
 
 `exact?` searchs Mathlib for a result that will close the goal.
 `apply?` gives suggestions for a lemma to apply when `exact?` fails.
