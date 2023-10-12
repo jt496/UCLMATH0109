@@ -29,15 +29,15 @@ When dealing with inequalities in `calc`-blocks, the tactic `rel` is often usefu
 `rel` is similar to `rw`, but substitutes inequalities rather than equalities.
 -/
 
-example (a b x y : ℝ) (hx : x = a+2*b) (hy : y ≥ |a-b|) (ha : a > 10) :
-  x + 2 * y > 30 :=
+example (a b x y : ℝ) (hx : x = a+2*b) (hy : |a-b| ≤ y) (ha : 10 ≤ a) :
+  30 ≤ x + 2 * y :=
 by
   calc
   _ = a + 2*b + 2*y       := by rw [hx]
   _ ≥ a + 2*b + 2*|a-b|   := by rel [hy]
   _ ≥ a + 2*b + 2*(a-b)   := by rel [le_abs_self (a-b)]
   _ = 3 * a               := by ring
-  _ > 3 * 10              := by rel [ha]
+  _ ≥ 3 * 10              := by rel [ha]
   _ = 30                  := by norm_num
 
 
@@ -49,27 +49,27 @@ Here is a simple example, proving that limits of sequences are unique.
 theorem sLim_unique (ha : limₙ x a) (hb : limₙ x b) : a = b :=
 by
   --- If a ≠ b then we can set ε = |a-b| > 0 and obtain a contradiction
-  have : |a-b| > 0 ∨ |a-b| = 0
+  have : 0 < |a-b| ∨ |a-b| = 0
   · sorry --apply? ; exact?
   cases this with
   | inl hp =>
     exfalso
     rw [sLim] at ha hb
-    have : |a-b|/2 > 0
-    · sorry --exact?
+    have : 0 < |a-b|/2
+    · exact?
     specialize ha _ this
     specialize hb _ this
     obtain ⟨Na, hA⟩ := ha
     obtain ⟨Nb, hB⟩ := hb
     let N := max Na Nb
-    specialize hA N (le_max_left _ _)
-    specialize hB N (le_max_right _ _)
-    apply lt_irrefl |a - b|
-    calc
+    specialize hA N (by exact?)
+    specialize hB N (by exact?)
+    have := calc
        |a - b| = |(a - x N) + (x N - b)|   := by ring
-        _      ≤ |a - x N| + |x N - b|     := by exact abs_add (a - x N) (x N - b)  
-        _      = |x N - a| + |x N - b|     := by congr 1; exact abs_sub_comm a (x N)   
+        _      ≤ |a - x N| + |x N - b|     := by exact?
+        _      = |x N - a| + |x N - b|     := by congr 1; exact?
         _      < |a - b|/2 + |a - b|/2     := by rel [hA,hB]
         _      = |a - b|                   := by ring
+    exact?
   | inr hz =>  
     exact eq_of_abs_sub_eq_zero hz
