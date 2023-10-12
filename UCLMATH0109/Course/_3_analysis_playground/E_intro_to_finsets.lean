@@ -50,15 +50,6 @@ by
 One obvious use of Finsets is for finite sums.
 In order to be able to use ∑ notation we need to `open scoped BigOperators`
 -/
-example (a b c: ℕ) (h : 0 < a) (h1: a*b = a*c) : b =c :=
-by
-  exact Nat.eq_of_mul_eq_mul_left h h1
-
-
-example (a b : ℕ) (h : 0 < a) : a*b/a = b:=
-by
-  exact Nat.mul_div_right b h
-
 open scoped BigOperators
 
 lemma sum_nat (n : ℕ) : 2*∑ i in range n.succ, i = n*(n+1):=
