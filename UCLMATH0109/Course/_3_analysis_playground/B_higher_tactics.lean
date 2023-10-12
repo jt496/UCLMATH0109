@@ -2,18 +2,11 @@ import Mathlib.Tactic
 import Mathlib.Data.Real.Basic
 
 /-
-  #  Higher-level tactics
+  #  Higher-level tactics: ring / norm_num / decide / linarith / nlinarith
 
 Mathlib has a number of higher-level tactics:
 
 `ring` can prove identities in commutative rings (eg ℝ, ℤ, ℚ). 
- 
-`norm_num` can close goals involving numerical expressions.
-
-`decide` can close a goal if Lean knows an algorithm for checking whether the goal is true or false.
-
-`linarith` proves results that follow from linear (in)equalities
-`nlinarith` is a version that can handle some non-linear arithmetic
 
 -/
 
@@ -45,7 +38,9 @@ by
   sorry
 
 /- 
-If we have a goal that is involves numerical expressions then `norm_num` may be able to close it.
+ 
+ `norm_num` can close goals involving numerical expressions.
+
 -/
 
 lemma less_than : (123123123123123 : ℝ) < 212312312312312 :=
@@ -53,20 +48,20 @@ by
   sorry
 
 /-
-We can also use `decide` for proving propositions
+`decide` can close a goal if Lean knows an algorithm for checking whether the goal is true or false.
 -/
 
 lemma small_prime : Nat.Prime 13 :=
 by
   sorry
 
--- However sometimes the algorithm called by `decide` will time-out
-lemma prime: Nat.Prime 110017 :=
+-- However sometimes the algorithm called by `decide` will fail
+lemma larger_prime: Nat.Prime 110017 :=
 by
   sorry
 
 /-
-`linarith` can prove results involving linear (in)equalities
+`linarith` can prove results involving linear (in)equalities. 
 -/
 
 lemma linear_ineq (a b c : ℝ) (h1: a ≤ 2 * b) (h2: b ≤ 3 * c) : 2 * a ≤ 12 *c:=
@@ -74,7 +69,7 @@ by
   sorry
 
 /-
-For non-linear inequalities we can try `nlinarith`
+For non-linear inequalities we can try `nlinarith`.
 -/
 
 example (a b : ℝ) : 0 ≤ (a + b)^2 - 2*a*b :=
