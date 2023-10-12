@@ -77,8 +77,7 @@ by
   exact mem_image
 
 /-
-A `Finset T` is nonempty if it contains an element.
-Any nonempty finset in ℕ or ℝ will contain a min and a max, but this 
+A `Finset T` is Nonempty if it contains an element.
 -/
 
 example (s : Finset A) (hx : x ∈ s) : s.Nonempty:=
@@ -95,7 +94,7 @@ by
   | inr h => 
     right; use x
 
-/-- The image of a nonempty set is nonempty -/
+/-- The image of a Nonempty set is Nonempty -/
 example (s : Finset ℕ) (hne: s.Nonempty) (f: ℕ → ℝ) : Nonempty (s.image f):=
 by
   obtain ⟨x,hxs⟩:=hne
@@ -108,7 +107,7 @@ There are two different `maximum` functions defined for `s : Finset P` when `P` 
 any LinearOrder such as `ℕ` or `ℝ`
 -/
 #check Finset.max'
--- this requires a proof that s is nonempty and then returns a value in `P`
+-- this requires a proof that s is Nonempty and then returns a value in `P`
 #check Finset.max 
 -- this returns a value in `WithBot P` which we can think of as `P` with an extra
 -- element that is < everything in `P`. 
