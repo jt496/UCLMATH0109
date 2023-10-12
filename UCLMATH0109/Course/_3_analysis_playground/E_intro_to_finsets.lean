@@ -3,7 +3,7 @@ import Mathlib.Data.Finset.Lattice
 import Mathlib.Algebra.BigOperators.Ring
 import Mathlib.Tactic
 
-variable (A B : Type)
+variable (α β : Type)
 /-
 Finite sets, such as {0, 1, 2,..., n} have a special type in Lean.
 
@@ -15,7 +15,7 @@ In many respects we can treat them like `Set T`.
 -/
 
 variable (s t : Finset ℕ) (n : ℕ)
-variable (f : ℕ → ℝ)
+variable (f g: ℕ → ℝ)
 
 -- The standard set notation is still valid 
 #check n ∈ s         
@@ -90,10 +90,19 @@ by
   obtain ⟨x,hx0,hx1⟩:= prod_eq_zero_iff.1 h
   rwa [hx1] at hx0
 
-  
+
+lemma sum_cancel (hf: ∀ n, f n = g (n+1) - g n) : ∑ i in range n.succ, f i = g (n+1) - g 0 :=
+by
+  induction n with
+  | zero => 
+    rw [sum_range_one, hf 0]
+  | succ n ih =>
+    rw [sum_range_succ,← Nat.succ_eq_add_one, ih, hf n.succ]
+    ring
+
 
 /-
-If `s : Finset A` and `f : A → B` then we can form the `Finset B` that is the image of s under f
+If `s : Finset α` and `f : α → β` then we can form the `Finset β` that is the image of s under f
 
 This is the finite set `{f x | x ∈ s}`
 -/
@@ -107,7 +116,7 @@ by
 A `Finset T` is Nonempty if it contains an element.
 -/
 
-example (s : Finset A) (hx : x ∈ s) : s.Nonempty:=
+example (s : Finset α) (hx : x ∈ s) : s.Nonempty:=
 by
   use x
 
@@ -191,6 +200,14 @@ example (S : ℕ  → Finset ℕ ) (I : Finset ℕ) (hdisj: ∀ i, i ∈ I → �
 by
   exact card_biUnion hdisj
 
+
+/-- A simple but often useful bound on a sum -/
+example (s : Finset ℕ) (hf: ∀n, n ∈ s → f n ≤ b) : ∑ n in s, f n ≤ s.card * b:=
+by
+  rw [card_eq_sum_ones,Nat.cast_sum,sum_mul]
+  apply sum_le_sum
+  convert hf
+  rw [Nat.cast_one,one_mul]
 
 /-
 Any convergent sequence `xₙ → a` is bounded by the maximum of its first 
