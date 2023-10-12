@@ -29,12 +29,13 @@ When dealing with inequalities in `calc`-blocks, the tactic `rel` is often usefu
 `rel` is similar to `rw`, but substitutes inequalities rather than equalities.
 -/
 
-example (a b x y : ℝ) (hx : x = a+2*b) (hy : y ≥ a-b) (ha : a > 10) :
+example (a b x y : ℝ) (hx : x = a+2*b) (hy : y ≥ |a-b|) (ha : a > 10) :
   x + 2 * y > 30 :=
 by
   calc
   _ = a + 2*b + 2*y       := by rw [hx]
-  _ ≥ a + 2*b + 2*(a-b)   := by rel [hy]
+  _ ≥ a + 2*b + 2*|a-b|   := by rel [hy]
+  _ ≥ a + 2*b + 2*(a-b)   := by rel [le_abs_self (a-b)]
   _ = 3 * a               := by ring
   _ > 3 * 10              := by rel [ha]
   _ = 30                  := by norm_num
