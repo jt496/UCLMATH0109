@@ -11,10 +11,35 @@ They are called `Finsets`
 
 If `s : Finset T` then `s` is a finite set of terms of type T
 
-In many respects we can treat them like `Set T` but they are fundamentally different.
+In many respects we can treat them like `Set T`.
 -/
 
-#check Finset
+variable (s t : Finset ℕ) (n : ℕ)
+variable (f : ℕ → ℝ)
+
+-- The standard set notation is still valid 
+#check n ∈ s         
+#check s ⊆ t
+#check s ∩ t
+#check s ∪ t
+#check s \ t
+
+-- We  `open` the `Finset` namespace so that we can write `range` instead of `Finset.range` etc.
+
+open Finset 
+
+#check Disjoint s t     -- s ∩ t = ∅
+#check s.Nonempty       -- ∃x , x ∈ s
+
+#check range n          -- {0,1,...,n-1} as a Finset ℕ
+#check ({n} : Finset ℕ) -- {n} as a Finset
+#check insert n s       -- s ∪ {n}
+#check s.erase n        -- s \ {n}
+#check s.image f        -- {f x | x ∈ s}
+
+#check s.card           -- |s|
+
+-- In general there is no `univ : Finset T` (unless `T` is itself finite) similiarly there is no `sᶜ`.
 
 /-
 A `Finset` has an underlying description as a `List`. But this shouldn't be important
@@ -32,8 +57,6 @@ So for example `[1, 3, 4, 3] ∼ [3, 3, 4, 1]`.
 A `Finset T` is the equivalence class under `∼` of a `List T` that has no duplicate elements.)
 -/
 
--- Note we  `open` the `Finset` namespace so that we can write `range` instead of `Finset.range` etc.
-open Finset
 #reduce range 5 -- {0, 1, 2, 3, 4} 
 
 example (n : ℕ) : range n ⊆ range n.succ  :=
@@ -42,8 +65,8 @@ by
   exact Nat.le_succ n
 
 /-
-One obvious use of Finsets is for finite sums.
-In order to be able to use ∑ notation we need to `open scoped BigOperators`
+One obvious use of Finsets is for finite sums and products.
+In order to be able to use ∑ and ∏ notation we need to `open scoped BigOperators`
 -/
 open scoped BigOperators
 
@@ -59,6 +82,15 @@ lemma sum_nat_sq (n : ℕ) : 6*∑ i in range n.succ, i^2 = n*(n+1)*(2*n+1):=
 by
 -- Try to mimic the previous proof
   sorry
+
+
+lemma prod_zero (s : Finset ℕ) : ∏ a in s, a = 0 → 0 ∈ s:=
+by
+  intro h
+  obtain ⟨x,hx0,hx1⟩:= prod_eq_zero_iff.1 h
+  rwa [hx1] at hx0
+
+  
 
 /-
 If `s : Finset A` and `f : A → B` then we can form the `Finset B` that is the image of s under f
