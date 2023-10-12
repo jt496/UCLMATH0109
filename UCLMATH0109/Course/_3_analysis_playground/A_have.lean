@@ -12,27 +12,21 @@ theorem one_over_nat : limₙ (fun n => (n + 1)⁻¹) 0 :=
 by
   intro ε hε
   dsimp
-  --  We need to use the Archimedean property of ℝ, ie for any r ∈ ℝ there 
-  --  exists N ∈ ℕ such that r < N
   have h : ∃ N : ℕ, N > ε⁻¹
-  · --exact?
-    exact exists_nat_gt ε⁻¹
-  obtain ⟨N, hN⟩ := h
+  · exact exists_nat_gt ε⁻¹
+  obtain ⟨N,hN⟩ := h 
   use N
   intro n hn
   rw [sub_zero]
-  -- Very useful to know that the absolute value makes no difference here.
-  have hsp : |(n + 1 : ℝ)⁻¹| = (n + 1: ℝ)⁻¹
-  · -- apply?
-    refine abs_eq_self.mpr ?hsp.a
+  have h : |(n+1:ℝ)⁻¹| = (n+1:ℝ)⁻¹
+  · rw [abs_eq_self]
     apply le_of_lt
-    -- exact?
     exact Nat.inv_pos_of_nat
-  rw [hsp]; clear hsp
-  -- work out the next line using `apply?`
-  refine inv_lt_of_inv_lt hε ?h.h
-  trans ↑N
-  exact hN
-  norm_cast
-  -- work out the next line using `exact?`
-  exact Nat.lt_succ.mpr hn
+  rw [h]
+  have : n+1 > ε⁻¹
+  · trans (N:ℝ)
+    · norm_cast
+      exact Nat.lt_succ.mpr hn
+    · assumption
+  exact inv_lt_of_inv_lt hε this
+
