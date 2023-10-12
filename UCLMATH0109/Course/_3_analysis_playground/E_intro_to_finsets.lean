@@ -87,7 +87,7 @@ by
 
 /-
 A `Finset T` is nonempty if it contains an element.
-Any nonempty finset in ℕ or ℝ will contain a min and a max, but 
+Any nonempty finset in ℕ or ℝ will contain a min and a max, but this 
 -/
 
 example (s : Finset A) (hx : x ∈ s) : s.Nonempty:=
@@ -103,7 +103,42 @@ by
     left; use x
   | inr h => 
     right; use x
- 
+
+/-- The image of a nonempty set is nonempty -/
+example (s : Finset ℕ) (hne: s.Nonempty) (f: ℕ → ℝ) : Nonempty (s.image f):=
+by
+  obtain ⟨x,hxs⟩:=hne
+  use f x
+  exact mem_image_of_mem f hxs
+
+
+/-
+There are two different `maximum` functions defined for `s : Finset P` when `P` is 
+any LinearOrder such as `ℕ` or `ℝ`
+-/
+#check Finset.max'
+-- this requires a proof that s is nonempty and then returns a value in `P`
+#check Finset.max 
+-- this returns a value in `WithBot P` which we can think of as `P` with an extra
+-- element that is < everything in `P`. 
+
+/-
+For simplicity we will usually use max'
+-/
+
+/--Every `s : Finset ℕ` is bounded above, but the proof depends on whether or
+not s is Nonempty -/
+example (s : Finset ℕ) : ∃ n , ∀ x ∈ s, x ≤ n :=
+by
+  by_cases s.Nonempty
+  · use s.max' h
+    intro n hn
+    exact le_max' s n hn
+  · use 0
+    intro n hn
+    exfalso
+    apply h;
+    use n
 
 /-
 Any convergent sequence `xₙ → a` is bounded by the maximum of its first 
