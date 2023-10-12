@@ -18,15 +18,17 @@ by
 
 lemma sq_add' (a b : ℝ) : (a + b)^2 = a^2 + 2*a*b + b^2  :=
 by
-  sorry
-
-#print sq_add
-#print sq_add'
+  ring
 
 -- You really wouldn't want to prove this by hand
 lemma pow_four_add (a b : ℝ) : (a + b)^4 = a^4 + 4*a^3*b+ 6*a^2*b^2 + 4*a*b^3 + b^4 :=
 by 
-  sorry
+  ring
+
+#print sq_add
+#print sq_add'
+#print pow_four_add
+
 
 /-
 Beware that in `ℕ` subtraction is truncated (so a - b = 0 if a ≤ b). 
@@ -35,7 +37,7 @@ Beware that in `ℕ` subtraction is truncated (so a - b = 0 if a ≤ b).
 
 lemma nat_add_sub (a b : ℕ) : a + b - b = a:=
 by
-  sorry
+  exact Nat.add_sub_cancel a b
 
 /- 
  
@@ -45,7 +47,7 @@ by
 
 lemma less_than : (123123123123123 : ℝ) < 212312312312312 :=
 by
-  sorry
+  norm_num
 
 /-
 `decide` can close a goal if Lean knows an algorithm for checking whether the goal is true or false.
@@ -53,12 +55,12 @@ by
 
 lemma small_prime : Nat.Prime 13 :=
 by
-  sorry
+  decide
 
 -- However sometimes the algorithm called by `decide` will fail
 lemma larger_prime: Nat.Prime 110017 :=
 by
-  sorry
+  norm_num
 
 /-
 `linarith` can prove results involving linear (in)equalities. 
@@ -66,7 +68,7 @@ by
 
 lemma linear_ineq (a b c : ℝ) (h1: a ≤ 2 * b) (h2: b ≤ 3 * c) : 2 * a ≤ 12 *c:=
 by
-  sorry
+  linarith
 
 /-
 For non-linear inequalities we can try `nlinarith`.
@@ -74,6 +76,8 @@ For non-linear inequalities we can try `nlinarith`.
 
 example (a b : ℝ) : 0 ≤ (a + b)^2 - 2*a*b :=
 by
-  sorry
+  ring
+  nlinarith
+
 
 
