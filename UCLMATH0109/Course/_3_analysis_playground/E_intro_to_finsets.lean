@@ -201,7 +201,7 @@ by
   exact card_biUnion hdisj
 
 
-/-- A simple but often useful bound on a sum -/
+/-- A simple but often useful bound on a sum as product of bound on size of terms and number of terms -/
 example (s : Finset ℕ) (hf: ∀n, n ∈ s → f n ≤ b) : ∑ n in s, f n ≤ s.card * b:=
 by
   rw [card_eq_sum_ones,Nat.cast_sum,sum_mul]
