@@ -1,4 +1,4 @@
-timport UCLMATH0109.Course._3_analysis_playground.C_have
+import UCLMATH0109.Course._3_analysis_playground.C_have
 import Mathlib.Data.Finset.Lattice
 import Mathlib.Algebra.BigOperators.Ring
 import Mathlib.Tactic
@@ -66,8 +66,8 @@ If `s : Finset A` and `f : A → B` then we can form the `Finset B` that is the 
 This is the finite set `{f x | x ∈ s}`
 -/
 
-open Classical
-lemma image_is (f : A → B) (s: Finset A) : x ∈ s.image f ↔ ∃ n ∈ s, f n = x :=
+
+lemma image_is (f : ℕ → ℝ) (s: Finset ℕ) : x ∈ s.image f ↔ ∃ n ∈ s, f n = x :=
 by
   exact mem_image
 
@@ -83,7 +83,7 @@ by
 We can use standard set notation with Finsets.
 -/
 
-example (s t: Finset A) (hx : x ∈ s ∪ t) : s.Nonempty ∨ t.Nonempty :=
+example (s t: Finset ℝ) (hx : x ∈ s ∪ t) : s.Nonempty ∨ t.Nonempty :=
 by
 --  cases hx -- fails since s, t are Finsets not Sets
   rw [mem_union] at hx
@@ -120,14 +120,38 @@ not s is Nonempty -/
 example (s : Finset ℕ) : ∃ n , ∀ x ∈ s, x ≤ n :=
 by
   by_cases s.Nonempty
-  · use s.max' h
+  · -- Since s is nonempty it has a max'
+    use s.max' h
     intro n hn
     exact le_max' s n hn
-  · use 0
+  · -- Since s is empty it is trivially bounded above by 0
+    use 0
     intro n hn
     exfalso
     apply h;
     use n
+
+/-
+An arbitrary union of finite sets need not be finite, but a finite union of finite sets is always finite. 
+
+If `S : A → Finset B` and `I : Finset A` then `I.biUnion S` is the finite union of the Finsets indexed by I.
+-/
+
+example (S : ℕ  → Finset ℕ ) (I : Finset ℕ) : x ∈ I.biUnion S ↔  ∃ i∈ I, x ∈ (S i):=
+by
+  exact mem_biUnion
+
+/-
+The cardinality of `s : Finset T` is `s.card`
+
+The cardinality of a finite disjoint union of finite sets is the sum of the cardinalities of the sets.
+-/
+
+example (S : ℕ  → Finset ℕ ) (I : Finset ℕ) (hdisj: ∀ i, i ∈ I → ∀j, j ∈ I → i ≠ j → Disjoint (S i) (S j)) : 
+(I.biUnion S).card  = ∑ i in I, (S i).card :=
+by
+  exact card_biUnion hdisj
+
 
 /-
 Any convergent sequence `xₙ → a` is bounded by the maximum of its first 
