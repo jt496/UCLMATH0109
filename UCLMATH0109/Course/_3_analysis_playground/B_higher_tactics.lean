@@ -28,6 +28,9 @@ by
   --ring
   sorry
 
+#print sq_add
+#print sq_add'
+
 -- You really wouldn't want to prove this by hand
 lemma pow_four_add (a b : ℝ) : (a + b)^4 = a^4 + 4*a^3*b+ 6*a^2*b^2 + 4*a*b^3 + b^4 :=
 by 
@@ -49,7 +52,7 @@ by
 If we have a goal that is involves numerical expressions then `norm_num` may be able to close it.
 -/
 
-lemma less_than : 123123123123123 < 212312312312312 :=
+lemma less_than : (123123123123123 : ℝ)< 212312312312312 :=
 by
 --  norm_num
   sorry

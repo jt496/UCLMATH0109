@@ -3,34 +3,43 @@ import Mathlib.Tactic
 /-
 # Other useful tactics for structuring a proof
 
-`refine` is like `exact` except that we can replace any explicit argument that we don't 
-currently have in our local context by `?_` and Lean will add this as a new goal. 
 
 `exact?` searchs Mathlib for a result that will close the goal.
 `apply?` gives suggestions for a lemma to apply when `exact?` fails.
 
-Many of the suggestions given by `apply?` will involve `refine`
 -/
 
 -- 01
 example (a b : ℝ) : |a - b| = |b - a| :=
 by
-  sorry
+  exact abs_sub_comm a b
+
 
 -- 02
 example (a b c : ℝ) : |a - b| ≤ |a - c| + |c - b| :=
 by
-  sorry
+  exact abs_sub_le a c b
+
+
+/-
+Many of the suggestions given by `apply?` will involve `refine`.
+
+`refine` is like `exact` except that we can replace any explicit argument that we don't 
+currently have in our local context by `?_` and Lean will add this as a new goal. 
+-/
+
 
 -- 03
 example (a b c : ℕ) (h : c < a)  : 0 < a + b - c := 
 by
-  sorry
+  refine Nat.sub_pos_of_lt ?h
+  exact Nat.lt_add_right c a b h
 
 -- 04
 example (n : ℕ) : n < (n + 1) + 1 :=
 by
-  sorry
+  refine Nat.lt_add_right n (n + 1) 1 ?h
+  exact Nat.lt.base n
 
 
 /-
@@ -39,9 +48,9 @@ but the tactic `congr!` will do it for us.
 -/
 
 -- 05
-example (f g : ℕ → ℝ) (a b : ℕ) (hac : a = b) (hfg : f = g): f a = g b :=
-by 
-  sorry
+example (f g : ℕ → ℝ) (a b : ℕ) (hac : a = b) (hfg : f = g) : f a = g b :=
+by
+  congr!
 
 /-
 Sometimes `congr!` is too aggressive and results in goals that are false. We can control this using 
@@ -49,9 +58,12 @@ Sometimes `congr!` is too aggressive and results in goals that are false. We can
 -/
 
 -- 06
-example (a b c : ℕ) : a + 2*b + 2*c = (2*b + a) + (c + c) :=
+example (a b c : ℕ) : (a + 2*b) + 2*c = (2*b + a) + (c + c) :=
 by
-  sorry
+  congr! 1
+  · exact Nat.add_comm a (2 * b)
+  · exact Nat.two_mul c
+
 
 /-
 `convert` is similar to `refine` but it works when the goal is not exactly the same as the term we use.
@@ -64,12 +76,16 @@ by
 -- 07
 example (f g : ℕ → ℕ) (h : ∀ n, g n = f n) (hm : Monotone f) : Monotone g :=
 by
-  sorry
+  convert hm
+  ext
+  apply h
 
 -- 08
 example (f : ℕ → ℝ) (h : StrictMono (f + f)) : StrictMono (2 * f):=
 by
-  sorry
+  convert h using 1
+  exact two_mul f
+
 
 /-
 We already saw the `rfl` tactic that allows Lean to close any goal of the form `⊢ A ∼ A`, if 
@@ -87,7 +103,8 @@ The most common use of this is with `=`
 -- 09 
 example (a b : ℕ) (h : a = b) : b = a :=
 by
-  sorry
+  symm
+  exact h
 
 /-
 If the goal is `⊢ A ∼ B` where `∼` is a transitive relation, then `trans C` converts this into two goals,
@@ -97,9 +114,15 @@ If the goal is `⊢ A ∼ B` where `∼` is a transitive relation, then `trans C
 -- 10  
 example (a b c : ℕ) (h1 : a = b) (h2 : c = b) : a = c :=
 by
-  sorry
+  trans b
+  · exact h1
+  · exact h2.symm
 
 -- 11
 example (s t u : Set ℕ) (h1: s ⊆ t) (h2 : t ⊆ u) : s ⊆ u:=
 by
-  sorry
+  trans t
+  · exact h1
+  · exact h2
+
+
