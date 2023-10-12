@@ -93,6 +93,13 @@ by
   | inr h => 
     right; use x
 
+
+example (s t : Finset ℕ) : (s ∩ t).Nonempty → s.Nonempty ∧ t.Nonempty :=
+by
+  rintro ⟨x,hx⟩
+  rw [mem_inter] at hx
+  exact ⟨⟨x,hx.1⟩,⟨x,hx.2⟩⟩
+
 /-- The image of a Nonempty set is Nonempty -/
 example (s : Finset ℕ) (hne: s.Nonempty) (f: ℕ → ℝ) : Nonempty (s.image f):=
 by
