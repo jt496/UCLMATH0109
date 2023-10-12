@@ -1,4 +1,4 @@
-import UCLMATH0109.Course._3_analysis_playground.C_have
+timport UCLMATH0109.Course._3_analysis_playground.C_have
 import Mathlib.Data.Finset.Lattice
 import Mathlib.Algebra.BigOperators.Ring
 import Mathlib.Tactic
@@ -35,11 +35,6 @@ A `Finset T` is the equivalence class under `∼` of a `List T` that has no dupl
 -- Note we  `open` the `Finset` namespace so that we can write `range` instead of `Finset.range` etc.
 open Finset
 #reduce range 5 -- {0, 1, 2, 3, 4} 
-
-
-/-
-# TODO a basic set of examples with Finsets developing enough theory to do the next proof.
--/
 
 example (n : ℕ) : range n ⊆ range n.succ  :=
 by
@@ -83,6 +78,10 @@ A `Finset T` is Nonempty if it contains an element.
 example (s : Finset A) (hx : x ∈ s) : s.Nonempty:=
 by
   use x
+
+/-
+We can use standard set notation with Finsets.
+-/
 
 example (s t: Finset A) (hx : x ∈ s ∪ t) : s.Nonempty ∨ t.Nonempty :=
 by
