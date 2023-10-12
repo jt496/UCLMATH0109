@@ -1,7 +1,7 @@
 import Mathlib.Tactic
 
 /-
-# Other useful tactics
+# Other useful tactics for structuring a proof
 
 `refine` is like `exact` except that we can replace any explicit argument that we don't 
 currently have in our local context by `?_` and Lean will add this as a new goal. 
