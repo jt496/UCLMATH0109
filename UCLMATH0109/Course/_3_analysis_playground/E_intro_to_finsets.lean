@@ -50,7 +50,7 @@ when working with them in most situations.
 
 A `List α` is an ordered sequence of terms of type α, e.g. `[0,1,0,2,3] : List ℕ`
 
-We can define an equivalence relation on `List T`, by `l ∼ k` iff there is a permutation mapping 
+We can define an equivalence relation on `List α`, by `l ∼ k` iff there is a permutation mapping 
 the elements of `l` to `k` by reordering. 
 
 So for example `[1, 3, 4, 3] ∼ [3, 3, 4, 1]`.
@@ -60,6 +60,7 @@ A `Finset α` is the equivalence class under `∼` of a `List α` that has no du
 
 #reduce range 5 -- {0, 1, 2, 3, 4} 
 
+/- {0,1,..,n-1} ⊆ {0,1,..,n} -/
 example (n : ℕ) : range n ⊆ range n.succ  :=
 by
   apply range_mono
@@ -76,7 +77,8 @@ If `s` is a `Finset α`, and `f : α → β` a function then
 -/
 open scoped BigOperators
 
-lemma sum_nat (n : ℕ) : 2*∑ i in range n.succ, i = n*(n+1):=
+/-- 2 * (1 + 2 + ... + n) = n * (n + 1)-/
+lemma sum_nat (n : ℕ) : 2 * ∑ i in range n.succ, i = n * (n + 1):=
 by
   induction n with
   | zero => rfl
@@ -84,19 +86,20 @@ by
     rw [sum_range_succ,mul_add,ih,Nat.succ_eq_add_one]
     ring
 
-lemma sum_nat_sq (n : ℕ) : 6*∑ i in range n.succ, i^2 = n*(n+1)*(2*n+1):=
+/-- 6 * (1 + 2 + ... + n) = n * (n + 1) * (2 * n + 1)-/
+lemma sum_nat_sq (n : ℕ) : 6 * ∑ i in range n.succ, i^2 = n * (n + 1) * (2 * n + 1):=
 by
 -- Try to mimic the previous proof
   sorry
 
-/-- If a product of natural numbers is zero then one of the terms is zero -/
+/-- If a product of a finite set of natural numbers is zero then one of its elements is zero -/
 lemma prod_zero (s : Finset ℕ) : ∏ a in s, a = 0 → 0 ∈ s:=
 by
   intro h
   obtain ⟨x,hx0,hx1⟩:= prod_eq_zero_iff.1 h
   rwa [hx1] at hx0
 
-/-- If f (n+1) = g (n+1) - g(n), then the sum of f over {0,1,...,n} is g(n+1)- g(0) -/
+/-- If f (n) = g (n + 1) - g(n), then the sum of f over {0,1,...,n} is g(n+1)- g(0) -/
 lemma sum_cancel (hf: ∀ n, f n = g (n+1) - g n) : ∑ i in range n.succ, f i = g (n+1) - g 0 :=
 by
   induction n with
@@ -133,7 +136,7 @@ correspondance between set and logic notation.
 /-- If x ∈ s ∪ t then s is nonempty or t is nonempty -/
 example (s t: Finset ℝ) (hx : x ∈ s ∪ t) : s.Nonempty ∨ t.Nonempty :=
 by
---  cases hx -- fails since s, t are Finsets not Sets
+--  cases hx -- fails since s and t are Finsets not Sets
   rw [mem_union] at hx
   cases hx with
   | inl h => 
