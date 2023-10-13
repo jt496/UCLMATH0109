@@ -147,9 +147,10 @@ by
 /-- If s ∩ t is nonempty then s and (t ∪ u) are not disjoint -/
 example (s t u: Finset ℕ) : (s ∩ t).Nonempty → ¬ Disjoint s (t ∪ u)  :=
 by
-  intro ⟨x,hx⟩
+  intro h
   apply not_disjoint_iff_nonempty_inter.2
-  use x
+  apply h.mono
+  intro x hx
   rw [mem_inter] at *
   refine ⟨hx.1,?_⟩
   apply mem_union_left _ hx.2
@@ -173,7 +174,7 @@ any LinearOrder such as `ℕ` or `ℝ`
 -- element that is < everything in `P`. 
 
 /-
-For simplicity we will usually use max'
+We will use `max'` for now.
 -/
 
 /--Every `s : Finset ℕ` is bounded above, but the proof depends on whether or
@@ -181,7 +182,7 @@ not s is Nonempty -/
 example (s : Finset ℕ) : ∃ n , ∀ x ∈ s, x ≤ n :=
 by
   by_cases s.Nonempty
-  · -- Since s is nonempty it has a max'
+  · -- Since s is Nonempty it has a max'
     use s.max' h
     intro n hn
     exact le_max' s n hn
@@ -215,7 +216,7 @@ by
   exact card_biUnion hdisj
 
 
-/-- A simple but often useful bound on a sum as product of bound on size of terms and number of terms -/
+/-- If f is bounded above by b on s then the sum of f over s is at most |s| * b -/
 example (s : Finset ℕ) (hf: ∀n, n ∈ s → f n ≤ b) : ∑ n in s, f n ≤ s.card * b:=
 by
   rw [card_eq_sum_ones, Nat.cast_sum, sum_mul]
@@ -224,15 +225,14 @@ by
   rw [Nat.cast_one,one_mul]
 
 /--
-Any convergent sequence `xₙ → a` is bounded by the maximum of its first 
-N terms and |a| + 1 where N is given by setting ε = 1 in the
-definition of `xₙ → a`
+Any convergent sequence `xₙ → a` is bounded by the maximum of {|x 0|,|x 1|, ... ,|x N|} 
+and |a| + 1, where N is given by setting ε = 1 in the definition of `xₙ → a`
 -/
 theorem sLim_imp_bd (hx : limₙ x a) (n : ℕ): ∃ B, |x n| ≤ B :=
 by
--- Get N : ℕ from definition of limit with ε = 1
+-- Get N : ℕ from definition of limₙ x a with ε = 1
   obtain ⟨N, hN⟩ := hx 1 zero_lt_one
--- Let I ={0,1,...,N}
+-- Let I = {0,1,...,N}
   let I : Finset ℕ := range N.succ
 -- I is Nonempty
   have hne : I.Nonempty := nonempty_range_succ
