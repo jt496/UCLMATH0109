@@ -9,7 +9,7 @@ Finite sets, such as {0, 1, 2,..., n} have a special type in Lean.
 
 They are called `Finsets`
 
-If `s : Finset α` then `s` is a finite set of terms of type T
+If `s : Finset α` then `s` is a finite set of terms of type T.
 
 In many respects we can treat them like `Set α`.
 -/
@@ -32,7 +32,7 @@ open Finset
 #check Disjoint s t     -- s ∩ t = ∅
 #check s.Nonempty       -- ∃x , x ∈ s
 
-#check range n          -- {0,1,...,n-1} as a Finset ℕ
+#check range n          -- {0,1,...,n - 1} as a Finset ℕ
 #check ({n} : Finset ℕ) -- {n} as a Finset ℕ
 #check insert n s       -- s ∪ {n}
 #check s.erase n        -- s \ {n}
@@ -50,21 +50,22 @@ when working with them in most situations.
 
 A `List α` is an ordered sequence of terms of type α, e.g. `[0,1,0,2,3] : List ℕ`
 
-We can define an equivalence relation on `List α`, by `l ∼ k` iff there is a permutation mapping 
-the elements of `l` to `k` by reordering. 
+We can define an equivalence relation on `List α`, by `l ∼ k` iff there is a permutation 
+mapping `l` to `k` by reordering. 
 
-So for example `[1, 3, 4, 3] ∼ [3, 3, 4, 1]`.
+For example, `[1, 3, 4, 3] ∼ [3, 3, 4, 1]`.
 
-A `Finset α` is the equivalence class under `∼` of a `List α` that has no duplicate elements.
+A `Finset α` is the equivalence class under `∼` of a `List α` together with a proof 
+that it has no duplicate elements.
 -/
 
 #reduce range 5 -- {0, 1, 2, 3, 4} 
 
 /- {0,1,..,n-1} ⊆ {0,1,..,n} -/
-example (n : ℕ) : range n ⊆ range n.succ  :=
+example (a b : ℕ) (h: a ≤ b) : range a ⊆ range b  :=
 by
   apply range_mono
-  exact Nat.le_succ n
+  exact h
 
 /-
 One obvious use of Finsets is for finite sums and products.
@@ -73,11 +74,10 @@ In order to be able to use ∑ and ∏ notation we need to `open scoped BigOpera
 
 If `s` is a `Finset α`, and `f : α → β` a function then
   `∑ i in s, f i`  is the sum of `f` over `s`,
-
 -/
 open scoped BigOperators
 
-/-- 2 * (1 + 2 + ... + n) = n * (n + 1)-/
+/-- 2 * (1 + 2 + ... + n) = n * (n + 1) -/
 lemma sum_nat (n : ℕ) : 2 * ∑ i in range n.succ, i = n * (n + 1):=
 by
   induction n with
@@ -114,8 +114,6 @@ by
 If `s : Finset α` and `f : α → β` then `s.image f` is the `Finset β` that is the 
 image of s under f i.e. the finite set `{f x | x ∈ s}`
 -/
-
-
 lemma image_is (f : ℕ → ℝ) (s: Finset ℕ) : x ∈ s.image f ↔ ∃ n ∈ s, f n = x :=
 by
   exact mem_image
@@ -123,7 +121,6 @@ by
 /-
 A `s : Finset α` is Nonempty if it contains an element i.e. `∃ x, x ∈ s` 
 -/
-
 example (s : Finset α) (hx : x ∈ s) : s.Nonempty:=
 by
   use x
@@ -133,7 +130,7 @@ We can use standard set notation with Finsets, but we no longer have the direct
 correspondance between set and logic notation. 
 -/
 
-/-- If x ∈ s ∪ t then s is nonempty or t is nonempty -/
+/-- If x ∈ s ∪ t then s is Nonempty or t is Nonempty -/
 example (s t: Finset ℝ) (hx : x ∈ s ∪ t) : s.Nonempty ∨ t.Nonempty :=
 by
 --  cases hx -- fails since s and t are Finsets not Sets
@@ -148,18 +145,23 @@ by
 example (s t u: Finset ℕ) : (s ∩ t).Nonempty → ¬ Disjoint s (t ∪ u)  :=
 by
   intro h
-  apply not_disjoint_iff_nonempty_inter.2
+  -- If you check the definition of `Disjoint` it doesn't look very helpful but
+  -- a theorem relating `Disjoint a b` and `Nonempty (a ∩ b)` can easily be found
+  -- apply?
+  refine Nonempty.not_disjoint ?_
   apply h.mono
   intro x hx
   rw [mem_inter] at *
   refine ⟨hx.1,?_⟩
-  apply mem_union_left _ hx.2
+  -- apply?
+  refine mem_union_left u hx.2
 
 /-- The image of a Nonempty set is Nonempty -/
 example (s : Finset ℕ) (hne: s.Nonempty) (f: ℕ → ℝ) : Nonempty (s.image f):=
 by
   obtain ⟨x,hxs⟩:=hne
   use f x
+  -- apply?
   exact mem_image_of_mem f hxs
 
 
