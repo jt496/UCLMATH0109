@@ -43,10 +43,10 @@ open Finset
 -- In general there is no `univ : Finset α` (unless `α` is itself finite) similiarly there is no `sᶜ`.
 
 /-
-A `Finset α` has an underlying description if the set as a `List α`. But this shouldn't be important
+A `Finset α` has an underlying description of the set as a `List α`. But this shouldn't be important
 when working with them in most situations.
 
-(Ignore the next paragraph unless you really want to understand the gory details.
+[Ignore the rest of this comment unless you really want to understand the details.]
 
 A `List α` is an ordered sequence of terms of type α, e.g. `[0,1,0,2,3] : List ℕ`
 
@@ -55,7 +55,7 @@ the elements of `l` to `k` by reordering.
 
 So for example `[1, 3, 4, 3] ∼ [3, 3, 4, 1]`.
 
-A `Finset α` is the equivalence class under `∼` of a `List α` that has no duplicate elements.)
+A `Finset α` is the equivalence class under `∼` of a `List α` that has no duplicate elements.
 -/
 
 #reduce range 5 -- {0, 1, 2, 3, 4} 
