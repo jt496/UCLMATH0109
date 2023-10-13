@@ -9,20 +9,21 @@ Finite sets, such as {0, 1, 2,..., n} have a special type in Lean.
 
 They are called `Finsets`
 
-If `s : Finset T` then `s` is a finite set of terms of type T
+If `s : Finset α` then `s` is a finite set of terms of type T
 
-In many respects we can treat them like `Set T`.
+In many respects we can treat them like `Set α`.
 -/
 
 variable (s t : Finset ℕ) (n : ℕ)
-variable (f g: ℕ → ℝ)
+variable (f g : ℕ → ℝ)
 
--- The standard set notation is still valid 
+-- Most standard set notation is still valid 
 #check n ∈ s         
 #check s ⊆ t
 #check s ∩ t
 #check s ∪ t
 #check s \ t
+-- #check sᶜ -- fails since the complement of a `Finset ℕ` is never finite
 
 -- We  `open` the `Finset` namespace so that we can write `range` instead of `Finset.range` etc.
 
@@ -32,29 +33,29 @@ open Finset
 #check s.Nonempty       -- ∃x , x ∈ s
 
 #check range n          -- {0,1,...,n-1} as a Finset ℕ
-#check ({n} : Finset ℕ) -- {n} as a Finset
+#check ({n} : Finset ℕ) -- {n} as a Finset ℕ
 #check insert n s       -- s ∪ {n}
 #check s.erase n        -- s \ {n}
 #check s.image f        -- {f x | x ∈ s}
 
-#check s.card           -- |s|
+#check s.card           -- |s| the number of elements in s
 
--- In general there is no `univ : Finset T` (unless `T` is itself finite) similiarly there is no `sᶜ`.
+-- In general there is no `univ : Finset α` (unless `α` is itself finite) similiarly there is no `sᶜ`.
 
 /-
-A `Finset` has an underlying description as a `List`. But this shouldn't be important
+A `Finset α` has an underlying description if the set as a `List α`. But this shouldn't be important
 when working with them in most situations.
 
 (Ignore the next paragraph unless you really want to understand the gory details.
 
-A `List T` is an ordered sequence of terms of type T, e.g. `[0,1,0,2,3] : List ℕ`
+A `List α` is an ordered sequence of terms of type α, e.g. `[0,1,0,2,3] : List ℕ`
 
 We can define an equivalence relation on `List T`, by `l ∼ k` iff there is a permutation mapping 
 the elements of `l` to `k` by reordering. 
 
 So for example `[1, 3, 4, 3] ∼ [3, 3, 4, 1]`.
 
-A `Finset T` is the equivalence class under `∼` of a `List T` that has no duplicate elements.)
+A `Finset α` is the equivalence class under `∼` of a `List α` that has no duplicate elements.)
 -/
 
 #reduce range 5 -- {0, 1, 2, 3, 4} 
@@ -66,7 +67,12 @@ by
 
 /-
 One obvious use of Finsets is for finite sums and products.
+
 In order to be able to use ∑ and ∏ notation we need to `open scoped BigOperators`
+
+If `s` is a `Finset α`, and `f : α → β` a function then
+  `∑ i in s, f i`  is the sum of `f` over `s`,
+
 -/
 open scoped BigOperators
 
@@ -83,14 +89,14 @@ by
 -- Try to mimic the previous proof
   sorry
 
-
+/-- If a product of natural numbers is zero then one of the terms is zero -/
 lemma prod_zero (s : Finset ℕ) : ∏ a in s, a = 0 → 0 ∈ s:=
 by
   intro h
   obtain ⟨x,hx0,hx1⟩:= prod_eq_zero_iff.1 h
   rwa [hx1] at hx0
 
-
+/-- If f (n+1) = g (n+1) - g(n), then the sum of f over {0,1,...,n} is g(n+1)- g(0) -/
 lemma sum_cancel (hf: ∀ n, f n = g (n+1) - g n) : ∑ i in range n.succ, f i = g (n+1) - g 0 :=
 by
   induction n with
@@ -102,9 +108,8 @@ by
 
 
 /-
-If `s : Finset α` and `f : α → β` then we can form the `Finset β` that is the image of s under f
-
-This is the finite set `{f x | x ∈ s}`
+If `s : Finset α` and `f : α → β` then `s.image f` is the `Finset β` that is the 
+image of s under f i.e. the finite set `{f x | x ∈ s}`
 -/
 
 
@@ -113,7 +118,7 @@ by
   exact mem_image
 
 /-
-A `Finset T` is Nonempty if it contains an element.
+A `s : Finset α` is Nonempty if it contains an element i.e. `∃ x, x ∈ s` 
 -/
 
 example (s : Finset α) (hx : x ∈ s) : s.Nonempty:=
@@ -121,9 +126,11 @@ by
   use x
 
 /-
-We can use standard set notation with Finsets.
+We can use standard set notation with Finsets, but we no longer have the direct
+correspondance between set and logic notation. 
 -/
 
+/-- If x ∈ s ∪ t then s is nonempty or t is nonempty -/
 example (s t: Finset ℝ) (hx : x ∈ s ∪ t) : s.Nonempty ∨ t.Nonempty :=
 by
 --  cases hx -- fails since s, t are Finsets not Sets
@@ -134,12 +141,15 @@ by
   | inr h => 
     right; use x
 
-
-example (s t : Finset ℕ) : (s ∩ t).Nonempty → s.Nonempty ∧ t.Nonempty :=
+/-- If s ∩ t is nonempty then s and (t ∪ u) are not disjoint -/
+example (s t u: Finset ℕ) : (s ∩ t).Nonempty → ¬ Disjoint s (t ∪ u)  :=
 by
-  rintro ⟨x,hx⟩
-  rw [mem_inter] at hx
-  exact ⟨⟨x,hx.1⟩,⟨x,hx.2⟩⟩
+  intro ⟨x,hx⟩
+  apply not_disjoint_iff_nonempty_inter.2
+  use x
+  rw [mem_inter] at *
+  refine ⟨hx.1,?_⟩
+  apply mem_union_left _ hx.2
 
 /-- The image of a Nonempty set is Nonempty -/
 example (s : Finset ℕ) (hne: s.Nonempty) (f: ℕ → ℝ) : Nonempty (s.image f):=
@@ -182,7 +192,7 @@ by
 /-
 An arbitrary union of finite sets need not be finite, but a finite union of finite sets is always finite. 
 
-If `S : A → Finset B` and `I : Finset A` then `I.biUnion S` is the finite union of the Finsets indexed by I.
+If `S : α → Finset β` and `I : Finset α` then `I.biUnion S` is the finite union of the Finsets indexed by I.
 -/
 
 example (S : ℕ  → Finset ℕ ) (I : Finset ℕ) : x ∈ I.biUnion S ↔  ∃ i∈ I, x ∈ (S i):=
@@ -191,10 +201,11 @@ by
 
 /-
 The cardinality of `s : Finset T` is `s.card`
-
-The cardinality of a finite disjoint union of finite sets is the sum of the cardinalities of the sets.
 -/
 
+
+/--The cardinality of a finite union of pairwise disjoint finite sets is the sum of 
+  the cardinalities of the sets.-/
 example (S : ℕ  → Finset ℕ ) (I : Finset ℕ) (hdisj: ∀ i, i ∈ I → ∀j, j ∈ I → i ≠ j → Disjoint (S i) (S j)) : 
 (I.biUnion S).card  = ∑ i in I, (S i).card :=
 by
@@ -204,34 +215,48 @@ by
 /-- A simple but often useful bound on a sum as product of bound on size of terms and number of terms -/
 example (s : Finset ℕ) (hf: ∀n, n ∈ s → f n ≤ b) : ∑ n in s, f n ≤ s.card * b:=
 by
-  rw [card_eq_sum_ones,Nat.cast_sum,sum_mul]
+  rw [card_eq_sum_ones, Nat.cast_sum, sum_mul]
   apply sum_le_sum
   convert hf
   rw [Nat.cast_one,one_mul]
 
-/-
+/--
 Any convergent sequence `xₙ → a` is bounded by the maximum of its first 
 N terms and |a| + 1 where N is given by setting ε = 1 in the
 definition of `xₙ → a`
 -/
-
-
-/-- Any convergent sequence is bounded  -/
 theorem sLim_imp_bd (hx : limₙ x a) (n : ℕ): ∃ B, |x n| ≤ B :=
 by
+-- Get N : ℕ from definition of limit with ε = 1
   obtain ⟨N, hN⟩ := hx 1 zero_lt_one
+-- Let I ={0,1,...,N}
   let I : Finset ℕ := range N.succ
+-- I is Nonempty
   have hne : I.Nonempty := nonempty_range_succ
+-- J = {x 0, x 1,... ,x N} the image of I under x
   let J := I.image (fun n => |x n|)
+-- Let B1 = max J (exists since J is a Nonempty Finset ℕ)
   let B1 := J.max' (hne.image _)
+-- We use the bound B = max B1 (|a| + 1) (note this is the max of a pair of Nats)
   use max B1 (|a| + 1)
+-- |x n| is always ≤ either B1 or (|a| + 1) depending on n
   apply le_max_iff.2
+-- Do the case split on `n ≤ N` or not
   by_cases hn : n ≤ N
   · left
+  -- In this case |x n| ≤ B1 because |x n| ∈ J 
     apply le_max'
-    apply mem_image_of_mem (fun n => |x n|)  <| mem_range_succ_iff.2 hn
+  -- |x n| ∈ J since n ∈ I and J = I.image (fun n => |x n|)
+    apply mem_image_of_mem (fun n => |x n|) 
+  -- Now need to prove that n ∈ I which is true since n ≤ N 
+    apply mem_range_succ_iff.2 hn
   · right
+  -- In this case |x n| ≤ |a| + 1 because N ≤ n   
+  -- We rearrange the goal to |x n| ≤ |a| + 1
     apply le_add_of_sub_left_le
+  -- Since we will use hN which is < we will prove < which implies ≤
     apply le_of_lt
-    apply lt_of_le_of_lt <| abs_sub_abs_le_abs_sub (x n) a 
+  -- We now use |x n| - |a| ≤ |x n - a |   
+    apply lt_of_le_of_lt <| abs_sub_abs_le_abs_sub (x n) a
+  -- Finally hN implies the result since N ≤ n 
     exact hN n (le_of_not_le hn)
