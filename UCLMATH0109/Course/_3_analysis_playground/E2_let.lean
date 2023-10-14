@@ -50,7 +50,7 @@ by
   let B := J.max' (by exact Nonempty.image hne |x|)
 -- We use the bound C = max B (|a| + 1) (note this is the max of a pair of Reals)
   use max B (|a| + 1)
--- |x n| is always ≤ either B1 or (|a| + 1) depending on n
+-- |x n| is always ≤ either B or (|a| + 1) depending on n
   intro n
 -- Do a by_cases split on `n ≤ K` 
   by_cases hn : n ≤ K 
