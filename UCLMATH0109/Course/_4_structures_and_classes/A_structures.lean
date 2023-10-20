@@ -16,6 +16,9 @@ We can define terms of type `plane` in one of the following
 equivalent methods:
 -/
 
+def P : Plane where 
+  x := 1
+  y := 3
 def origin : Plane := {x := 0, y:= 0}
 def origin' := Plane.mk 0 0
 def origin'' : Plane := ⟨0,0⟩
