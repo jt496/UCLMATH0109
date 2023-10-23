@@ -137,3 +137,19 @@ by
 example (P : Plane) : P - 0 = P :=
 by
   sorry
+
+/-
+Lean also knows how to multiply elements of an additive commutative group
+by natural numbers and integers. This operation is called `•` (scalar multiplication).
+The Mathlib terms for these two operations are `nsmul` and `zsmul` (scalar multiplication
+by natural numbers and by integers).
+-/
+
+example (P : Plane) : 5 • P = P + P + P + P + P :=
+by
+  sorry
+
+
+example (P : Plane) : (-2:ℤ) • P = -(P + P) :=
+by
+  sorry
