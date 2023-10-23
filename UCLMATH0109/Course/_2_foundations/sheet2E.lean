@@ -29,12 +29,22 @@ variable {α : Type} [HMul ℕ α α]
 /-
 This multiplication satisfies two hypotheses: 
 `h2id: ∀ a, a = 2 * a` so 2 is a left-multiplicative identity 
-`hmul_assoc : ∀ i j: ℕ,∀ a : α, i * (j * a) = (i * j ) * a`, so
+`hmul_assoc : ∀ i j : ℕ, ∀ a : α, i * (j * a) = (i * j ) * a`, so
 left-multiplication by natural numbers is associative.
 -/
 -- 08
-example (h2id: ∀ (a:α), a = 2 * a ) (hmul_assoc : ∀ i j: ℕ,∀ a : α, i * (j * a) = (i * j ) * a) (b : α): 
+example (h2id: ∀ (a : α), a = 2 * a ) (hmul_assoc : ∀ i j: ℕ,∀ a : α, i * (j * a) = (i * j ) * a) (b : α): 
  b = 8 * b:=
 by
   rw [h2id b, hmul_assoc, h2id (2*b), h2id (2*b), h2id (2*b), hmul_assoc,hmul_assoc,hmul_assoc]
 
+-- 09 Bonus question using induction
+example (h2id: ∀ (a : α), a = 2 * a ) (hmul_assoc : ∀ i j: ℕ,∀ a : α, i * (j * a) = (i * j ) * a) (b : α) (n : ℕ): 
+ b = 2^n * b:=
+by
+  rw [h2id b,hmul_assoc]
+  induction n with
+  | zero => rfl; 
+  | succ n ih => 
+    rw [ih,← hmul_assoc,h2id (2*b),hmul_assoc,hmul_assoc]
+    rfl
