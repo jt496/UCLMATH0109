@@ -31,24 +31,44 @@ by
 
 
 /-
-In our next example we have a type `α` for which multiplication on the left by ℕ is defined
+In our next few examples we have a type `α` for which multiplication on the left by ℕ is defined
 (so if `n : ℕ` and `a : α` then `n * a : α` is well-defined.)
 -/
 variable {α : Type} [HMul ℕ α α]
-/-
-This multiplication satisfies two hypotheses:
-`h2id: ∀ a, a = 2 * a`, so 2 is a left-multiplicative identity
-`hmul_assoc : ∀ i j : ℕ, ∀ a : α, i * (j * a) = (i * j ) * a`, so
-left-multiplication by natural numbers is associative.
--/
+-- This multiplication satisfies two axioms:
+
+-- Left-multiplication by natural numbers is associative.
+(hmul_assoc : ∀ i j : ℕ, ∀ a : α, i * (j * a) = (i * j ) * a)
+-- 2 is a left-identity
+(h2id: ∀ a : α, a = 2 * a)
+
+-- Note that we know **nothing** else about this multiplication, even `b = 1 * b` needs a proof.
+
 -- 08
-example (h2id: ∀ (a : α), a = 2 * a ) (hmul_assoc : ∀ i j: ℕ,∀ a : α, i * (j * a) = (i * j ) * a) (b : α):
+example (b : α) :
+ b = 1 * b :=
+by
+  rw [h2id b, hmul_assoc]
+
+-- 09
+example (b : α):
  b = 8 * b:=
 by
   rw [h2id b, hmul_assoc, h2id (2*b), h2id (2*b), h2id (2*b), hmul_assoc,hmul_assoc,hmul_assoc]
 
--- 09 Bonus question using induction
-example (h2id: ∀ (a : α), a = 2 * a ) (hmul_assoc : ∀ i j: ℕ,∀ a : α, i * (j * a) = (i * j ) * a) (b : α) (n : ℕ):
+-- 10
+example (h34: ∀ a : α, 3 * a = 4 * a) (b : α): b = 3 * b:=
+by
+  rw [h34, h2id b, hmul_assoc, h2id (2*b), h2id (2*b), hmul_assoc, hmul_assoc]
+
+-- 11
+example (ho: ∀ n : ℕ, ∀ a : α, (2*n)* a = (2*n + 1)* a) (k : ℕ): a = k*a :=
+by
+
+  sorry
+
+-- 12 Bonus question using induction
+example (h2id: ∀ (a : α), a = 2 * a) (hmul_assoc : ∀ i j : ℕ, ∀ a : α, i * (j * a) = (i * j ) * a) (b : α) (n m: ℕ):
  b = 2^n * b:=
 by
   rw [h2id b,hmul_assoc]
