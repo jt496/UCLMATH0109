@@ -10,30 +10,28 @@ example (ha : a = 1) (hb : b = 2*a) : a + 2 * b + 3 = 8 * a :=
 by
 -- When Lean sees a numeral it assumes this is of type ℕ (unless told otherwise),
 -- so from the hypotheses Lean deduces that a and b are also of type ℕ (see Infoview)
-  rw [hb, ha]
+  sorry
 
 -- 02
 example (h1 : a = b) (h2 : c = d) (h3 : d = b) : a = c :=
 by
--- Notice that Lean can work out that a,b,c and d must all have same type (how?)
--- even though we haven't told it what type this is.
-  rw [h1,h2,h3]
+-- Notice that Lean can work out that a, b, c and d must all have same type (how?)
+-- Even though we don't know what this type is we can still complete the proof.
+  sorry
 
 -- 03
 example (hp : P ↔ Q) (hq : Q): P:=
 by
-  rwa [hp]
-
+  sorry
 -- 04
 example (α : Type) (P Q R : α → Prop) (hP : ∀ x, P x ↔ Q x) (a : α) (hQR : Q = R): P a ↔ R a:=
 by
-  rw [hP, hQR]
+  sorry
 
 -- 05
 example  (h2 : R ↔ Q) (h3 : R ↔ P) (hp : P) : Q :=
 by
-  rw [← h3] at hp
-  rwa [← h2]
+  sorry
 
 
 /-
@@ -58,37 +56,35 @@ variable {α : Type} [HMul ℕ α α]
 -- 06
 example (b : α) : 12 * b = 3 * 4 * b :=
 by
-  rfl
+  sorry
 
 -- 07 associativity does not hold by definition so rfl won't work here.
 example (b : α) : 10 * b = 5 * (2 * b) :=
 by
---  rfl fails
-  rw [hmul_assoc]
+  sorry
 
 -- 08
 example (b : α) : b = 1 * b :=
 by
-  rw [h2id b, hmul_assoc]
+  sorry
 
 -- 09
 example (b : α) : b = 8 * b:=
 by
-  rw [h2id b, hmul_assoc, h2id (2*b), h2id (2*b), h2id (2*b), hmul_assoc,hmul_assoc,hmul_assoc]
+  sorry
 
 -- 10
 example (b : α) : 3 * b = 12 * b :=
 by
-  rw [h2id b, hmul_assoc 12, h2id (2*b), h2id (2*b), hmul_assoc, hmul_assoc, hmul_assoc]
-
+  sorry
 
 -- 11 Bonus question using induction for those who know it
 example (b : α) (n : ℕ):
  b = 2^n * b:=
 by
-  rw [h2id b,hmul_assoc]
+  rw [h2id b, hmul_assoc]
   induction n with
-  | zero => rfl;
+  | zero =>
+    sorry
   | succ n ih =>
-    rw [ih, ← hmul_assoc, h2id (2*b), hmul_assoc, hmul_assoc]
-    rfl
+    sorry
