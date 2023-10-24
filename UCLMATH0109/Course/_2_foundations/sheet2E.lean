@@ -62,9 +62,9 @@ variable {α : Type} [HMul ℕ α α]
 -- 06
 example (b : α) : 12 * b = 3 * 4 * b :=
 by
--- Remember that if you want to work out where Lean is inserting implicit brackets then
--- you can do this by hovering over an expression in the Infoview
--- In this case we see that `3 * 4 * b` is parsed as `(3 * 4) * b`
+-- Remember, you can work out where Lean is inserting implicit brackets in an
+-- expression such as `3 * 4 * b`, by hovering over each `*` in the Infoview.
+-- In this case we see that `3 * 4 * b` is parsed as `(3 * 4) * b`.
   sorry
 
 -- 07 associativity does not hold by definition so rfl won't work here.
