@@ -42,11 +42,13 @@ variable {α : Type} [HMul ℕ α α]
 
 -- This multiplication satisfies two axioms:
 
+-- Two is a left-identity
+(h2id: ∀ a : α, a = 2 * a)
+
 -- Left-multiplication by ℕ is associative (note that `i * j` on the RHS below is standard multiplication in ℕ)
 (hmul_assoc : ∀ i j : ℕ, ∀ a : α, i * (j * a) = (i * j ) * a)
 
--- Two is a left-identity
-(h2id: ∀ a : α, a = 2 * a)
+
 
 -- Note that we know **nothing** else about this multiplication, even `b = 1 * b` needs a proof.
 
