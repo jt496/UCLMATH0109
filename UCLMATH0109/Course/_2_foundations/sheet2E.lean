@@ -45,9 +45,11 @@ variable {α : Type} [HMul ℕ α α]
 -- Two is a left-identity
 (h2id: ∀ a : α, a = 2 * a)
 
--- Left-multiplication by ℕ is associative (note that `i * j` on the RHS below is standard multiplication in ℕ)
+-- Left-multiplication by ℕ is associative
 (hmul_assoc : ∀ i j : ℕ, ∀ a : α, i * (j * a) = (i * j ) * a)
-
+-- Note that `i * j` in the RHS of `hmul_assoc` is standard multiplication of two natural numbers,
+-- while all other occurrences of `*` refer to our newly defined multiplication.
+-- (Hover over each `*` in turn to see this.)
 
 
 -- Note that we know **nothing** else about this multiplication, even `b = 1 * b` needs a proof.
