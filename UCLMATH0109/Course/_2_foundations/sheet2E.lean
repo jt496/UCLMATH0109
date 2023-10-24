@@ -42,7 +42,7 @@ variable {α : Type} [HMul ℕ α α]
 
 -- This multiplication satisfies two axioms:
 
--- Left-multiplication by ℕ is associative.
+-- Left-multiplication by ℕ is associative (note that `i * j` on the RHS below is standard multiplication in ℕ)
 (hmul_assoc : ∀ i j : ℕ, ∀ a : α, i * (j * a) = (i * j ) * a)
 
 -- Two is a left-identity
