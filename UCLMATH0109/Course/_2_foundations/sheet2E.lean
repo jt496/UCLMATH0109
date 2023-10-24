@@ -49,7 +49,7 @@ variable {α : Type} [HMul ℕ α α]
 (hmul_assoc : ∀ i j : ℕ, ∀ a : α, i * (j * a) = (i * j ) * a)
 -- Note that `i * j` in the RHS of `hmul_assoc` is standard multiplication of two natural numbers,
 -- while all other occurrences of `*` refer to our newly defined multiplication.
--- (Hover over each `*` in turn to see this.)
+-- (Hover over each `*` in turn to see this, Lean tells us the type of.)
 
 
 -- Note that we know **nothing** else about this multiplication, even `b = 1 * b` needs a proof.
@@ -57,9 +57,14 @@ variable {α : Type} [HMul ℕ α α]
 -- However Lean does know how to do arithmetic in ℕ so, for example, if `a : α` then
 --  `(2 * 3) * a = 6 * a` is true by `rfl`
 
+
+
 -- 06
 example (b : α) : 12 * b = 3 * 4 * b :=
 by
+-- Remember that if you want to work out where Lean is inserting implicit brackets then
+-- you can do this by hovering over an expression in the Infoview
+-- In this case we see that `3 * 4 * b` is parsed as `(3 * 4) * b`
   sorry
 
 -- 07 associativity does not hold by definition so rfl won't work here.
