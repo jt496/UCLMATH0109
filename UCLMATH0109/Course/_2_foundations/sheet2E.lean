@@ -47,16 +47,17 @@ variable {α : Type} [HMul ℕ α α]
 
 -- Left-multiplication by ℕ is associative
 (hmul_assoc : ∀ i j : ℕ, ∀ a : α, i * (j * a) = (i * j ) * a)
--- Note that `i * j` in the RHS of `hmul_assoc` is standard multiplication of two natural numbers,
--- while all other occurrences of `*` refer to our newly defined multiplication.
--- (Hover over each `*` in turn to see this, Lean tells us the type of.)
+/-
+Note that `i * j` in the RHS of `hmul_assoc` is standard multiplication of two natural numbers,
+while all other occurrences of `*` refer to our newly defined multiplication.
 
+Hover over each `*` in turn to see this: Lean tells us the type of each resulting term.
 
--- Note that we know **nothing** else about this multiplication, even `b = 1 * b` needs a proof.
+We know **nothing** else about this multiplication, even `b = 1 * b` needs a proof.
 
--- However Lean does know how to do arithmetic in ℕ so, for example, if `a : α` then
---  `(2 * 3) * a = 6 * a` is true by `rfl`
-
+However Lean does know how to do arithmetic in ℕ so, for example, if `a : α` then
+  `(2 * 3) * a = 6 * a` is true by `rfl`
+-/
 
 
 -- 06
