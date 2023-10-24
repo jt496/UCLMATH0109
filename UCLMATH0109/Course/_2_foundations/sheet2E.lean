@@ -79,8 +79,7 @@ by
   sorry
 
 -- 11 Bonus question using induction for those who know it
-example (b : α) (n : ℕ):
- b = 2^n * b:=
+example (b : α) (n : ℕ) : b = 2^n * b:=
 by
   rw [h2id b, hmul_assoc]
   induction n with
