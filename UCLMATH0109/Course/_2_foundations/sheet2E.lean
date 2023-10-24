@@ -35,8 +35,8 @@ by
 
 
 /-
-In our last few examples we introduce a type `α` for which multiplication on the left by ℕ is defined
-(so if `n : ℕ` and `a : α` then `n * a` is well-defined and has type `α`.)
+For our last few examples we introduce a type `α` for which multiplication on the left by ℕ is defined.
+(So if `n : ℕ` and `a : α` then `n * a` is well-defined and has type `α`.)
 -/
 variable {α : Type} [HMul ℕ α α]
 
