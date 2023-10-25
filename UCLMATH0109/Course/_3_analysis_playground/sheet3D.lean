@@ -7,11 +7,8 @@ example (a b x : ℕ) (h₁ : a + b = 5) (h₂ : a * b = 6) :
   x ^ 2 + 5 * x + 6 = (x + a) * (x + b) :=
 by
   calc
-    _ = x^2 + (a+b) * x + a*b := by rw [h₁,h₂]
-    _ = _ := by ring
-
-
-
+    _ = x^2 + (a+b) * x + a*b := by sorry
+    _ = _ := by sorry
 
 open Polynomial
 /-
@@ -20,11 +17,15 @@ ring `ℝ[X]` of polynomials over the real numbers.
 -/
 example (a b c d : ℝ[X]) (h₁ : a^2 + b^2 = X * c) (h₂ : a * b = d) :
     (X + a^2) * (X+b^2) = X^2 * (1 + c) + d^2 := by
-  calc
-    _ = X^2 + (a^2 + b^2) *X + (a * b)^2 := by ring
-    _ = X^2 + X * c  * X + d^2           := by rw [h₁, h₂]
-    _ = _                                := by ring
+  sorry
 
+/-
+Here is an example with inequalities. Use `ring`, `norm_num`, `rw` and `rel`
+in a `calc` clock.-/
+example (x y : ℝ) (hx : x > 1) (hy : 5 < y) :
+  x ^ 3 + 4 * x * y - 20 > 0 :=
+by
+  sorry
 
 /-
 This next example is a proof that `x^2` is a continuous function of `x`.
