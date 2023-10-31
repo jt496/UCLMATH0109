@@ -52,15 +52,15 @@ In thw following example we let
 
 open Complex
 
-notation "rt3" => Real.sqrt 3
+notation "√3" => Real.sqrt 3
 
 @[simp]
-lemma rt3_sq : rt3^2 = 3 :=
+lemma rt3_sq : √3^2 = 3 :=
 by
   apply Real.sq_sqrt
   norm_num
 
-noncomputable def ω : ℂ := ⟨1/2, rt3 / 2⟩
+noncomputable def ω : ℂ := ⟨1/2, √3 / 2⟩
 
 @[simp]
 lemma omega_re : ω.re = 1/2 := by rfl
@@ -74,9 +74,9 @@ by
   ext
   · simp only [pow_two, mul_re, omega_re, one_div, omega_im, sub_re, one_re]
     calc
-      _ = 4⁻¹ - rt3^2 / 4         := by ring
-      _ = 4⁻¹ - 3 / 4             := by simp
-      _ = _                       := by ring
+      _ = 4⁻¹ - √3^2 / 4         := by ring
+      _ = 4⁻¹ - 3 / 4            := by simp
+      _ = _                      := by ring
   · simp only [pow_two, mul_im, omega_re, one_div, omega_im, sub_im, one_im, sub_zero]
     ring
 
