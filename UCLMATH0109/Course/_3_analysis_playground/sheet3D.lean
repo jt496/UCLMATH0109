@@ -1,8 +1,6 @@
 import Mathlib.Tactic
 import Mathlib.Data.Real.Basic
 
-
-
 example (a b x : ℕ) (h₁ : a + b = 5) (h₂ : a * b = 6) :
   x ^ 2 + 5 * x + 6 = (x + a) * (x + b) :=
 by
@@ -28,6 +26,7 @@ example (x y : ℝ) (hx : x > 1) (hy : 5 < y) :
 by
   sorry
 
+
 /-
 This last example is a proof that `x^2` is a continuous at the point `x=1`.
 
@@ -41,10 +40,40 @@ You might find the following lemmas from Mathlib useful:
   `abs_add`
   `abs_mul`
 -/
-example (x ε δ : ℝ) (hδ : δ = min 1 (ε/3)) (hx : |x - 1| < δ) :
-  |x^2 - 1^2| < ε :=
-by
-  have : |x + 1| < 3
+example (x ε δ : ℝ) (hε : 0 < ε) :
+  ∃ δ, 0 < δ ∧ (|x - 1| < δ → |x^2 - 1^2| < ε) := by
+  let δ := min 1 (ε/3)
+  have δpos : 0 < δ
   · sorry
-  /-First factorize the left hand side, and then use `this` and `hδ`.-/
-  sorry
+  use δ
+  constructor
+  · exact δpos
+  · intro hx
+    have : |x + 1| < 3
+    · -- use a `calc`-block here.
+      sorry
+    -- Use a `calc`-block here. First factorize the left hand side,
+    -- and then use `this`, `hx` and `δpos`.
+    sorry
+
+/-
+# A Harder Example
+
+Let `(a,b)` be a solution to the equation `y ^ 2 = x ^ 3 + 1`.
+Then there is another aolution `(A,B)` to the same equation, defined by
+* `A = m ^ 2 - 2 * a`,
+* `B = m * A + c`,
+where `y = m * x + c` is the tangent line to the curve at `(a,b)`.
+-/
+example (a b m c A B : ℝ) (h : b^2 = a^3 + 1)
+    (hm : 2 * b * m = 3 * a^2) (hc : b = m * a + c)
+    (hA : A = m^2 - 2 * a) (hB : B = m * A + c) :
+    B^2 = A^3 + 1 := by
+  have : b^4 * B^2 = b^4 * (A^3 + 1)
+  · -- try using a `calc` block here.
+    -- I recommend you work out the proof on paper first.
+    sorry
+  simp only [mul_eq_mul_left_iff, zero_lt_four, pow_eq_zero_iff] at this
+  cases this with
+  | inl h₁ => sorry
+  | inr h₂ => sorry -- obtain a contradiction in this case.
