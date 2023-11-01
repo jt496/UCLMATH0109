@@ -21,7 +21,7 @@ Changing `simp` to `simp?` will give us a list of the `lemma`s used, and we can 
 in their statements in Mathlib.
 
 We can also tell `simp` to try using extra `lemma`s (i.e. not just those `lemma`s with
-the attribute @[simp]). This is dome using the syntax `simp [h1, h2, ...]`.
+the attribute @[simp]). This is done using the syntax `simp [h1, h2, ...]`.
 -/
 example (x : ℝ) (h : x = -1) : (x^2 * x^2)^100 = 1 :=
 by
@@ -47,7 +47,7 @@ by
 
 /-
 We may train `simp` by adding the attribute `@[simp]` to some of our own lemmas.
-In thw following example we let
+In the following example we let
 
 `ω = (1 + √-3) / 2`, and prove some standard facts about powers of `ω`.
 -/
