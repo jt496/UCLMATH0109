@@ -43,9 +43,7 @@ Other properties of `<` include
 -- 04 Recall that `exfalso` allows you to prove anything by proving `False`
 example (h1 : x < y) (h2 : y < x) : x = 73:=
 by
-  exfalso
-  apply lt_irrefl x
-  apply lt_trans h1 h2
+  sorry
 
 /-
 If `a < b` then `a ≠ b` -/
@@ -53,23 +51,41 @@ If `a < b` then `a ≠ b` -/
 -- 05
 example (h1 : x < y) (h2 : y ≤ z) : x ≠ z:=
 by
-  apply ne_of_lt
-  apply lt_of_lt_of_le h1 h2
-
+  sorry
 
 #check le_trans -- x ≤ y → y ≤ z → x ≤ z
 /-
 Note that if `h1 : x ≤ y` then `h1.trans` is `le_trans h1`
 So if we have `h1 : x ≤ y` and `h2 : y ≤ z` then `h1.trans h2` is `x ≤ z` -/
 
--- If `a ≤ b` and `c ≤ d` and `0 ≤ c` and `0 ≤ b` then `a * c ≤ b * d`
-#check mul_le_mul
-
-
--- You can do the next example by using `apply mul_le_mul` and solving
--- the four resulting subgoals. Once you've done this see if you can reduce your
--- proof to a single line `exact mul_le_mul ...` using the `dot` notation.
+-- If `b ≤ c` then  `∀ a, a + b ≤ a + c`
+#check add_le_add_left --  b ≤ c →  ∀ (a : α), a + b ≤ a + c`
+-- Note that if you `Ctrl + click` on `add_le_add_left` above then you will be taken to
+-- `mul_le_mul_left` in Mathlib.
 -- 06
+example (h1 : x ≤ z) (h2 : 2 ≤ x)  : x + 2 ≤ x + z :=
+by
+  sorry
+-- If `a ≤ b` and `c ≤ d` then `a + c ≤ b + d`
+#check add_le_add -- a ≤ b → c ≤ d → a + c ≤ b + d
+
+-- 07
+example (h1 : x ≤ y) (h2 : 2 ≤ x) (h3 : y ≤ z) : 2 + x ≤ y + z :=
+by
+  sorry
+
+-- If `a ≤ b` and `c ≤ d` and `0 ≤ c` and `0 ≤ b` then `a * c ≤ b * d`
+#check mul_le_mul -- `(h₁ : a ≤ b) (h₂ : c ≤ d) (c0 : 0 ≤ c) (b0 : 0 ≤ b) : a * c ≤ b * d`
+
+/-
+ You can do the next example by using `apply mul_le_mul` and solving
+ the four resulting subgoals. Once you've done this see if you can reduce your
+ proof to a single line `exact mul_le_mul ...` using the `dot` notation.
+ (You could also do this for some of the previous examples.) -/
+
+-- 08
 example (h1 : x ≤ y) (h2 : 3 ≤ z) (h3 : 0 ≤ x) (h4 : y ≤ z): 3 * x ≤ z * z :=
 by
-  exact mul_le_mul h2 (h1.trans h4) h3 <| h3.trans (h1.trans h4)
+  sorry
+
+#check lt_add_of_lt_add_left
