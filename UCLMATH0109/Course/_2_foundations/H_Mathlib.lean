@@ -29,7 +29,7 @@ by
   sorry
 
 /-
-We can look up the theorem `lt_of_le` in the *API documentation* of
+We can look up the theorem `le_of_lt` in the *API documentation* of
 Mathlib to see exactly what it says.
 We can also use the command `#check` to do this.
 Also "ctrl-click" on `le_of_lt` will take us to the file
@@ -54,7 +54,7 @@ If we give it a value of `h`, then it can deduce the what `a` and `b`
 are, and also that `α = ℝ`, since this is the type of the variables
 `a` and `b`.
 -/
-#check le_of_lt h     -- `x ≤ y` 
+#check le_of_lt h     -- `x ≤ y`
 
 /-
 It sometimes happens that we need to tell lean the values of implicit
@@ -62,4 +62,4 @@ variables. For example, to give the values of `a` and `b` but not the
 hypothesis `h`, we can type this:
 -/
 
-#check le_of_lt (a := x) (b := y)    -- `x < y → x ≤ y` 
+#check le_of_lt (a := x) (b := y)    -- `x < y → x ≤ y`
