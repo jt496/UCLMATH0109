@@ -74,7 +74,7 @@ by
   sorry
 
 -- 08
-example (b : α) : b = 1 * b :=
+example (b : α) : b = 2 * b :=
 by
   sorry
 
@@ -84,6 +84,11 @@ by
   sorry
 
 -- 10
+example (b : α) : b = 1 * b :=
+by
+  sorry
+
+-- 11
 example (b : α) : 3 * b = 12 * b :=
 by
   sorry

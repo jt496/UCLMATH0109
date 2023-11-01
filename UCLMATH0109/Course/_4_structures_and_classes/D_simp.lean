@@ -15,7 +15,8 @@ Often, `simp` closes the goal completely.
 -/
 example : 1 * y * 1 * 1 * x = y * 1 * 1 * x :=
 by
-  simp -- of course, `ring` would also work here.
+  sorry
+
 /-
 Changing `simp` to `simp?` will give us a list of the `lemma`s used, and we can see the `@[simp]`
 in their statements in Mathlib.
@@ -25,9 +26,7 @@ the attribute @[simp]). This is done using the syntax `simp [h1, h2, ...]`.
 -/
 example (x : ℝ) (h : x = -1) : (x^2 * x^2)^100 = 1 :=
 by
-  -- `simp` would give an error message here, because it can't simplify the goal.
-  simp [h]
-
+  sorry
 /-
 If you already know exactly which `simp` lemmas you want to use, then you can type
 `simp only [lemma₁, lemma₂, ...]`. If `simp` does not completely close the current goal,
@@ -41,9 +40,7 @@ be done if `simp` is not completely closing a goal.
 -/
 example : ((-1) ^ n) ^ 2 = 1 :=
 by
-  simp only [Nat.odd_iff_not_even, sq_eq_one_iff]
-  exact neg_one_pow_eq_or ℤ n
-
+  sorry
 
 /-
 We may train `simp` by adding the attribute `@[simp]` to some of our own lemmas.
@@ -58,29 +55,28 @@ notation "√3" => Real.sqrt 3
 @[simp]
 lemma rt3_sq : √3^2 = 3 :=
 by
-  apply Real.sq_sqrt
   norm_num
 
 /--The 6th root of unity `(1+I*√3)/2`.-/
 noncomputable def ω : ℂ := ⟨1/2, √3 / 2⟩
 
 @[simp]
-lemma omega_re : ω.re = 1/2 := by rfl
+lemma ω_re : ω.re = 1/2 := by rfl
 
 @[simp]
-lemma omega_im : ω.im = Real.sqrt 3 / 2 := by rfl
+lemma ω_im : ω.im = Real.sqrt 3 / 2 := by rfl
 
 @[simp]
 lemma omega_sq : ω ^ 2 = ω - 1 :=
 by
   ext
-  · simp only [pow_two, Complex.mul_re, omega_re, one_div, omega_im, Complex.sub_re, Complex.one_re]
+  · simp
     calc
-      _ = 4⁻¹ - √3^2 / 4         := by ring
-      _ = 4⁻¹ - 3 / 4            := by simp
-      _ = _                      := by ring
-  · simp only [pow_two, Complex.mul_im, omega_re, one_div, omega_im, Complex.sub_im, Complex.one_im, sub_zero]
-    ring
+      _ = 4⁻¹ - √3^2 / 4         := by sorry
+      _ = 4⁻¹ - 3 / 4            := by sorry
+      _ = _                      := by sorry
+  · simp
+    sorry
 
 @[simp]
 lemma omega_pow_three : ω^3 = -1 :=
