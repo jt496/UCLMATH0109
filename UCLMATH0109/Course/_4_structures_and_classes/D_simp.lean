@@ -41,7 +41,7 @@ change the state at the end of your simp command).
 
 If we type `simp?` instead of `simp`, then lean will tell us which lemmas it has used,
 and offer to replace your `simp` by an equivalent `simp only ...`. This should always
-be done if `simp` doe not completely close the goal.
+be done if `simp` does not completely close the goal.
 -/
 example : ((-1) ^ n) ^ 2 = 1 :=
 by
