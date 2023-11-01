@@ -1,30 +1,35 @@
 import Mathlib.Tactic
 
 /-
-This file demonstrates the use of the tactics `simp` and `simp?`.
+This file demonstrates the use of the tactic `simp`.
+Much more information on this subject can be found in the following page:
+https://leanprover-community.github.io/extras/simp.html.
 
-`simp` searches for ways to `rw` a goal in order to make it "simpler".
-It doesn't search through the whole of Mathlib, but onlt the lemmas and theorems
-with the attribute `@[simp]` just before their statement. Such lemmas are
-always equtions or iff statements, in which the RHS is in some sense simpler than the LHS.
+`simp` is a high level tactic, which repeatedly searches for ways to `rw` a goal
+in order to make it "simpler". It doesn't search through the whole of Mathlib,
+but only the `lemma`s and `theorem`s marked with the attribute `@[simp]` just
+before their statement. Such `lemma`s are always equations or iff statements,
+in which the RHS is in some sense simpler than the LHS.
+
 Often, `simp` closes the goal completely.
 -/
-
-example : (-1 : ℝ)^4 = 1 :=
+example : 1 * y * 1 * 1 * x = y * 1 * 1 * x :=
 by
   simp -- of course, `ring` would also work here.
-
 /-
-We can also tell `simp` to try using extra lemmas (i.e. not just those lemmas with
-the attribute @[simp]. This is dome using the syntax `simp [lemma₁, lemma₂, ...]`.
--/
+Changing `simp` to `simp?` will give us a list of the `lemma`s used, and we can see the `@[simp]`
+in their statements in Mathlib.
 
+We can also tell `simp` to try using extra `lemma`s (i.e. not just those `lemma`s with
+the attribute @[simp]). This is dome using the syntax `simp [h1, h2, ...]`.
+-/
 example (x : ℝ) (h : x = -1) : (x^2 * x^2)^100 = 1 :=
 by
+  -- `simp` would give an error message here, because it can't simplify the goal.
   simp [h]
 
 /-
-If you know examply which `simp` lemma you want to use, then you can type
+If you already know exactly which `simp` lemmas you want to use, then you can type
 `simp only [lemma₁, lemma₂, ...]`. If `simp` does not completely close the current goal,
 then you should always replace it by `simp only ...`. If you do not do this, then
 your code could crash after a Mathlib update (because new `simp` lemmas might be added which
@@ -34,13 +39,10 @@ If we type `simp?` instead of `simp`, then lean will tell us which lemmas it has
 and offer to replace your `simp` by an equivalent `simp only ...`. This should always
 be done if `simp` is not completely closing a goal.
 -/
-
-example (x : ℝ) (h : x = -1) : x^(2 * n + 2) = 1 :=
+example : ((-1) ^ n) ^ 2 = 1 :=
 by
-  simp only [h]
-  rw [neg_one_pow_eq_one_iff_even, Nat.even_add]
-  simp?
-  norm_num
+  simp only [Nat.odd_iff_not_even, sq_eq_one_iff]
+  exact neg_one_pow_eq_or ℤ n
 
 
 /-
@@ -50,8 +52,7 @@ In thw following example we let
 `ω = (1 + √-3) / 2`, and prove some standard facts about powers of `ω`.
 -/
 
-open Complex
-
+/--define the notation `√3` for the positive real square root of `3`.-/
 notation "√3" => Real.sqrt 3
 
 @[simp]
@@ -60,6 +61,7 @@ by
   apply Real.sq_sqrt
   norm_num
 
+/--The 6th root of unity `(1+I*√3)/2`.-/
 noncomputable def ω : ℂ := ⟨1/2, √3 / 2⟩
 
 @[simp]
@@ -72,12 +74,12 @@ lemma omega_im : ω.im = Real.sqrt 3 / 2 := by rfl
 lemma omega_sq : ω ^ 2 = ω - 1 :=
 by
   ext
-  · simp only [pow_two, mul_re, omega_re, one_div, omega_im, sub_re, one_re]
+  · simp only [pow_two, Complex.mul_re, omega_re, one_div, omega_im, Complex.sub_re, Complex.one_re]
     calc
       _ = 4⁻¹ - √3^2 / 4         := by ring
       _ = 4⁻¹ - 3 / 4            := by simp
       _ = _                      := by ring
-  · simp only [pow_two, mul_im, omega_re, one_div, omega_im, sub_im, one_im, sub_zero]
+  · simp only [pow_two, Complex.mul_im, omega_re, one_div, omega_im, Complex.sub_im, Complex.one_im, sub_zero]
     ring
 
 @[simp]
