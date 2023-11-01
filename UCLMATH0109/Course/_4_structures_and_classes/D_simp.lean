@@ -58,13 +58,14 @@ by
   norm_num
 
 /--The 6th root of unity `(1+I*√3)/2`.-/
+@[simps]
 noncomputable def ω : ℂ := ⟨1/2, √3 / 2⟩
 
-@[simp]
-lemma ω_re : ω.re = 1/2 := by rfl
+-- @[simp]
+-- lemma ω_re : ω.re = 1/2 := by rfl
 
-@[simp]
-lemma ω_im : ω.im = Real.sqrt 3 / 2 := by rfl
+-- @[simp]
+-- lemma ω_im : ω.im = Real.sqrt 3 / 2 := by rfl
 
 @[simp]
 lemma omega_sq : ω ^ 2 = ω - 1 :=
