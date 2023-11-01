@@ -4,14 +4,14 @@ import Mathlib.Tactic
 /-
 Let's define the notion of a group in lean.
 Recall that a group is a set `G`, together with
-  - a multiplication operation `G → G → G`,
-  - a function `G → G` taking an element `x` to another element `x⁻¹`,
-  - a certain element in `G` called `1`.
+* a multiplication operation `G → G → G`,
+* a function `G → G` taking an element `x` to another element `x⁻¹`,
+* a certain element in `G` called `1`.
 Furthermore, `G` must satisfy the group axioms.
 
 The following code tells lean what it means for `G` to be a group.
 Note that `Mul` and `Inv` and `One` are also classes, and
-you can see their definition by control-clicking on them. 
+you can see their definition by control-clicking on them.
 -/
 class MyGroup (G : Type) extends Mul G, Inv G, One G where
   mul_assoc     : ∀ x y z : G, (x * y) * z = x * (y * z)
@@ -19,6 +19,7 @@ class MyGroup (G : Type) extends Mul G, Inv G, One G where
   one_mul       : ∀ x : G, 1 * x = x
   mul_inv_self  : ∀ x : G, x * x⁻¹ = 1
   inv_mul_self  : ∀ x : G, x⁻¹ * x = 1
+
 /-
 In other words, for any Type `G`,
 an element of type `MyGroup G` is a group structure on `G` (ie. multiplication
@@ -52,7 +53,7 @@ section
     /-
     Let's forget what `G` and `group_structure` are now by ending the section.
     -/
-end 
+end
 
 /-
 There is a potential danger.
@@ -114,7 +115,7 @@ open Nat
 /-
 Currently, the notation `x^n` has no meaning for `x : G` and `n : ℕ`.
 We shall define the power notation here recursively. This is first
-done by defining a function `pow : G → ℕ → G` representing the power:  
+done by defining a function `pow : G → ℕ → G` representing the power:
 -/
 def pow (x : G) : ℕ → G
   | 0      => 1             -- `pow x 0 := 1`
@@ -154,7 +155,7 @@ The next lemma should be proved by induction.
 lemma pow_add (x : G) (n m : ℕ): x ^ (n + m) = (x ^ n) * (x ^ m) :=
 by
   induction n with
-  | zero => 
+  | zero =>
     sorry
   | succ n ih =>
     sorry
