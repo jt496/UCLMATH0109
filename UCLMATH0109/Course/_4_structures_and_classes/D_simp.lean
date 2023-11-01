@@ -13,9 +13,13 @@ in which the RHS is in some sense simpler than the LHS.
 
 Often, `simp` closes the goal completely.
 -/
+set_option trace.Meta.Tactic.simp.rewrite true
+
+
 example : 1 * y * 1 * 1 * x = y * 1 * 1 * x :=
 by
-  sorry
+  simp only [one_mul, mul_one]
+
 
 /-
 Changing `simp` to `simp?` will give us a list of the `lemma`s used, and we can see the `@[simp]`
@@ -26,7 +30,8 @@ the attribute @[simp]). This is done using the syntax `simp [h1, h2, ...]`.
 -/
 example (x : ℝ) (h : x = -1) : (x^2 * x^2)^100 = 1 :=
 by
-  sorry
+  simp only [h, even_two, Even.neg_pow, one_pow, mul_one]
+
 /-
 If you already know exactly which `simp` lemmas you want to use, then you can type
 `simp only [lemma₁, lemma₂, ...]`. If `simp` does not completely close the current goal,
@@ -36,11 +41,13 @@ change the state at the end of your simp command).
 
 If we type `simp?` instead of `simp`, then lean will tell us which lemmas it has used,
 and offer to replace your `simp` by an equivalent `simp only ...`. This should always
-be done if `simp` is not completely closing a goal.
+be done if `simp` doe not completely close the goal.
 -/
 example : ((-1) ^ n) ^ 2 = 1 :=
 by
-  sorry
+  simp only [Nat.odd_iff_not_even, sq_eq_one_iff]
+  exact neg_one_pow_eq_or ℤ n
+
 
 /-
 We may train `simp` by adding the attribute `@[simp]` to some of our own lemmas.
@@ -57,7 +64,13 @@ lemma rt3_sq : √3^2 = 3 :=
 by
   norm_num
 
-/--The 6th root of unity `(1+I*√3)/2`.-/
+section
+variable (z : ℂ)
+#check z.re
+#check z.im
+end
+
+/--The 6th root of unity `(1+I*√3)/2`.--/
 @[simps]
 noncomputable def ω : ℂ := ⟨1/2, √3 / 2⟩
 
@@ -67,45 +80,53 @@ noncomputable def ω : ℂ := ⟨1/2, √3 / 2⟩
 -- @[simp]
 -- lemma ω_im : ω.im = Real.sqrt 3 / 2 := by rfl
 
+#check ω_re
+#check ω_im
+
+
+
 @[simp]
 lemma omega_sq : ω ^ 2 = ω - 1 :=
 by
+  simp only [pow_two]
   ext
-  · simp
+  · simp only [Complex.mul_re, ω_re, one_div, ω_im, Complex.sub_re, Complex.one_re]
     calc
-      _ = 4⁻¹ - √3^2 / 4         := by sorry
-      _ = 4⁻¹ - 3 / 4            := by sorry
-      _ = _                      := by sorry
-  · simp
-    sorry
+      _ = 4⁻¹ - √3^2 / 4         := by ring
+      _ = 4⁻¹ - 3 / 4            := by simp only [rt3_sq]
+      _ = _                      := by ring
+  · simp only [Complex.mul_im, ω_re, one_div, ω_im, Complex.sub_im, Complex.one_im, sub_zero]
+    ring
+
 
 @[simp]
 lemma omega_pow_three : ω^3 = -1 :=
 by
   calc
-  ω^3 = ω * ω^2         := by ring
-  _   = ω * (ω-1)       := by simp
-  _   = ω^2 - ω         := by ring
-  _   = (ω-1) - ω       := by simp
-  _   = -1              := by ring
+  ω^3 = ω * ω^2         := by sorry
+  _   = ω * (ω-1)       := by sorry
+  _   = ω^2 - ω         := by sorry
+  _   = (ω-1) - ω       := by sorry
+  _   = -1              := by sorry
 
 @[simp]
 lemma omega_pow_six : ω^6 = 1 :=
 by
   calc
-  _ = ω^3 * ω^3       := by ring
-  _ = (-1) * (-1)     := by simp
-  _ = 1               := by ring
+  _ = ω^3 * ω^3       := by sorry
+  _ = (-1) * (-1)     := by sorry
+  _ = 1               := by sorry
 
 example : ω ^ (6 * n + 13) = ω :=
 by
   induction n with
   | zero =>
-    simp only [Nat.zero_eq, mul_zero, zero_add]
     calc
-      ω^13 = ω^6 * ω^6 * ω := by ring
-      _    = ω             := by simp
+      _    = ω^13          := by sorry
+      _    = ω^6 * ω^6 * ω := by sorry
+      _    = ω             := by sorry
   | succ n ih =>
     calc
-      _ = ω ^ (6 * n + 13) * ω ^ 6  := by rw [Nat.succ_eq_add_one]; ring
-      _ = ω                         := by simp [ih]
+      _ = ω ^ (6 * n + 13) * ω ^ 6  := by simp only [Nat.succ_eq_add_one]; ring
+
+      _ = ω                         := by simp only [ih, omega_pow_six, mul_one]
