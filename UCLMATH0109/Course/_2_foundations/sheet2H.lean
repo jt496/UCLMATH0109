@@ -94,11 +94,10 @@ example  (h1 : x + y < u + z) : x < u ∨ y < z :=
 by
   sorry
 
-
 -- |a - c| ≤ |a - b| + |b - c|
 #check abs_sub_le -- (a b c : α) : |a - c| ≤ |a - b| + |b - c|
 
--- 10 Hint: start with `apply le_trans` and
+-- 10 Hint: work out the proof on paper (its easy) and then start with `apply le_trans`
 example  : |x - u| ≤  |x - y| + |y - z| + |z - u| :=
 by
   sorry
