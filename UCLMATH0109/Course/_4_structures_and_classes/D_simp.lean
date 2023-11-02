@@ -13,6 +13,7 @@ in which the RHS is in some sense simpler than the LHS.
 
 Often, `simp` closes the goal completely.
 -/
+-- the next line allows us to see exactly what `simp` does
 set_option trace.Meta.Tactic.simp.rewrite true
 
 
