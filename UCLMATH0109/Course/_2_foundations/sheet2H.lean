@@ -88,4 +88,17 @@ example (h1 : x ≤ y) (h2 : 3 ≤ z) (h3 : 0 ≤ x) (h4 : y ≤ z): 3 * x ≤ z
 by
   sorry
 
-#check lt_add_of_lt_add_left
+-- You can do the next example using lemmas we have introduced above, or you can find it in Mathlib
+-- 09
+example  (h1 : x + y < u + z) : x < u ∨ y < z :=
+by
+  sorry
+
+
+-- |a - c| ≤ |a - b| + |b - c|
+#check abs_sub_le -- (a b c : α) : |a - c| ≤ |a - b| + |b - c|
+
+-- 10 Hint: start with `apply le_trans` and
+example  : |x - u| ≤  |x - y| + |y - z| + |z - u| :=
+by
+  sorry
