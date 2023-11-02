@@ -20,8 +20,9 @@ for the partial sums of the series `∑ (1 / ((n+1) * (n+2)))`.
 You may find it helpful to prove the `have` statement first.
 -/
 
-theorem S_eq : ∑ n in range N, 1 / ((n+1)*(n+2) : ℝ) = N / (N+1) :=
+example : ∑ n in range N, 1 / ((n+1)*(n+2) : ℝ) = N / (N+1) :=
 by
   have partial_frac : ∀ n, 1 / ((n+1)*(n+2) : ℝ) = 1/(n+1 : ℝ) - 1/(n+2 : ℝ)
   · sorry
   sorry
+
