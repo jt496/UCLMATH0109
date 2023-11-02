@@ -1,7 +1,4 @@
 import Mathlib
-/-
-TODO: write a sheet on using Mathlib (following video 2H)
--/
 
 
 variable (x y z  : ℝ)
@@ -84,7 +81,7 @@ by
  (You could also do this for some of the previous examples.) -/
 
 -- 08
-example (h1 : x ≤ y) (h2 : 3 ≤ z) (h3 : 0 ≤ x) (h4 : y ≤ z): 3 * x ≤ z * z :=
+example (h1 : x ≤ y) (h2 : 3 ≤ z) (h3 : 0 ≤ x) (h4 : y ≤ z) : 3 * x ≤ z * z :=
 by
   sorry
 
@@ -98,6 +95,6 @@ by
 #check abs_sub_le -- (a b c : α) : |a - c| ≤ |a - b| + |b - c|
 
 -- 10 Hint: work out the proof on paper (its easy) and then start with `apply le_trans`
-example  : |x - u| ≤  |x - y| + |y - z| + |z - u| :=
+example : |x - u| ≤  |x - y| + |y - z| + |z - u| :=
 by
   sorry
