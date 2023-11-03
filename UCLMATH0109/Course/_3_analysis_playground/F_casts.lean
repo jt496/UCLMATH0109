@@ -36,14 +36,13 @@ variable (n : ℕ) (x : ℝ)
 
 /-
 Below we describe the main tactics for dealing with these situations:
-`norm_cast` and `push_cast`.
+`norm_cast`, `push_cast`, `exact_mod_cast`, `rw_mod_cast`.
 
 See https://lean-forward.github.io/norm_cast/norm_cast.pdf for more details.
+
 -/
-set_option trace.Tactic.norm_cast true
-example (a b : ℕ) : (a : ℝ) + b = ((a : ℤ) + b : ℝ) :=
-by
-  rfl
+-- set_option trace.Tactic.norm_cast true
+
 
 example (n : ℕ) : (2 * n : ℝ) + 3  = (2 * n : ℤ) + 3 :=
 by
@@ -51,8 +50,13 @@ by
   push_cast
   rfl
 
+example (a b : ℕ) : (a : ℝ) + b = (((a : ℤ) + (b : ℚ) : ℝ) : ℂ) :=
+by
+  norm_cast
 
 example (n : ℕ) (z : ℤ) (h : n - z < (5 : ℚ)) : n - z < (5 : ℤ) :=
 by
-  norm_cast at h
--- notice that `h` doesn't change but the goal does!
+  -- norm_cast -- doesn't work
+  --  norm_cast at h -- this works, notice that `h` doesn't change but the goal does!
+  --  exact_mod_cast h --
+  sorry
