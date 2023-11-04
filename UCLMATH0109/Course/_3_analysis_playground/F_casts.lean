@@ -32,8 +32,6 @@ This is called a `coercion` or `cast`
 variable (n : ℕ) (x : ℝ)
 #check x = n -- x = ↑n
 
-
-
 /-
 Below we describe the main tactics for dealing with these situations:
 `norm_cast`, `push_cast`, `exact_mod_cast`, `rw_mod_cast`.
@@ -60,3 +58,6 @@ by
   --  norm_cast at h -- this works, notice that `h` doesn't change but the goal does!
   --  exact_mod_cast h --
   sorry
+
+
+-- Do something with Bernouilli and ℝ≥0
