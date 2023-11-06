@@ -127,19 +127,21 @@ by
 
 
 /-
-The binomial coefficient `n.choose k` is the number of subsets of size k from
-a set of size n. In Lean this is defined as:
+ `Nat.choose n k` is the number of `k`-element subsets of an `n`-element set,
+ aka the binomial coefficient `n.choose k`
+
+In Lean this is defined as:
 
 def choose : ℕ → ℕ → ℕ
   | _    , 0     => 1 (there is one empty set)
   | 0    , _ + 1 => 0 (the empty set has no subsets that are non-empty)
   | n + 1, k + 1 => n.choose k + n.choose (k + 1) Pascal's Identity
 
-This definition may look odd, but has the big advantages of not involving either
+This definition may look odd, but has the big advantage of not involving either
 subtraction or division in ℕ, both of which are awkward.
 
 Note that `n.choose k = n! / (k! * (n - k)!)`, but this is a theorem not a definition
-(and doesn't hold if n = 0 and k = 1).
+(and doesn't hold for n = 0 and k = 1).
 
 Our last example can be solved using the following two results, together
 with `norm_cast` and `apply?`
