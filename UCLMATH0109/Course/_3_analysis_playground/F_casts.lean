@@ -17,10 +17,7 @@ but is expected to have type
 Lean is complaining that this doesn't make sense because `=` is only defined for
 terms of the same type, so given the LHS `a : A` it was expecting the RHS of the
 equality to also be a term of type A.
--/
-end
 
-/-
 But as mathematicians we happily form expressions that involve terms
 of different types.
 
@@ -31,6 +28,7 @@ This is called a `coercion` or `cast`
 -/
 variable (n : ℕ) (x : ℝ)
 #check x = n -- x = ↑n, th `↑` in the Infoview indicates that a coercion has taken place
+end
 
 /-
 Below we describe the main tactics for dealing with these situations:
@@ -55,7 +53,7 @@ by
   sorry
 
 -- 04
-example (a b : ℕ) : (a : ℝ) + b = (((a : ℤ) + (b : ℚ) : ℝ) : ℂ) :=
+example (a b : ℕ) (c : ℤ) : (a + b : ℕ) + (c : ℤ) = (((a : ℤ) + (b + c : ℚ) : ℝ) : ℂ) :=
 by
   sorry
 
@@ -68,29 +66,26 @@ by
 -- 06
 example (a b : ℕ) (h : a ≤ b) : a - b = 0 :=
 by
+  apply?
   sorry
+
 
 -- 07
-example (a b : ℕ): a - (a + b) = 0 :=
-by
-  sorry
-
--- 08
 example (a b : ℕ)  : (b : ℤ) - a  = b - a:=
 by
   sorry
 
--- 09
+-- 08
 example (a b : ℕ) : (a : ℤ) - (a + b) = -b :=
 by
   sorry
 
--- 10
+-- 09
 example (a b c: ℕ) (h : c = a + b) : (a : ℤ) - c = -b :=
 by
   sorry
 
--- 11
+-- 10
 example (a b : ℕ) (h : a ≤ b) : (b - a : ℕ)  = (b : ℤ)  - a:=
 by
   sorry
@@ -101,21 +96,26 @@ If (n d : ℕ) then n / d is a natural number, n = (n / d) * d does not hold
 unless d divides n. Instead we have `n = (n / d) * d + (n % d)` where `n % d` is
 the remainder of n mod d,
 -/
--- 12
+-- 11
 example (n d : ℕ) (h: d ∣ n) : (n / d) * d = n :=
 by
   sorry
 
--- 13
+-- 12
 example (a b : ℕ) (h: a ∣ b) : (a : ℤ) ∣ (-(b : ℤ)):=
 by
-  obtain ⟨k,rfl⟩ := h
-  use (-k)
-  rw [mul_neg]
-  norm_cast
+  sorry
+
+
+-- 13
+example (a b : ℕ) (z : ℤ) (ha : z ≤ a) (hb : z ≤ b) : z ≤ min (a : ℝ) b :=
+by
+  sorry
+
+
 
 /-
-A useful tactic for cancelling denominators is `cancel_denom`
+A useful tactic for cancelling denominators is `cancel_denoms`
 -/
 open scoped BigOperators
 open Finset
@@ -142,6 +142,7 @@ subtraction or division in ℕ, both of which are awkward.
 
 Note that `n.choose k = n! / (k! * (n - k)!)`, but this is a theorem not a definition
 (and doesn't hold for n = 0 and k = 1).
+
 
 Our last example can be solved using the following two results, together
 with `norm_cast` and `apply?`
