@@ -39,61 +39,58 @@ Below we describe the main tactics for dealing with these situations:
 See https://lean-forward.github.io/norm_cast/norm_cast.pdf for more details.
 
 -/
-
+-- 01
 example (a b : ℕ) : a + b = (a : ℤ) + b :=
 by
   sorry
 
+-- 02
 example (a b : ℕ) : (a + b : ℕ) = (a : ℝ) + b :=
 by
   sorry
---  exact Nat.cast_add a b
 
-
+-- 03
 example (n : ℕ) : (2 * n : ℝ) + 3  = (2 * n : ℤ) + 3 :=
 by
--- norm_cast  -- or
-  push_cast
-  rfl
+  sorry
 
+-- 04
 example (a b : ℕ) : (a : ℝ) + b = (((a : ℤ) + (b : ℚ) : ℝ) : ℂ) :=
 by
-  push_cast
-  norm_cast
+  sorry
 
-
+-- 05
 example (n : ℕ) (z : ℤ) (h : n - z < (5 : ℚ)) : n - z < 5 :=
 by
   sorry
 
-
-
 -- If (a b : ℕ) and a ≤ b then a - b = 0 (subtraction is `truncated` in ℕ)
+-- 06
 example (a b : ℕ) (h : a ≤ b) : a - b = 0 :=
 by
-  exact Nat.sub_eq_zero_of_le h
+  sorry
 
-
+-- 07
 example (a b : ℕ): a - (a + b) = 0 :=
 by
-  exact Nat.sub_self_add a b
+  sorry
 
-
+-- 08
 example (a b : ℕ)  : (b : ℤ) - a  = b - a:=
 by
   sorry
 
-
+-- 09
 example (a b : ℕ) : (a : ℤ) - (a + b) = -b :=
 by
   sorry
 
-
+-- 10
 example (a b c: ℕ) (h : c = a + b) : (a : ℤ) - c = -b :=
 by
   sorry
 
-
+-- 11
 example (a b : ℕ) (h : a ≤ b) : (b - a : ℕ)  = (b : ℤ)  - a:=
 by
   sorry
@@ -104,32 +101,20 @@ If (n d : ℕ) then n / d is a natural number, n = (n / d) * d does not hold
 unless d divides n. Instead we have `n = (n / d) * d + (n % d)` where `n % d` is
 the remainder of n mod d,
 -/
+-- 12
 example (n d : ℕ) (h: d ∣ n) : (n / d) * d = n :=
 by
-  exact Nat.div_mul_cancel h
-
+  sorry
 /-
 A useful tactic for cancelling denominators is `cancel_denom`
 -/
 open scoped BigOperators
 open Finset
 
-
+-- 13
 example (n : ℕ) : ∑ i in range n.succ, (i : ℝ)^(3 : ℕ) = (n : ℝ)^2 * (n + 1 : ℝ)^2/4 :=
 by
-  cancel_denoms -- only works for Fields
-  induction n with
-  | zero =>
-    norm_cast
-  | succ n ih =>
-    rw [sum_range_succ]
-    rw [mul_add, ih, Nat.succ_eq_add_one]
-    norm_cast
-    ring
-
-
-
-
+  sorry
 
 
 /-
@@ -141,16 +126,21 @@ def choose : ℕ → ℕ → ℕ
   | 0    , _ + 1 => 0 (the empty set has no subsets that are non-empty)
   | n + 1, k + 1 => n.choose k + n.choose (k + 1) Pascal's Identity
 
-Note that `n.choose k = n! / (k! * (n - k)!)`, but this is a theorem not a definition
-(and doesn't hold if n = 0 and k = 1)
+This definition may look odd, but has the big advantages of not involving either
+subtraction or division in ℕ, both of which are awkward.
 
+Note that `n.choose k = n! / (k! * (n - k)!)`, but this is a theorem not a definition
+(and doesn't hold if n = 0 and k = 1).
+
+Our last example can be solved using the following two results, together
+with `norm_cast` and `apply?`
 -/
--- This last example can be solved using the following two results, together
--- with `norm_cast` and `apply?`
+
 #check div_lt_one -- if 0 < b then a / b < 1 ↔ a < b
 #check Nat.choose_succ_succ -- Pascal's identity
 
-/-- If k ≤ n then `(n choose k + 1)/(n + 1 choose k + 1) < 1 -/
+/- If k ≤ n then `(n choose k + 1)/(n + 1 choose k + 1) < 1 -/
+-- 14
 example (n : ℕ) (h : k ≤ n): (n.choose (k + 1) : ℝ) / ((n + 1).choose (k + 1)) < 1:=
 by
   sorry
