@@ -5,7 +5,7 @@ sense in Lean.
 -/
 section
 variable (A B : Type) (a : A) (b : B)
--- #check a = b
+ -- #check a = b
 /-
 type mismatch
   b
@@ -34,7 +34,7 @@ variable (n : ℕ) (x : ℝ)
 
 /-
 Below we describe the main tactics for dealing with these situations:
-`norm_cast`, `push_cast`, `exact_mod_cast`, `rw_mod_cast`.
+`norm_cast` and `push_cast`,
 
 See https://lean-forward.github.io/norm_cast/norm_cast.pdf for more details.
 
@@ -105,13 +105,22 @@ the remainder of n mod d,
 example (n d : ℕ) (h: d ∣ n) : (n / d) * d = n :=
 by
   sorry
+
+-- 13
+example (a b : ℕ) (h: a ∣ b) : (a : ℤ) ∣ (-(b : ℤ)):=
+by
+  obtain ⟨k,rfl⟩ := h
+  use (-k)
+  rw [mul_neg]
+  norm_cast
+
 /-
 A useful tactic for cancelling denominators is `cancel_denom`
 -/
 open scoped BigOperators
 open Finset
 
--- 13
+-- 14
 example (n : ℕ) : ∑ i in range n.succ, (i : ℝ)^(3 : ℕ) = (n : ℝ)^2 * (n + 1 : ℝ)^2/4 :=
 by
   sorry
@@ -140,7 +149,7 @@ with `norm_cast` and `apply?`
 #check Nat.choose_succ_succ -- Pascal's identity
 
 /- If k ≤ n then `(n choose k + 1)/(n + 1 choose k + 1) < 1 -/
--- 14
+-- 15
 example (n : ℕ) (h : k ≤ n): (n.choose (k + 1) : ℝ) / ((n + 1).choose (k + 1)) < 1:=
 by
   sorry
