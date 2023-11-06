@@ -1,21 +1,22 @@
 import Mathlib.Tactic
+
 /-
-If `a : A` and `b : B`, then the expression `a = b` does not make
+If `a : α` and `b : β`, then the expression `a = b` does not make
 sense in Lean.
 -/
 section
-variable (A B : Type) (a : A) (b : B)
- -- #check a = b
+variable (α β : Type) (a : α) (b : β)
+--#check a = b
 /-
 type mismatch
   b
 has type
-  B : Type
+  β : Type
 but is expected to have type
-  A : Type
+  α : Type
 
 Lean is complaining that this doesn't make sense because `=` is only defined for
-terms of the same type, so given the LHS `a : A` it was expecting the RHS of the
+terms of the same type, so given the LHS `a : α` it was expecting the RHS of the
 equality to also be a term of type A.
 
 But as mathematicians we happily form expressions that involve terms
@@ -66,9 +67,7 @@ by
 -- 06
 example (a b : ℕ) (h : a ≤ b) : a - b = 0 :=
 by
-  apply?
   sorry
-
 
 -- 07
 example (a b : ℕ)  : (b : ℤ) - a  = b - a:=
@@ -90,7 +89,6 @@ example (a b : ℕ) (h : a ≤ b) : (b - a : ℕ)  = (b : ℤ)  - a:=
 by
   sorry
 
-
 /-
 If (n d : ℕ) then n / d is a natural number, n = (n / d) * d does not hold
 unless d divides n. Instead we have `n = (n / d) * d + (n % d)` where `n % d` is
@@ -101,13 +99,22 @@ example (n d : ℕ) (h: d ∣ n) : (n / d) * d = n :=
 by
   sorry
 
+
 -- 12
+example (a b c : ℕ) (hb: b ∣ a) (hc: c ∣ a) (ha : a ≠ 0)   :
+((a / b : ℕ)) / (a / c : ℕ) = (c : ℝ )/ b :=
+by
+  have hab: ((a / b : ℕ) : ℝ) = (a : ℝ) / b
+  · sorry
+  have hac: ((a / c : ℕ) : ℝ) = (a : ℝ) / c
+  · sorry
+  sorry
+
+-- 13
 example (a b : ℕ) (h: a ∣ b) : (a : ℤ) ∣ (-(b : ℤ)):=
 by
   sorry
-
-
--- 13
+-- 14
 example (a b : ℕ) (z : ℤ) (ha : z ≤ a) (hb : z ≤ b) : z ≤ min (a : ℝ) b :=
 by
   sorry
@@ -120,39 +127,7 @@ A useful tactic for cancelling denominators is `cancel_denoms`
 open scoped BigOperators
 open Finset
 
--- 14
-example (n : ℕ) : ∑ i in range n.succ, (i : ℝ)^(3 : ℕ) = (n : ℝ)^2 * (n + 1 : ℝ)^2/4 :=
-by
-  sorry
-
-
-/-
- `Nat.choose n k` is the number of `k`-element subsets of an `n`-element set,
- aka the binomial coefficient `n.choose k`
-
-In Lean this is defined as:
-
-def choose : ℕ → ℕ → ℕ
-  | _    , 0     => 1 (there is one empty set)
-  | 0    , _ + 1 => 0 (the empty set has no subsets that are non-empty)
-  | n + 1, k + 1 => n.choose k + n.choose (k + 1) Pascal's Identity
-
-This definition may look odd, but has the big advantage of not involving either
-subtraction or division in ℕ, both of which are awkward.
-
-Note that `n.choose k = n! / (k! * (n - k)!)`, but this is a theorem not a definition
-(and doesn't hold for n = 0 and k = 1).
-
-
-Our last example can be solved using the following two results, together
-with `norm_cast` and `apply?`
--/
-
-#check div_lt_one -- if 0 < b then a / b < 1 ↔ a < b
-#check Nat.choose_succ_succ -- Pascal's identity
-
-/- If k ≤ n then `(n choose k + 1)/(n + 1 choose k + 1) < 1 -/
 -- 15
-example (n : ℕ) (h : k ≤ n): (n.choose (k + 1) : ℝ) / ((n + 1).choose (k + 1)) < 1:=
+example (n : ℕ) : ∑ i in range n.succ, (i : ℝ)^(3 : ℕ) = (n : ℝ)^2 * (n + 1 : ℝ)^2/4 :=
 by
   sorry
