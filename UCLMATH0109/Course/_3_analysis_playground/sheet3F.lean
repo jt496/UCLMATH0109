@@ -1,6 +1,12 @@
 import Mathlib.Tactic
 
 
+/-- xₙ → a if for any ε > 0 there is N ∈ ℕ such that for all n ≥ N we have |xₙ - a| < ε  -/
+def sLim (x : ℕ → ℝ) (a : ℝ) : Prop :=
+  ∀ ε, 0 < ε → ∃ N, ∀ n, N ≤ n → |x n - a| < ε
+
+notation "limₙ " => sLim
+
 /-
 These examples should be solved mainly using `norm_cast`, `push_cast` and (occaisionally) `cancel_denoms`.
 
@@ -18,7 +24,7 @@ a : ℕ
 b : ℚ
 h : ↑a = ↑b
 ⊢ ↑a = ↑b
-Note that `exact h` fails here even though Infoview suggests otherwise (hover over Infoview to see why)  -/
+Note that `exact h` fails here even though Infoview seems to suggest otherwise (hover over Infoview to see why)  -/
   sorry
 
 
@@ -61,6 +67,13 @@ example (a b c : ℕ) (h : b ≠ 0) (h1 : b ∣ a) (h2 : c ∣ b):
 by
   sorry
 
+
+-- 07 if xₙ → a then 2 * xₙ → 2 * a
+example (hl : limₙ x a) : limₙ (2*x) (2*a) :=
+by
+  intro ε hε
+  dsimp -- this definitionally simplifies the goal so `(2 * x) n` becomes `↑2 * x n`
+  sorry
 /-
  `Nat.choose n k` is the number of `k`-element subsets of an `n`-element set,
  aka the binomial coefficient `n.choose k`
@@ -86,7 +99,7 @@ with `norm_cast` and `apply?`
 #check Nat.choose_succ_succ -- Pascal's identity
 
 /- If k ≤ n then `(n choose k + 1)/(n + 1 choose k + 1) < 1 -/
--- 07
+-- 08
 example (n : ℕ) (h : k ≤ n): (n.choose (k + 1) : ℝ) / ((n + 1).choose (k + 1)) < 1:=
 by
   sorry
