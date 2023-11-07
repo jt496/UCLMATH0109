@@ -68,16 +68,15 @@ by
 In Lean this is defined as:
 
 def choose : ℕ → ℕ → ℕ
-  | _    , 0     => 1 (there is one empty set)
+  | _    , 0     => 1 (there is one empty subset of any set)
   | 0    , _ + 1 => 0 (the empty set has no subsets that are non-empty)
-  | n + 1, k + 1 => n.choose k + n.choose (k + 1) Pascal's Identity
+  | n + 1, k + 1 => n.choose k + n.choose (k + 1)  (Pascal's Rule: https://en.wikipedia.org/wiki/Pascal%27s_rule)
 
 This definition may look odd, but has the big advantage of not involving either
 subtraction or division in ℕ, both of which are awkward.
 
 Note that `n.choose k = n! / (k! * (n - k)!)`, but this is a theorem not a definition
 (and doesn't hold for n = 0 and k = 1).
-
 
 Our last example can be solved using the following two results, together
 with `norm_cast` and `apply?`
