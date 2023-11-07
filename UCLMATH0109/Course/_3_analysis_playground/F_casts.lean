@@ -17,7 +17,7 @@ but is expected to have type
 
 Lean is complaining that this doesn't make sense because `=` is only defined for
 terms of the same type, so given the LHS `a : α` it was expecting the RHS of the
-equality to also be a term of type A.
+equality to also be a term of type α.
 
 But as mathematicians we happily form expressions that involve terms
 of different types.
@@ -150,4 +150,3 @@ by
   | succ n ih =>
     rw [sum_range_succ, mul_add, ih, Nat.succ_eq_add_one]
     push_cast; ring
-    
