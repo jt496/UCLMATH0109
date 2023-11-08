@@ -2,6 +2,12 @@ import Mathlib.Data.Finset.Lattice
 import Mathlib.Algebra.BigOperators.Ring
 import Mathlib.Tactic
 
+/-- xₙ → a if for any ε > 0 there is N ∈ ℕ such that for all n ≥ N we have |xₙ - a| < ε  -/
+def sLim (x : ℕ → ℝ) (a : ℝ) : Prop :=
+  ∀ ε, 0 < ε → ∃ N, ∀ n, N ≤ n → |x n - a| < ε
+
+notation "limₙ " => sLim
+
 open Finset
 open scoped BigOperators
 
@@ -54,8 +60,26 @@ by
   sorry
 
 /-
-
 06 -/
-example (n : ℕ) (x y : ℕ → ℝ) : |∑ i in range n, x n + y n| ≤ ∑ i in range n, |x n| + ∑ i in range n, |y n|:=
+example (n : ℕ) (x y : ℕ → ℝ) :
+|∑ i in range n, (x i + y i)| ≤ ∑ i in range n, |x i| + ∑ i in range n, |y i|:=by
+calc
+  _ ≤ ∑ i in range n, |x i + y i|      := by sorry
+  _ ≤ ∑ i in range n, (|x i| + |y i|)  := by sorry
+  _ = _                                := by sorry
+
+/-
+Ico a b is the closed/open interval [a, b)
+If `a b : ℕ` this is `{a,a+1, ..., b-1}
+-/
+
+#check mem_Ico
+#check sub_zero
+#check abs_mul
+/- If limₙ xₙ = 0 and ∀ n, f n ≤ g n then there exists N such that for all M
+`∑ i in [N,M), |f i| ≤ ∑ i in [N,M), |g n|`
+07 -/
+example  (f g : ℕ → ℝ) (hx : limₙ x 0) (hf : ∀ n, |f n| ≤ |(g n)*(x n)|) :
+∃ N, ∀ M, ∑ i in Ico N M, |f i| ≤ ∑ j in Ico N M, |g j| :=
 by
   sorry
