@@ -40,9 +40,9 @@ correct lemma from Mathlib.
 example (s t u : Finset ℕ) : (s ∪ t ∪ u).card ≤ s.card  + t.card + u.card :=
 by
   sorry
-  
+
 /-
-For this example first prove it on paper, `apply?` with the correct `have` statements
+For this example first prove it on paper: `apply?` with the correct `have` statements
 or in a `calc` block should do it.
 05 -/
 example (s t : Finset ℕ) (f : ℕ → ℕ) (hs : ∀ i, i ∈ s → f i ≤ n) (ht: ∀ i, i ∈ t → f i ≤ 2*n) :
@@ -51,4 +51,11 @@ by
   have hu: s ∪ t = s ∪ (t \ s) := by sorry
   have hD: Disjoint s (t \ s) := by sorry
   -- try setting out a `calc` block to complete this
+  sorry
+
+/-
+
+06 -/
+example (n : ℕ) (x y : ℕ → ℝ) : |∑ i in range n, x n + y n| ≤ ∑ i in range n, |x n| + ∑ i in range n, |y n|:=
+by
   sorry
