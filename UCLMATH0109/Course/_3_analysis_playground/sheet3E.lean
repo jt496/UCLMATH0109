@@ -76,10 +76,10 @@ If `a b : ℕ` this is `{a,a+1, ..., b-1}
 #check mem_Ico
 #check sub_zero
 #check abs_mul
-/- If limₙ xₙ = 0 and ∀ n, f n ≤ g n then there exists N such that for all M
-`∑ i in [N,M), |f i| ≤ ∑ i in [N,M), |g n|`
+/- If limₙ xₙ = 0 and ∀ n, |yₙ| ≤ |zₙ * xₙ| then
+`∃ N, ∀ M, ∑ i in [N,M), |y i| ≤ ∑ i in [N,M), |z i|`
 07 -/
-example  (f g : ℕ → ℝ) (hx : limₙ x 0) (hf : ∀ n, |f n| ≤ |(g n)*(x n)|) :
-∃ N, ∀ M, ∑ i in Ico N M, |f i| ≤ ∑ j in Ico N M, |g j| :=
+example  (y z : ℕ → ℝ) (hx : limₙ x 0) (hle : ∀ i, |y i| ≤ |(z i)*(x i)|) :
+∃ N, ∀ M, ∑ i in Ico N M, |y i| ≤ ∑ i in Ico N M, |z i| :=
 by
   sorry
