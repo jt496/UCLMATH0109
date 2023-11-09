@@ -11,7 +11,6 @@ notation "limₙ " => sLim
 open Finset
 open scoped BigOperators
 
-
 /-
 Prove this generalized version of the triange inequality by induction.
 01 -/
@@ -68,6 +67,7 @@ calc
   _ ≤ ∑ i in range n, (|x i| + |y i|)  := by sorry
   _ = _                                := by sorry
 
+
 /-
 Ico a b is the closed/open interval [a, b)
 If `a b : ℕ` this is `{a,a+1, ..., b-1}
@@ -81,5 +81,33 @@ If `a b : ℕ` this is `{a,a+1, ..., b-1}
 07 -/
 example  (y z : ℕ → ℝ) (hx : limₙ x 0) (hle : ∀ i, |y i| ≤ |(z i)*(x i)|) :
 ∃ N, ∀ M, ∑ i in Ico N M, |y i| ≤ ∑ i in Ico N M, |z i| :=
+by
+  sorry
+
+
+
+def Bounded (x : ℕ → ℕ) : Prop := ∃ B, ∀ n, x n ≤ B
+
+def EventuallyBounded (x : ℕ → ℕ) : Prop := ∃ B, ∃ N, ∀ n, N ≤ n → x n ≤ B
+
+/-
+The next result is very similar to the proof in the video `E2_let`.
+08 -/
+lemma Bounded_of_EventuallyBounded (h: EventuallyBounded x) : Bounded x :=
+by
+  sorry
+
+
+def Omega (x y : ℕ → ℕ) : Prop := ∃ N, ∃ c, ∀ n, N ≤ n → x n ≤ c * (y n)
+
+-- 09
+example (h : a ≤ b): Omega (fun n => n^a) (fun n => n^b) :=
+by
+  sorry
+
+
+/-- Hint: try to apply the lemma you proved above `Bounded_of_EventuallyBounded`
+10 -/
+example (f g : ℕ → ℕ) : Omega f g → Bounded (f/g) :=
 by
   sorry
