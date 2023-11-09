@@ -104,7 +104,7 @@ notation x"= O(" y ")" => Omega x y
 
 #check 1 = O( 1)
 -- 09
-example (h : a ≤ b): Omega (fun n => n^a) (fun n => n^b) :=
+example (h : a ≤ b): fun n => n^a = O(fun n => n^b) :=
 by
   sorry
 
