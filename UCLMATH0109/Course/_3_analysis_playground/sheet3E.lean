@@ -100,6 +100,9 @@ by
 
 def Omega (x y : ℕ → ℕ) : Prop := ∃ N, ∃ c, ∀ n, N ≤ n → x n ≤ c * (y n)
 
+notation x"=O(" y ")" => Omega x y
+
+
 -- 09
 example (h : a ≤ b): Omega (fun n => n^a) (fun n => n^b) :=
 by
