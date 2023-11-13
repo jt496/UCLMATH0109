@@ -98,19 +98,19 @@ by
   sorry
 
 
-def Omega (x y : ℕ → ℕ) : Prop := ∃ N, ∃ c, ∀ n, N ≤ n → x n ≤ c * (y n)
+def BigO (x y : ℕ → ℕ) : Prop := ∃ N, ∃ c, ∀ n, N ≤ n → x n ≤ c * (y n)
 
-notation x"= O(" y ")" => Omega x y
+notation x" = O(" y ")" => BigO x y
 
-#check 1 = O( 1)
+#check 1 = O( 1 )
 -- 09
-example (h : a ≤ b): fun n => n^a = O(fun n => n^b) :=
+example (h : a ≤ b): (· ^ a) = O((· ^ b)) :=
 by
   sorry
 
 
 /-- Hint: try to apply the lemma you proved above `Bounded_of_EventuallyBounded`
 10 -/
-example (f g : ℕ → ℕ) : Omega f g → Bounded (f/g) :=
+example (f g : ℕ → ℕ) :f = O( g ) → Bounded (f/g) :=
 by
   sorry
