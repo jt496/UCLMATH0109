@@ -3,7 +3,7 @@ import Mathlib.Tactic
 /-
 # Structures
 
-In lean, there are many `Type`s, for example `ℕ`, `ℤ`, `ℚ`, `ℝ`, `ℂ`, `ℕ → ℝ`, etc.
+In lean, there are many `Type`s, for example `ℕ`, `ℤ`, `ℚ`, `ℝ`, `ℂ`, `ℕ → ℝ`, `Set ℕ`, etc.
 A common way of defining a new `Type` is using the command `structure`.
 
 Below, we define a new `Type` called `Plane` whose terms can be thought of as being
@@ -11,7 +11,7 @@ points in the plane. They each have an `x`-coordinate and a `y`-coordinate, both
 of which are integers.
 -/
 
-@[ext]  -- this line will be exPlained soon.
+@[ext]  -- this line will be explained soon.
 structure Plane where
   x : ℤ
   y : ℤ
@@ -35,8 +35,8 @@ Give a term `P : Plane`, we can write `P.x` and `P.y` for its `x`- and `y`-coord
 -/
 #eval A.x
 
--- Look back at line 14. This line automatically generates lemma `Plane.ext`,
--- which gives us a way of Proving that two terms of type `Plane` are eQual.
+-- Look back at line 14. This line automatically generates  a lemma `Plane.ext`,
+-- which gives us a way of Proving that two terms of type `Plane` are equal.
 -- The lemma is used by the `ext` tactic.
 #check Plane.ext A B
 
@@ -47,12 +47,12 @@ example : (⟨1,2⟩ : Plane) = ⟨1,n - n + 2⟩ := by
 /-
 # Classes
 
-We might like to be able to add Points in the Plane.
+We might like to be able to add terms of `Plane`.
 However, lean does not yet know how to do this. (Uncomment the
 following line, to see the error message.)
 -/
 
--- #check P + Q
+-- #check A + B
 
 /-
 To be able to add Points in `Plane`, we'll start by
@@ -61,7 +61,7 @@ defining a function which adds Points.
 def my_addition (P Q : Plane) : Plane := ⟨P.x + Q.x, P.y + Q.y⟩
 
 /-
-To be able to write `+` for this oPeration, we need to
+To be able to write `+` for this operation, we need to
 create an instance of the class `Add`.
 
 `Add Plane` is a structure whose only field is
@@ -70,7 +70,7 @@ create an instance of the class `Add`.
 
 However, the structure `Add Plane` is a `class`. This means that instead of
 defining terms of `Add Plane` using the `def` command, we instead use the
-`incidence` command. Once we define the term using the incidence command, lean
+`incidence` command. Once we define the term using the `incidence` command, lean
 will know the meaning of `P + Q` for `P Q : Plane`.
 
 *Warning* One should never define two different instances of type `Add Plane`,
@@ -93,6 +93,8 @@ After creating such an instance, it is a very good idea to write a
 "definitional lemma", which says what the addition notation means.
 -/
 lemma add_def (P Q : Plane) : P + Q = ⟨P.x + Q.x, P.y + Q.y⟩ := rfl
+lemma add_x (P Q : Plane) : (P + Q).x = P.x + Q.x := rfl
+lemma add_y (P Q : Plane) : (P + Q).y = P.y + Q.y := rfl
 
 /-
 It would also be nice to write `0` instead of `origin`.
@@ -102,7 +104,7 @@ instance : Zero Plane where
   zero := origin
 
 /-
-We can now Prove simPle things about the Plane like this.
+Here are some definitional lemmas for `Zero`.
 -/
 lemma zero_def : (0 : Plane) = origin := rfl
 
@@ -124,19 +126,25 @@ lemma my_zero_add (P : Plane) : 0 + P = P :=
 by
   sorry
 
-lemma my_add_assoc (P Q r : Plane) : (P + Q) + r = P + (Q + r) :=
+lemma my_add_assoc (P Q r : Plane) :
+  (P + Q) + r = P + (Q + r) :=
 by
   sorry
 
 /-
 Let's now define `-P` for a Point `P : Plane`.
 -/
-def Plane_neg (P : Plane) : Plane := ⟨-P.x, -P.y⟩
+def my_neg (P : Plane) : Plane := ⟨-P.x, -P.y⟩
 
 instance : Neg Plane where
-  neg := Plane_neg
+  neg := my_neg
 
+/-
+Here are some definitional lemmas.
+-/
 lemma neg_def (P : Plane) : -P = ⟨-P.x,-P.y⟩ := rfl
+lemma neg_x (P : Plane) : (-P).x = -P.x := rfl
+lemma neg_y (P : Plane) : (-P).y = -P.y := rfl
 
 lemma my_add_neg_self (P : Plane) : P + (-P) = 0 := by
   sorry
@@ -149,10 +157,10 @@ lemma my_add_comm (P Q : Plane) : P + Q = Q + P := by
 
 
 /-
-We have now Proved all of the axioms, which say that `Plane`
-is a commutative grouP with the oPeration of addition.
-To allow lean to use all the theorems it knows about grouPs,
-we create an instance of `AddGrouP Plane`.
+We have now proved all of the axioms, which say that `Plane`
+is a commutative group with the operation of addition.
+To allow lean to use all the theorems it knows about such groups,
+we create an instance of `AddCommGroup Plane`.
 -/
 
 instance : AddCommGroup Plane where
@@ -178,9 +186,9 @@ by
   sorry
 
 /-
-Lean also knows how to multiPly elements of an additive commutative grouP
-by natural numbers and integers. This oPeration is called `•` (scalar multiPlication).
-The Mathlib terms for these two oPerations are `nsmul` and `zsmul` (scalar multiPlication
+Lean also knows how to multiply elements of an additive commutative group
+by natural numbers and integers. These operations are typed as `•` (scalar multiplication).
+The Mathlib terms for these two operations are `nsmul` and `zsmul` (scalar multiplication
 by natural numbers and by integers).
 -/
 

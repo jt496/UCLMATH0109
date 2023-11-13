@@ -61,8 +61,8 @@ instance : Mul circle := sorry
 #06
 State and prove a definitional lemmas
 -/
-lemma mul.x (a b : circle) : (a * b).x = a.x * b.x - a.y * b.y := sorry
-lemma mul.y (a b : circle) : (a * b).y = a.x * b.y + a.y * b.x := sorry
+lemma mul.x (a b : circle) : (a * b).x = sorry := sorry
+lemma mul.y (a b : circle) : (a * b).y = sorry := sorry
 
 /-
 #07
