@@ -3,7 +3,11 @@ import Mathlib.Tactic
 /-
 # Structures
 
-In lean, there are many `Type`s, for example `ℕ`, `ℤ`, `ℚ`, `ℝ`, `ℂ`, `ℕ → ℝ`, `Set ℕ`, etc.
+In lean, there are many `Type`s, for example
+
+  `ℕ`, `ℤ`, `ℚ`, `ℝ`, `ℂ`,
+  `ℕ → ℝ`, `Set ℕ`, ... etc.
+
 A common way of defining a new `Type` is using the command `structure`.
 
 Below, we define a new `Type` called `Plane` whose terms can be thought of as being
