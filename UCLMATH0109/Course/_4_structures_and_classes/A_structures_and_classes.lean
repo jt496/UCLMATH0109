@@ -77,7 +77,7 @@ create an instance of the class `Add`.
 
 However, the structure `Add Plane` is a `class`. This means that instead of
 defining terms of `Add Plane` using the `def` command, we instead use the
-`incidence` command. Once we define the term using the `incidence` command, lean
+`instance` command. Once we define the term using the `instance` command, lean
 will know the meaning of `P + Q` for `P Q : Plane`.
 
 *Warning* One should never define two different instances of type `Add Plane`,
