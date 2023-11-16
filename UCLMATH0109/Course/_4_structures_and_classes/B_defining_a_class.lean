@@ -30,28 +30,28 @@ using any of the theorems from Mathlib.
 -/
 section
     /-
-    We begin by telling lean that `G` is a Type, and `group_structure` is
+    We begin by telling lean that `G` is a Type, and `G_axioms` is
     a `MyGroup G`, as defined above.
     -/
-    variable {G : Type} [group_structure : MyGroup G] (x y : G)
+    variable {G : Type} [G_axioms : MyGroup G] (x y : G)
     /-
-    Note that `group_structure` is a variable of type `mygroup G`.
+    Note that `G_axioms` is a variable of type `mygroup G`.
     This means that we have the following terms:
     -/
-    #check group_structure.mul
-    #check group_structure.one
-    #check group_structure.inv
-    #check group_structure.mul_assoc
-    #check group_structure.mul_one
-    #check group_structure.one_mul
-    #check group_structure.mul_inv_self
-    #check group_structure.inv_mul_self
+    #check G_axioms.mul
+    #check G_axioms.one
+    #check G_axioms.inv
+    #check G_axioms.mul_assoc
+    #check G_axioms.mul_one
+    #check G_axioms.one_mul
+    #check G_axioms.mul_inv_self
+    #check G_axioms.inv_mul_self
     /-
     We can use the symbols `1`, `*` and `⁻¹` in the group `G`.
     -/
     #check x * (y⁻¹ * 1)⁻¹ * x
     /-
-    Let's forget what `G` and `group_structure` are now by ending the section.
+    Let's forget what `G` and `G_axioms` are now by ending the section.
     -/
 end
 
