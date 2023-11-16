@@ -16,5 +16,5 @@ import UCLMATH0109.Course._3_analysis_playground.E2_let
 import UCLMATH0109.Course._3_analysis_playground.F_casts
 import UCLMATH0109.Course._4_structures_and_classes.A_structures_and_classes
 import UCLMATH0109.Course._4_structures_and_classes.B_defining_a_class
-import UCLMATH0109.Course._4_structures_and_classes.C_group_exercises
+import UCLMATH0109.Course._4_structures_and_classes.C_groups
 import UCLMATH0109.Course._4_structures_and_classes.D_simp
