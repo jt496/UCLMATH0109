@@ -19,7 +19,7 @@ open Group
 -- first find the group axioms, using `exact?`
 example (x y z : G) : (x*y)*z=x*(y*z) :=
 by
-  -- exact? 
+  -- exact?
   sorry
 
 example (x : G) : 1*x = x :=
@@ -53,16 +53,11 @@ example (x : G) (h: x*y=1) : y = x⁻¹:=
 by
   sorry
 
-
-
-
-
 -- for the next example, you could use a "have" statement
 -- to obtain the previous example as an intermediate step.
 example (x y : G) (h : x*y=1) : y*x=1 :=
 by
   sorry
-
 
 --to prove a complicated equation which is true in any group
 --(with no other hypotheses than the group axioms),
@@ -88,8 +83,7 @@ example (x : G) (n : ℤ) : x^(-n) = x⁻¹^n :=
 by
   exact Eq.symm (inv_zpow' x n)
 
-
--- Have a think about this one. 
+-- Have a think about this one.
 -- Of course you could prove it by a very
 -- long sequence of rewrites. However it is easier to
 -- prove a more general statement by induction.
@@ -97,10 +91,8 @@ example (x y : G) (h : x*y=y*x) : x^45*y^4 = y^4* x^45 :=
 by
   sorry
 
-
-
 -- here is a classic group theory exercise.
--- Suppose G is a group in which x^2=1 for every element x. 
+-- Suppose G is a group in which x^2=1 for every element x.
 -- Prove that G is abelian.
 example (x y : G) (h: ∀ z:G , z^2=1) : x*y=y*x :=
 by
@@ -111,28 +103,72 @@ by
 
 example (x y : G) (h : x * y = y^2 * x) (n : ℕ) : x^n * y = y ^ (2^n) * x^n :=
 by
-  induction n with
-  | zero => 
-    --simp
-    rw [pow_zero, pow_zero, pow_one, one_mul, mul_one]
-  | succ n ih =>
-    rw [pow_succ, mul_assoc, ih, ←mul_assoc, ←mul_assoc]
-    congr 1
-    clear ih
-    induction n with
-    | zero =>
-      simp [h]
-    | succ n ih2 =>
-      rw [pow_succ, mul_comm, pow_mul, pow_two,
-        ←mul_assoc, ih2, mul_assoc,ih2, ←mul_assoc,
-        pow_succ, pow_succ, ←pow_add, pow_succ]
-      congr
-      ring
-
-
+  sorry
 
 example (x y : G) (h : x * y = y⁻¹ * x) : x ^ (2 * n) * y = y * x^(2 * n) := by
   sorry
 
 example (x y : G) (h : x * y = y⁻¹ * x) : x ^ n * y = y^((-1:ℤ)^n) * x ^ n := by
   sorry
+
+section homomorphisms
+
+/-
+If `G` and `H` are groups, then `G →* H` is the `Type` of group
+homomorphisms from `G` to `H`.
+This is a `structure` with fields:
+  `toFun` a function `G → H`,
+  `map_mul'` a proof that `toFun (g * g') = toFun g * toFun g'`,
+  `map_one'` a proof that `toFun 1 = 1`,
+-/
+
+variable {G} {H : Type} [Group H]
+variable (f : G →* H) -- `f` is a homomorphism from `G` to `H`
+
+
+-- Find some standard properties of group homomorphisms in Mathlib.
+
+example : f (g * h) = f g * f h :=
+  sorry
+
+example : f g⁻¹ = (f g)⁻¹ :=
+  sorry
+
+example : f (g ^ n) = (f g) ^ n :=
+by
+  sorry
+
+/-
+Show that if `A` is an Abelian group then
+the map `a ↦ a^2` is a group homomorphism from `A` to `A`.
+-/
+example (A : Type) [CommGroup A] : A →* A where
+  toFun     := fun a ↦ a^2
+  map_one'  := sorry
+  map_mul'  := sorry
+
+#check Subgroup G
+/-
+In lean, `Subgroup G` is a structure with fields
+  `carrier` - a subset of `G`.
+  `mul_mem'` a proof that if `g` and `h` are in `carrier` then so is `g*h`,
+  `one_mem'` a proof that `1` is in `carrier`,
+  `inv_mem'` a proof that if `g ∈ carrier` then `g⁻¹ ∈ carrier`.
+
+Prove that the image of `f` is a subgroup of `H`
+and the kernel is a subgroup of `G`.
+-/
+
+def Ker : Subgroup G where
+  carrier := {g : G | f g = 1}
+  mul_mem' := sorry
+  one_mem' := sorry
+  inv_mem' := sorry
+
+def Im : Subgroup H where
+  carrier := {h : H | ∃ g : G, f g = h}
+  mul_mem' := sorry
+  one_mem' := sorry
+  inv_mem' := sorry
+
+end homomorphisms
