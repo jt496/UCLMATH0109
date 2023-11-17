@@ -24,15 +24,8 @@ by
 example (hl : limₙ x a) : limₙ (2*x) (2*a) :=
 by
   intro ε hε ; dsimp
-  obtain ⟨N,hN⟩ :=hl (ε/2) (by positivity)
-  use N
-  intro n hn
-  norm_cast
-  rw [← mul_sub, abs_mul]
-  norm_num
-  specialize hN n hn
-  linarith
-
+  obtain ⟨N,hN⟩ :=hl (ε/2) (by sorry)
+  sorry
 
 -- 03 You can do this with `apply?` but you need to choose the correct suggestion carefully
 example (a b c d : ℝ) (ha : d ≤ a) : d ≤ min (max a b) (max a c) :=
