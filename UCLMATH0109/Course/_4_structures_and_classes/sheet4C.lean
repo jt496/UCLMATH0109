@@ -143,6 +143,6 @@ In this last example, you might want to use `Set.mem_singleton_iff`.
 You might also want to look up `Function.injective`.
 -/
 theorem injective_iff (φ : G →* H) :
-    Function.Injective f ↔ (Ker φ : Set G) = {1} :=
+    Function.Injective φ ↔ (Ker φ : Set G) = {1} :=
 by
   sorry
