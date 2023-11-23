@@ -136,7 +136,7 @@ by
 
 --16
 /-
-We defined th kernel of a homomorphism in question 10.
+We defined the kernel of a homomorphism in question 10.
 Prove that a homomorphism `φ` is injective iff its kernel is `{1}`.
 
 In this last example, you might want to use `Set.mem_singleton_iff`.
