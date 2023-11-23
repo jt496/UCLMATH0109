@@ -5,12 +5,12 @@ import Mathlib.Tactic
 /-
 In the previous file, the notion of a group was defined from scratch.
 Of course, groups are already defined in Mathlib, and many theorems
-about groups are already there. We have imported some of these in the first
+about groups are in Mathlib. We have imported some of these in the first
 line of this file. From now on, we'll work with the Mathlib definition of
 a group.
 -/
 
-/-Let `G` be a group.-/
+/-Let `G` and `H` be a groups.-/
 variable {G H : Type} [Group G] [Group H]
 
 -- first find the group axioms, using `exact?`
@@ -29,7 +29,7 @@ by
 
 example (x : G) : x * x⁻¹ = 1 :=
 by
-  sorry
+  exact mul_inv_self x
 
 example (x : G): x⁻¹ * x = 1 :=
 by
@@ -48,13 +48,13 @@ example (x : G) (h: x * y = 1) : y = x⁻¹ :=
 by
   sorry
 
--- For the next example, you could use a "have" statement
+-- For the next example, you could use a `have` statement
 -- to obtain the previous example as an intermediate step.
 example (x y : G) (h : x * y = 1) : y * x = 1 :=
 by
   sorry
 
---to prove a complicated equation which is true in any group
+--To prove a complicated equation which is true in any group
 --(with no other hypotheses than the group axioms),
 --you can use the high level tactic `group`. For example,
 example (x y : G) : x*y*x⁻¹*y^2*y⁻¹^2*x*y⁻¹*x^2 = x^3 :=
@@ -72,6 +72,26 @@ example (x y : G) (h: x = y) : x ^ 2 = y ^ 2 :=
 by
   sorry
 
+#check Subgroup G
+/-
+In lean, `Subgroup G` is a structure with fields
+  `carrier` - a subset of `G` (the elements of the subgroup).
+  `mul_mem'` a proof that if `g` and `h` are in `carrier` then so is `g * h`,
+  `one_mem'` a proof that `1` is in `carrier`,
+  `inv_mem'` a proof that if `g ∈ carrier` then `g⁻¹ ∈ carrier`.
+-/
+
+open Set
+/-
+Show that `{1}` is a subgroup of `G`
+-/
+def Trivial_subgroup : Subgroup G where
+  carrier := {1}
+  mul_mem' := by sorry
+  one_mem' := by sorry
+  inv_mem' := by sorry
+
+
 
 /-
 If `G` and `H` are groups, then `G →* H` is the `Type` of group
@@ -83,7 +103,6 @@ This is a `structure` with fields:
 -/
 
 variable (φ : G →* H) -- `φ` is a homomorphism from `G` to `H`
-
 
 -- Find some standard properties of group homomorphisms in Mathlib.
 
@@ -100,7 +119,7 @@ by
   sorry
 
 /-
-Show that the fucntion taking every element of `G` to `1 : H` is
+Show that the function taking every element of `G` to `1 : H` is
 a homomorphism.
 -/
 def trivial_hom : G →* H where
@@ -116,39 +135,8 @@ Show that the identity is a homomorphism.
 -/
 def id_hom : G →* G where
   toFun := id
-  map_one' := by
-    rfl
-  map_mul' := by
-    tauto
-
-
-
-#check Subgroup G
-/-
-In lean, `Subgroup G` is a structure with fields
-  `carrier` - a subset of `G`.
-  `mul_mem'` a proof that if `g` and `h` are in `carrier` then so is `g*h`,
-  `one_mem'` a proof that `1` is in `carrier`,
-  `inv_mem'` a proof that if `g ∈ carrier` then `g⁻¹ ∈ carrier`.
--/
-
-/-
-Show that `{1}` is a subgroup of `G`
--/
-def Trivial_subgroup : Subgroup G where
-  carrier := {1}
-  mul_mem' := by
-    intro a b ha hb
-    rw [Set.mem_singleton_iff] at *
-    rw [ha, hb, one_mul]
-  one_mem' := by
-    dsimp
-    rw [Set.mem_singleton_iff]
-  inv_mem' := by
-    intro x hx
-    dsimp at *
-    rw [Set.mem_singleton_iff] at *
-    rw [hx, inv_one]
+  map_one' := rfl
+  map_mul' _ _ := rfl
 
 /-
 Show that the image of a homomorphism is a subgroup.
