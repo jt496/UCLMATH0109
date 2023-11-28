@@ -1,7 +1,6 @@
 import Mathlib.Algebra.Group.Basic
 import Mathlib.Tactic
 
---## WORK IN PROGRESS
 /-
 In the previous file, the notion of a group was defined from scratch.
 Of course, groups are already defined in Mathlib, and many theorems
@@ -29,8 +28,7 @@ by
 
 example (x : G) : x * x⁻¹ = 1 :=
 by
-  exact mul_inv_self x
-
+  sorry
 example (x : G): x⁻¹ * x = 1 :=
 by
   sorry
@@ -72,9 +70,11 @@ example (x y : G) (h: x = y) : x ^ 2 = y ^ 2 :=
 by
   sorry
 
+
+
 #check Subgroup G
 /-
-In lean, `Subgroup G` is a structure with fields
+In lean, `Subgroup G` is a `Type`, defined as a structure with fields
   `carrier` - a subset of `G` (the elements of the subgroup).
   `mul_mem'` a proof that if `g` and `h` are in `carrier` then so is `g * h`,
   `one_mem'` a proof that `1` is in `carrier`,
@@ -86,11 +86,13 @@ open Set
 Show that `{1}` is a subgroup of `G`
 -/
 def Trivial_subgroup : Subgroup G where
-  carrier := {1}
-  mul_mem' := by sorry
-  one_mem' := by sorry
-  inv_mem' := by sorry
-
+  carrier  := {1}
+  mul_mem' := by
+    sorry
+  one_mem' := by
+    sorry
+  inv_mem' := by
+    sorry
 
 
 /-
@@ -102,21 +104,20 @@ This is a `structure` with fields:
   `map_one'` a proof that `toFun 1 = 1`,
 -/
 
-variable (φ : G →* H) -- `φ` is a homomorphism from `G` to `H`
-
 -- Find some standard properties of group homomorphisms in Mathlib.
 
-example : φ (g * h) = φ g * φ h :=
+example (φ : G →* H) : φ (g * h) = φ g * φ h :=
 by
   sorry
 
-example : φ g⁻¹ = (φ g)⁻¹ :=
+example (φ : G →* H) : φ g⁻¹ = (φ g)⁻¹ :=
 by
   sorry
 
-example : φ (g ^ n) = (φ g) ^ n :=
+example (φ : G →* H) : φ (g ^ n) = (φ g) ^ n :=
 by
   sorry
+
 
 /-
 Show that the function taking every element of `G` to `1 : H` is
@@ -124,33 +125,30 @@ a homomorphism.
 -/
 def trivial_hom : G →* H where
   toFun := fun _ ↦ 1
-  map_one' := rfl
+  map_one' := by
+    sorry
   map_mul' := by
-    intros
-    dsimp
-    exact self_eq_mul_left.mpr rfl
+    sorry
 
 /-
 Show that the identity is a homomorphism.
 -/
 def id_hom : G →* G where
   toFun := id
-  map_one' := rfl
-  map_mul' _ _ := rfl
+  map_one' := by
+    sorry
+  map_mul' := by
+    sorry
 
 /-
 Show that the image of a homomorphism is a subgroup.
+The image of a function `f : X → Y` is `Set.range f`.
 -/
 def Im (φ : G →* H): Subgroup H where
-  carrier := {h : H | ∃ g : G, φ g = h}
+  carrier := range φ
   mul_mem' := by
-    intro a b ha hb
-    dsimp at ha hb ⊢
-    obtain ⟨x, hx⟩ := ha
-    obtain ⟨y, hy⟩ := hb
-    use x*y
-    rw [map_mul, hx, hy]
+    sorry
   one_mem' := by
-    use 1
-    exact map_one φ
-  inv_mem' := sorry
+    sorry
+  inv_mem' := by
+    sorry
