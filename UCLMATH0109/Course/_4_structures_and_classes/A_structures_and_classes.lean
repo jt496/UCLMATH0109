@@ -3,7 +3,7 @@ import Mathlib.Tactic
 /-
 # Structures
 
-In lean, there are many `Type`s, for example
+In Lean, there are many `Type`s, for example
 
   `ℕ`, `ℤ`, `ℚ`, `ℝ`, `ℂ`,
   `ℕ → ℝ`, `Set ℕ`, ... etc.
