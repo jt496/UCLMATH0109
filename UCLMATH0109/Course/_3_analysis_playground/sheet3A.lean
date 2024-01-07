@@ -1,10 +1,6 @@
 import Mathlib.Tactic
 
 
-/-
-TODO: Add more examples of using refine / congr! / convert etc
-
--/
 
 /-- xₙ → a if for any ε > 0 there is N ∈ ℕ such that for all n ≥ N we have |xₙ - a| < ε  -/
 def sLim (x : ℕ → ℝ) (a : ℝ) : Prop :=
