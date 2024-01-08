@@ -15,6 +15,7 @@ import Mathlib.Data.Nat.Basic
 example (A : Type) : A → A → A :=
 by
   sorry
+
 -- 02
 example (A B C: Type) (f : A → B) (g : B → C) : A → C :=
 by
@@ -80,12 +81,10 @@ example : ∃ n : ℕ, 2*n = 10 :=
 by
   sorry
 
-
 -- 15
 example (a : X) : ∃ x, x = a :=
 by
   sorry
-
 
 -- 16
 example : ∃ n : ℕ, ∀ m, n ≠ m + 1 :=
