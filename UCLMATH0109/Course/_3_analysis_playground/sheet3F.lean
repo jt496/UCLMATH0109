@@ -97,6 +97,7 @@ with `norm_cast` and `apply?`
 
 #check div_lt_one -- if 0 < b then a / b < 1 ↔ a < b
 #check Nat.choose_succ_succ -- Pascal's identity
+#check Nat.choose_pos -- if k ≤ n then `0 <  n.choose k`
 
 /- If k ≤ n then `(n choose k + 1)/(n + 1 choose k + 1) < 1 -/
 -- 08
