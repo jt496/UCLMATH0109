@@ -36,9 +36,14 @@ instance : One circle := sorry
 
 /-
 #04
-prove the definitional lemma
+prove the definitional lemmas
 -/
 lemma one_def : (1 : circle) = ⟨1,0,h⟩ := sorry
+
+lemma one.x : (1 : circle).x = 1:= sorry
+
+lemma one.y : (1 : circle).y = 0:= sorry
+
 
 /-
 #05
@@ -58,42 +63,49 @@ for multiplication on the circle.
 instance : Mul circle := sorry
 
 /-
-#06
+#07
 State and prove a definitional lemmas
 -/
 lemma mul.x (a b : circle) : (a * b).x = sorry := sorry
 lemma mul.y (a b : circle) : (a * b).y = sorry := sorry
 
 /-
-#07
+#08
 -/
 lemma mul_one (a : circle) : a * 1 = a := sorry
 
 /-
-#08
+#09
 -/
 lemma mul_comm (a b : circle) : a * b = b * a := sorry
 
 /-
-#09
+#10
 -/
 lemma mul_assoc (a b c : circle) : (a * b) * c = a * (b * c) := sorry
 
 /-
-#10 define an inverse for multiplication, and create an
+#11 Define an inverse for multiplication, and create an
 instance of the class `Inv circle`, so that we can write `a⁻¹`.
 -/
 def inv (a : circle) : circle := sorry
 
 instance : Inv circle := sorry
 
+
+--#12 prove the definitional lemmas
+lemma inv.x (a : circle ) : (a⁻¹).x = sorry := sorry
+
+lemma inv.y (a : circle ) : (a⁻¹).y = sorry := sorry
+
+
 /-
-#11
+#13
 -/
 lemma mul_left_inv (a b : circle) : a⁻¹ * a = 1 := sorry
 
 /-
-#12
+#14
 create in instance of `CommGroup circle`, showing that `circle` is
 a commutative group.
 -/
