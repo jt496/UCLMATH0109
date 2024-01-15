@@ -68,7 +68,7 @@ by
   sorry
 
 -- 07
-example (P Q: Prop): ((P → Q) → P) → P:=
+example (P Q : Prop): ((P → Q) → P) → P:=
 by
   sorry
 
