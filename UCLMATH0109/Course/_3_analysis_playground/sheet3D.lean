@@ -55,4 +55,4 @@ example (x ε : ℝ) (hε : 0 < ε) :
       sorry
     -- Use a `calc`-block here. First factorize the left hand side,
     -- and then use `this`, `hx` and `δpos`.
-    sorry 
+    sorry
