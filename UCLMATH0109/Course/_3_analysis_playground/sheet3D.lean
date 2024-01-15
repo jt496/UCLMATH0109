@@ -35,12 +35,13 @@ abd then prove the main result by a single `calc` block.
 In each `calc`-block you will only need the tactics`ring`, `rw`, `rel` and `exact`.
 
 You might find the following lemmas from Mathlib useful:
+  `lt_min`
   `min_le_left`
   `min_le_right`
   `abs_add`
   `abs_mul`
 -/
-example (x ε δ : ℝ) (hε : 0 < ε) :
+example (x ε : ℝ) (hε : 0 < ε) :
   ∃ δ, 0 < δ ∧ (|x - 1| < δ → |x^2 - 1^2| < ε) := by
   let δ := min 1 (ε/3)
   have δpos : 0 < δ
@@ -54,26 +55,4 @@ example (x ε δ : ℝ) (hε : 0 < ε) :
       sorry
     -- Use a `calc`-block here. First factorize the left hand side,
     -- and then use `this`, `hx` and `δpos`.
-    sorry
-
-/-
-# A Harder Example
-
-Let `(a,b)` be a solution to the equation `y ^ 2 = x ^ 3 + 1`.
-Then there is another aolution `(A,B)` to the same equation, defined by
-* `A = m ^ 2 - 2 * a`,
-* `B = m * A + c`,
-where `y = m * x + c` is the tangent line to the curve at `(a,b)`.
--/
-example (a b m c A B : ℝ) (h : b^2 = a^3 + 1)
-    (hm : 2 * b * m = 3 * a^2) (hc : b = m * a + c)
-    (hA : A = m^2 - 2 * a) (hB : B = m * A + c) :
-    B^2 = A^3 + 1 := by
-  have : b^4 * B^2 = b^4 * (A^3 + 1)
-  · -- try using a `calc` block here.
-    -- I recommend you work out the proof on paper first.
-    sorry
-  simp only [mul_eq_mul_left_iff, zero_lt_four, pow_eq_zero_iff] at this
-  cases this with
-  | inl h₁ => sorry
-  | inr h₂ => sorry -- obtain a contradiction in this case.
+    sorry 
