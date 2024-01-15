@@ -1,20 +1,20 @@
 import Mathlib.Tactic
 
--- 01 De Morgan's 1st law 
+-- 01 De Morgan's 1st law
 example : ¬ (P ∨ Q) ↔  ¬P ∧ ¬ Q:=
 by
   constructor
   · intro hnpq
-    constructor 
+    constructor
     · intro hp; apply hnpq
       left; exact hp
     · sorry
   intro hnpq hpq
   obtain ⟨hnp,hnq⟩:=hnpq
   cases hpq with
-  | inl hp => 
+  | inl hp =>
     sorry
-  | inr hq => 
+  | inr hq =>
     sorry
 
 /-
@@ -29,11 +29,11 @@ by
   · intro hnpq
     by_cases hp : P
     · sorry
-    · sorry 
+    · sorry
   · intros h hpq
     sorry
 
--- 03 
+-- 03
 example : (P → Q) ↔ Q ∨ ¬P:=
 by
   sorry
@@ -51,7 +51,7 @@ by
 
 /-
 Lean has a built-in tactic `contrapose` that converts any goal `P → Q`
-into its contrapositive 
+into its contrapositive
 
 Lean also has a tactic `push_neg` for pushing negations inside expressions.
 
@@ -67,12 +67,12 @@ by
   intro h
   sorry
 
--- 07 
-example : ((P → Q) → P) → P:=
+-- 07
+example (P Q: Prop): ((P → Q) → P) → P:=
 by
   sorry
 
--- 08 
+-- 08
 example : ¬(P → Q) ↔ P ∧ ¬Q:=
 by
   sorry
