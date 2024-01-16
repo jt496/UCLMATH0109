@@ -10,7 +10,7 @@ Here we will prove a theorem from 1st year analysis:
 
 (Don't worry if the code below doesn't mean anything to you, this example is
 simply intended to show you what Lean can do.)
-
+ 
 -/
 
 def lim (x : ℕ → ℝ) (l : ℝ) : Prop :=
