@@ -1,5 +1,5 @@
 import Mathlib.Tactic
-
+namespace UCL
 /-
 Define a structure, whose terms are points on the circle
 of radius 1 around the origin in the plane.
