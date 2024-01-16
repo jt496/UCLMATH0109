@@ -119,22 +119,8 @@ by
   -- After that, rewrite `x⁻¹` and `y⁻¹` as `x` and `y`.
   sorry
 
+
 --13
-example (x y : G) (h : x * y = y^2 * x) (n : ℕ) : x^n * y = y ^ (2^n) * x^n :=
-by
-  sorry
-
---14
-example (x y : G) (h : x * y = y⁻¹ * x) : x ^ (2 * n) * y = y * x^(2 * n) :=
-by
-  sorry
-
---15
-example (x y : G) (h : x * y = y⁻¹ * x) : x ^ n * y = y^((-1:ℤ)^n) * x ^ n :=
-by
-  sorry
-
---16
 /-
 We defined the kernel of a homomorphism in question 10.
 Prove that a homomorphism `φ` is injective iff its kernel is `{1}`.
@@ -144,5 +130,17 @@ You might also want to look up `Function.Injective`.
 -/
 theorem injective_iff (φ : G →* H) :
     Function.Injective φ ↔ (Ker φ : Set G) = {1} :=
+by
+  sorry
+
+
+
+--14
+example (x y : G) (h : x * y = y^2 * x) (n : ℕ) : x^n * y = y ^ (2^n) * x^n :=
+by
+  sorry
+
+--15
+example {x y : G} (h : x * y = y⁻¹ * x) : x ^ (2 * n) * y = y * x^(2 * n) :=
 by
   sorry
