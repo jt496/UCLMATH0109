@@ -56,5 +56,5 @@ by
   by_cases hn : n ≤ K
  -- In this case |x n| ≤ B because |x n| ∈ J
   · sorry
- -- Now need to prove that |x n| ≤ (|a| + 1) since K ≤ n
+ -- In this case |x n| ≤ (|a| + 1) since K ≤ n
   · sorry
