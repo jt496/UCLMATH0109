@@ -102,7 +102,6 @@ by
 -- 11
 theorem pow_three (n : N) : n ^ (1 + 1 + 1) = n * n^2:=
 by
-  rw [pow_add, mul_comm,pow_one]
   rfl
 
 -- 12
