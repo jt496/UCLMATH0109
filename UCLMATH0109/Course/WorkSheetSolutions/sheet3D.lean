@@ -77,4 +77,3 @@ example (x ε : ℝ) (hε : 0 < ε) :
       _           < 3 * δ                 := by rel [this,hx]
       _           ≤ 3 * (ε / 3)           := by rel [min_le_right 1 (ε/3)]
       _           = ε                     := by ring
-
