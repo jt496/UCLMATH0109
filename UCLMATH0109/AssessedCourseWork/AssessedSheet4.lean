@@ -55,7 +55,7 @@ def choose : ℕ → ℕ → ℕ
   | n + 1, k + 1 => choose n k + choose n (k + 1) -- Pascal's identity
 -/
 
--- Here are later in this sheet we list results that you *may* wish to use
+-- We list some results that you *may* wish to use later in this sheet
 
 #check Nat.choose_succ_succ -- `(n + 1).choose (k + 1) = n.choose k + n.choose (k + 1)`
 
