@@ -9,8 +9,8 @@ import Mathlib.Tactic
 -- 01 (3 marks)
 example (P Q : Prop) (hq : Q) : (P → Q → P) → (Q → P) → P:=
 by
-  intro _ hpq
-  apply hpq hq
+  intro _ hqp
+  apply hqp hq
 
 
 -- 02 (3 marks)
