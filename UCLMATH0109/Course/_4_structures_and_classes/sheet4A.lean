@@ -102,7 +102,7 @@ lemma inv.y (a : circle ) : (a⁻¹).y = sorry := sorry
 /-
 #13
 -/
-lemma mul_left_inv (a b : circle) : a⁻¹ * a = 1 := sorry
+lemma mul_left_inv (a : circle) : a⁻¹ * a = 1 := sorry
 
 /-
 #14
