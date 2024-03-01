@@ -283,6 +283,6 @@ by
 /-!
 Possible extensions:
 1. Improve the bound in the main theorem.
-2. Make the function \lst{decomp} computable.
+2. Make the function `decomp` computable.
 
 -/
