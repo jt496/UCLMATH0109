@@ -1,0 +1,16 @@
+lines 54-58 should be:
+
+def u₁ : Rˣ where
+  val := α - 1
+  inv := α
+  val_inv := sorry
+  inv_val := sorry
+
+
+
+lines 95-97 should be:
+
+lemma x_eq : a.x = (-α₂ * σ₁ a + α₁ * σ₂ a) / √5 :=
+by
+  sorry
+
