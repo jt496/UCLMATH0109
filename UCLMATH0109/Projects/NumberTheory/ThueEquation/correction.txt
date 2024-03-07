@@ -1,0 +1,8 @@
+lines 99-102 should be:
+
+
+noncomputable def ℓ : Rˣ → ℝ := fun u ↦ Real.log |σ₁ u.val|
+
+lemma log_mul (u v : Rˣ) : ℓ (u * v) = ℓ u + ℓ v := sorry
+@[simp] lemma log_one : ℓ 1 = 0 := sorry
+
