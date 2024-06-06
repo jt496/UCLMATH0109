@@ -167,7 +167,7 @@ lemma pow_add (x : G) (n m : ℕ): x ^ (n + m) = (x ^ n) * (x ^ m) :=
 by
   induction n with
   | zero =>
-    rw [zero_eq, zero_add, pow_zero, ax_one_mul]
+    rw [zero_add, pow_zero, ax_one_mul]
   | succ n ih =>
     rw [succ_add, pow_succ, ih, pow_succ, ax_assoc]
 

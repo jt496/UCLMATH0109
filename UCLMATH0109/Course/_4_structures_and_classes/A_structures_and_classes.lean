@@ -185,13 +185,16 @@ instance : AddCommGroup Plane where
   add_zero      := my_add_zero
   add_left_neg  := my_neg_add_self
   add_comm      := my_add_comm
+  zsmul := zsmulRec
+  nsmul := nsmulRec
+
 
 /-
 To demonstrate that this works, Prove the following using Mathlib.
 -/
 example (P Q : Plane) : P + Q - P = Q :=
 by
-  exact add_sub_cancel' P Q
+  exact add_sub_cancel_left P Q
 
 example (P Q R : Plane) : P + Q + R = P + R + Q :=
 by
@@ -210,7 +213,7 @@ by natural numbers and by integers).
 
 example (P : Plane) : 5 • P = P + P + P + P + P :=
 by
-  rw [succ_nsmul,succ_nsmul,three_nsmul, add_assoc,add_assoc,add_assoc]
+  rw [succ_nsmul,succ_nsmul,three_nsmul, add_assoc,add_assoc,add_assoc,add_assoc,add_assoc,add_assoc]
 
 
 example (P : Plane) : (-2:ℤ) • P = -(P + P) :=

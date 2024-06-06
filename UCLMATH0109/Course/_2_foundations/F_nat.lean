@@ -237,11 +237,10 @@ def pow : N → N → N
 
 
 -- This allows us to use the notation `a ^ b`
-instance : Pow N N where
+instance : HomogeneousPow N where
   pow := pow
 
-
-theorem pow_zero (n : N) : n ^ 0 = 1 :=
+theorem pow_zero (n : N) : n ^ 0  = 1 :=
 by
   sorry
 

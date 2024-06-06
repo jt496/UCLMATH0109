@@ -90,7 +90,7 @@ noncomputable def ω : ℂ := ⟨1/2, √3 / 2⟩
 lemma omega_sq : ω ^ 2 = ω - 1 :=
 by
   simp only [pow_two]
-  ext
+  apply Complex.ext
   · simp only [Complex.mul_re, ω_re, one_div, ω_im, Complex.sub_re, Complex.one_re]
     calc
       _ = 4⁻¹ - √3^2 / 4         := by ring
@@ -128,6 +128,6 @@ by
       _    = ω             := by sorry
   | succ n ih =>
     calc
-      _ = ω ^ (6 * n + 13) * ω ^ 6  := by simp only [Nat.succ_eq_add_one]; ring
+      _ = ω ^ (6 * n + 13) * ω ^ 6  := by ring
 
       _ = ω                         := by simp only [ih, omega_pow_six, mul_one]
