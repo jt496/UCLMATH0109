@@ -24,12 +24,12 @@ import «UCLMATH0109».Course._3_analysis_playground.D_calc
 import «UCLMATH0109».Course._3_analysis_playground.E1_intro_to_finsets
 import «UCLMATH0109».Course._3_analysis_playground.E2_let
 import «UCLMATH0109».Course._3_analysis_playground.F_casts
---import «UCLMATH0109».Course._3_analysis_playground.sheet3A
+import «UCLMATH0109».Course._3_analysis_playground.sheet3A
 import «UCLMATH0109».Course._3_analysis_playground.sheet3B
---import «UCLMATH0109».Course._3_analysis_playground.sheet3C
+import «UCLMATH0109».Course._3_analysis_playground.sheet3C
 import «UCLMATH0109».Course._3_analysis_playground.sheet3D
---import «UCLMATH0109».Course._3_analysis_playground.sheet3E
---import «UCLMATH0109».Course._3_analysis_playground.sheet3F
+import «UCLMATH0109».Course._3_analysis_playground.sheet3E
+import «UCLMATH0109».Course._3_analysis_playground.sheet3F
 import «UCLMATH0109».Course._4_structures_and_classes.A_structures_and_classes
 import «UCLMATH0109».Course._4_structures_and_classes.B_defining_a_class
 import «UCLMATH0109».Course._4_structures_and_classes.C_groups
