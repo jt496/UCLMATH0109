@@ -12,10 +12,10 @@ open Finset
 open scoped BigOperators
 
 
-#check sum_range_succ -- ∑ i in range n.succ f i = ∑ i in range n, f i  + f n
+#check sum_range_succ -- ∑ i ∈ range n.succ f i = ∑ i ∈ range n, f i  + f n
 /- Prove this generalized version of the triange inequality by induction. -/
 -- 01
-example (c : ℕ → ℝ) : |c n - c 0| ≤ ∑ i in range n, |c (i+1) - c i| :=
+example (c : ℕ → ℝ) : |c n - c 0| ≤ ∑ i ∈ range n, |c (i+1) - c i| :=
 by
   sorry
 
@@ -30,7 +30,7 @@ by
   sorry
 
 -- 03
-example : ∑ n in range N, 1 / ((n+1)*(n+2) : ℝ) = N / (N+1) :=
+example : ∑ n ∈ range N, 1 / ((n+1)*(n+2) : ℝ) = N / (N+1) :=
 by
   have partial_frac : ∀ n : ℕ, 1 / ((n+1)*(n+2) : ℝ) = 1/(n+1 : ℝ) - 1/(n+2 : ℝ)
   · intro n
@@ -67,10 +67,10 @@ by
 
 -- 06
 example (n : ℕ) (x y : ℕ → ℝ) :
-|∑ i in range n, (x i + y i)| ≤ ∑ i in range n, |x i| + ∑ i in range n, |y i|:=by
+|∑ i ∈ range n, (x i + y i)| ≤ ∑ i ∈ range n, |x i| + ∑ i ∈ range n, |y i|:=by
 calc
-  _ ≤ ∑ i in range n, |x i + y i|      := by sorry
-  _ ≤ ∑ i in range n, (|x i| + |y i|)  := by sorry
+  _ ≤ ∑ i ∈ range n, |x i + y i|      := by sorry
+  _ ≤ ∑ i ∈ range n, (|x i| + |y i|)  := by sorry
   _ = _                                := by sorry
 
 

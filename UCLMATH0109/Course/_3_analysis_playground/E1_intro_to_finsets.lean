@@ -1,4 +1,4 @@
-import UCLMATH0109.Course._3_analysis_playground.C_have
+import UCL2024._UCLMATH0109.Course._3_analysis_playground.C_have
 import Mathlib.Data.Finset.Lattice
 import Mathlib.Algebra.BigOperators.Ring
 import Mathlib.Tactic
@@ -73,12 +73,12 @@ One obvious use of Finsets is for finite sums and products.
 In order to be able to use ∑ and ∏ notation we need to `open scoped BigOperators`
 
 If `s` is a `Finset α`, and `f : α → β` a function then
-  `∑ i in s, f i`  is the sum of `f` over `s`,
+  `∑ i ∈ s, f i`  is the sum of `f` over `s`,
 -/
 open scoped BigOperators
 
 /-- 2 * (0 + 1 + 2 + ... + n) = n * (n + 1) -/
-lemma sum_nat (n : ℕ) : 2 * ∑ i in range n.succ, i = n * (n + 1):=
+lemma sum_nat (n : ℕ) : 2 * ∑ i ∈ range n.succ, i = n * (n + 1):=
 by
   induction n with
   | zero =>
@@ -89,19 +89,19 @@ by
 
 
 /-- 6 * (0² + 1² + 2² + ... + n²) = n * (n + 1) * (2 * n + 1)-/
-lemma sum_nat_sq (n : ℕ) : 6 * ∑ i in range n.succ, i^2 = n * (n + 1) * (2 * n + 1):=
+lemma sum_nat_sq (n : ℕ) : 6 * ∑ i ∈ range n.succ, i^2 = n * (n + 1) * (2 * n + 1):=
 by
 -- Try to mimic the previous proof
   sorry
 
 /-- If a product of a finite set of natural numbers is zero then one of its elements is zero -/
-lemma prod_zero (s : Finset ℕ) (h : ∏ a in s, a = 0 ) : ∃ x, x ∈ s ∧ x = 0:=
+lemma prod_zero (s : Finset ℕ) (h : ∏ a ∈ s, a = 0 ) : ∃ x, x ∈ s ∧ x = 0:=
 by
   exact prod_eq_zero_iff.mp h
 
 
 /-- If f (n) = g (n + 1) - g(n), then the sum of f over {0,1,...,n} is g(n+1)- g(0) -/
-lemma sum_cancel (hf: ∀ n, f n = g (n+1) - g n) : ∑ i in range n.succ, f i = g (n+1) - g 0 :=
+lemma sum_cancel (hf: ∀ n, f n = g (n+1) - g n) : ∑ i ∈ range n.succ, f i = g (n+1) - g 0 :=
 by
   induction n with
   | zero =>
@@ -211,12 +211,12 @@ The cardinality of `s : Finset α` is `s.card`
 /--The cardinality of a finite union of pairwise disjoint finite sets is the sum of
   the cardinalities of the sets.-/
 example (S : ℕ  → Finset ℕ ) (I : Finset ℕ) (hdisj: ∀ i, i ∈ I → ∀j, j ∈ I → i ≠ j → Disjoint (S i) (S j)) :
-(I.biUnion S).card  = ∑ i in I, (S i).card :=
+(I.biUnion S).card  = ∑ i ∈ I, (S i).card :=
 by
   exact card_biUnion hdisj
 
 /-- If f is bounded above by b on s then the sum of f over s is at most |s| * b -/
-example (s : Finset ℕ) (f : ℕ → ℕ) (hf: ∀n, n ∈ s → f n ≤ b) : ∑ n in s, f n ≤ s.card * b:=
+example (s : Finset ℕ) (f : ℕ → ℕ) (hf: ∀n, n ∈ s → f n ≤ b) : ∑ n ∈ s, f n ≤ s.card * b:=
 by
   rw [card_eq_sum_ones, sum_mul, one_mul]
   exact sum_le_sum hf
