@@ -49,7 +49,7 @@ by
 
 -- `ext` also allows to prove equalities between other types, such as complex numbers, matrices, etc.
 -- Here `z.re` and `z.im` are the real and imaginary parts of a complex number `z`
--- In this case we need to
+-- In this case we need to use `Complex.ext` rather than `ext`
 -- 06
 example (z w : ℂ) (hre : z.re = w.re) (him : z.im = w.im) : z = w:=
 by
