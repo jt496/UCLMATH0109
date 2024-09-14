@@ -1,4 +1,4 @@
-import UCL2024._UCLMATH0109.Course._3_analysis_playground.C_have
+import UCLMATH0109.Course._3_analysis_playground.C_have
 import Mathlib.Data.Finset.Lattice
 import Mathlib.Algebra.BigOperators.Ring
 import Mathlib.Tactic
