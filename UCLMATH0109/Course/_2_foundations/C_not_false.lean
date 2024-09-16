@@ -62,8 +62,8 @@ by
 
 
 /-
-# True : (tactic : triv)
-`True` is the proposition that is trivially true, its proof is `triv`
+# True : (tactic : trivial)
+`True` is the proposition that is trivially true, its proof is `trivial`
 -/
 example (P : Prop) : P → True :=
 by
