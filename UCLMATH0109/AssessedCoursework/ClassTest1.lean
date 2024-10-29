@@ -45,28 +45,17 @@ lemma Fibonacci_step (n : ℕ) : Fibonacci (n + 2) = Fibonacci n + Fibonacci (n 
 
 #check twoStepInduction
 
--- 06 (3 marks)
+-- 05 (3 marks)
 lemma Lucas_Fibonacci (n : ℕ) : Lucas (n + 1) = Fibonacci n + Fibonacci (n + 2) := by
   induction n using twoStepInduction with
-  | H1 => exact rfl
-  | H2 => exact rfl
+  | H1 => sorry
+  | H2 => sorry
   | H3 n ih1 ih2 =>
-    rw [Lucas_step, ih1, ih2, succ_eq_add_one, Fibonacci_step, succ_eq_add_one]
-    exact Mathlib.Tactic.Ring.add_pf_add_overlap rfl rfl
+    sorry
 
-
-
--- 07 (4 marks)
+-- 06 (4 marks)
 lemma Lucas_bound (n : ℕ) : Lucas n ≤ 2^(n + 1) := by
-  induction n using twoStepInduction with
-  | H1 => exact le_of_ble_eq_true rfl
-  | H2 => exact le_of_ble_eq_true rfl
-  | H3 n ih1 ih2 =>
-    rw [Lucas_step, pow_succ, ← succ_eq_add_one]
-    calc
-    Lucas n + Lucas (n + 1) ≤ 2^(n + 1) + Lucas (n+1):= by rel[ih1]
-    _ ≤ 2^(n + 1) + 2^(n + 2) := by rel[ih2]
-
+  sorry
 
 def Bounded (x : ℕ → ℝ) := ∃ B, ∀ n, x n < B
 
@@ -75,7 +64,4 @@ lemma Bounded_iff (x : ℕ → ℝ) : Bounded x ↔ ∃ B, ∀ n, x n < B := by 
 -- 07 (8 marks)
 example (x : ℕ → ℝ) (h₁ : Monotone x) (h₂ : ¬ Bounded x) (ε : ℝ) (hε : 0 < ε) :
    ∃ N, ∀ n, N < n → |(x n)⁻¹| ≤ ε :=by
-  use 1
-  intro n
-  intro hn
   sorry
