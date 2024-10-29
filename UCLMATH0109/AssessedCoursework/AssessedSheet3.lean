@@ -112,7 +112,7 @@ by
   by_cases hbp : b = 0
   · -- in this case `xₙ*b` is the constant zero sequence
     convert sLim_const 0
-    · sorry/home/john/Lean4/UCL2024/UCL2024/_UCLMATH0109/AssessedCourseWork/NewClassTest1.lean
+    · sorry
     · sorry
   · have hbpos : 0 < b
     · sorry
