@@ -69,9 +69,9 @@ lemma Lucas_bound (n : ℕ) : Lucas n ≤ 2^(n + 1) := by
     rw [Lucas_step]
     have h1: 2^(n+1) + 2^(n+2) = 2^(n+1) * 3 := by ring
     calc
-    _ ≤ 2^(n+1) + 2^(n+2) := by apply Nat.add_le_add ih1 ih2
-    _ = 2^(n+1) * 3 := by rw [h1]
-    _ ≤ _ := by rw [pow_succ _ (n+2),pow_succ _ (n+1)]; linarith
+    _ ≤ 2^(n+1) + 2^(n+2)   := Nat.add_le_add ih1 ih2
+    _ = 2^(n+1) * 3         := by rw [h1]
+    _ ≤ _                   := by rw [pow_succ _ (n+2),pow_succ _ (n+1)]; linarith
 
 def Bounded (x : ℕ → ℝ) := ∃ B, ∀ n, x n < B
 
@@ -91,4 +91,4 @@ example (x : ℕ → ℝ) (h₁ : Monotone x) (h₂ : ¬ Bounded x) (ε : ℝ) (
   intro n hn
   calc
     _ = (x n)⁻¹   := by rw [abs_inv, abs_eq_self.mpr (hnnoneg n hn.le).le]
-    _ ≤ ε         := by apply inv_le_of_inv_le hε <| hN.trans (h₁ hn.le)
+    _ ≤ ε         := inv_le_of_inv_le hε (hN.trans (h₁ hn.le))
