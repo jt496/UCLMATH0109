@@ -20,7 +20,7 @@ def zero : R := ⟨0,0⟩
 def one : R := ⟨1,0⟩
 def α : R := ⟨0,1⟩
 def add (a b : R) : R := ⟨a.x + b.x, a.y + b.y⟩
-def mul (a b : R) : R := ⟨a.x * b.x + a.y * b.y,a.x * b.y + a.y * b.x + 3 * a.y * b.y⟩
+def mul (a b : R) : R := ⟨a.x * b.x + 3 * a.y * b.y,a.x * b.y + a.y * b.x + a.y * b.y⟩
 def neg (a : R) : R := ⟨-a.x, -a.y⟩
 
 /-
