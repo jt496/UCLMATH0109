@@ -119,7 +119,7 @@ Assume in this section that we have a surjective homomorphism from `G'` to `G`,
 whose kernel is isomorphic to `K`.
 We shall construct a corresponding cocycle `σ` and an isomorphism `G' ≃* G_[σ]`.
 -/
-variable [Group G'] (φ : G' →* G) (hφ : Function.Surjective φ) (hφ' : φ.ker ≤ Subgroup.center G')
+variable [Group G'] (φ : G' →* G) (hφ : Function.Surjective φ) [hφ' : Fact (φ.ker ≤ Subgroup.center G')]
 variable {G}
 
 instance : CommGroup φ.ker where
