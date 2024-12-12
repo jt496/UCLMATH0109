@@ -163,7 +163,7 @@ The function `∂ τ` is called the coboundary of `τ`.
 Prove that `∂ τ` is a 2-cocycle.
 -/
 def coboundary (τ : G → K) : Cocycle G K where
-  toFun g h := τ g * τ h * τ (g * h)⁻¹
+  toFun g h := τ g * τ h * (τ (g * h))⁻¹
   relation := sorry
 
 notation "∂" => coboundary
