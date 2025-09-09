@@ -1,16 +1,17 @@
 {
-    "name": "Debian",
-    "image": "mcr.microsoft.com/devcontainers/base:debian",
-    "onCreateCommand": ".devcontainer/setup.sh",
-    "customizations": {
-        "vscode": {
-            "extensions": [
-                "leanprover.lean4"              // Lean 4 extension
-            ]
-        }
-    },
-    "remoteUser": "vscode",
-    "remoteEnv": {
-        "PATH" : "${containerEnv:PATH}:/home/vscode/.elan/bin:/home/vscode/.local/bin"
+  "name": "Mathlib4 dev container",
+
+  "image": "ghcr.io/leanprover-community/mathlib4/gitpod",
+
+  "onCreateCommand": "lake exe cache get!",
+
+  "hostRequirements": {
+     "cpus": 4
+  },
+
+  "customizations": {
+    "vscode" : {
+      "extensions" : [ "leanprover.lean4" ]
     }
+  }
 }
