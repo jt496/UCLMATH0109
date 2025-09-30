@@ -87,10 +87,8 @@ example : ¬∃ n : ℕ, ∀ m, n ≠ m :=by
 example (P : ℕ → Prop) (h₂ : ∀ n, P n → P (2 * n)) (h₁ : P 1) : P 32 :=by
   sorry
 
-#check Nat.lt_add_one -- ∀ (n : ℕ), n < n + 1
-
 -- 19 State and prove: `for every natural number n there exists a natural number m that n < m`
--- (To complete the proof you could use `exact Nat.lt_add_one n` which says that `n < n + 1`)
+-- (To complete the proof you could use `exact lt_add_one n` which says that `n < n + 1`)
 example : sorry :=by
   sorry
 
