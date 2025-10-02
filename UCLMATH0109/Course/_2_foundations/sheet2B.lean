@@ -9,7 +9,7 @@ to complete the following proofs.
 -- 01 `∧` is symmetric
 example (h : P ∧ Q) : Q ∧ P :=
 by
-  constructor 
+  constructor
   · exact h.2
   · sorry
 
@@ -21,30 +21,30 @@ by
   | inl hp =>
     right
     exact hp
-  | inr hq => 
+  | inr hq =>
     sorry
 
--- 03 
+-- 03
 example (h: (P ∨ Q) ∧ (P ∨ R)) : P ∨ (Q ∧ R):=
 by
   obtain ⟨hpq, hpr⟩:=h
   cases hpq with
-  | inl hp => 
+  | inl hp =>
     left
     sorry
-  | inr hq => 
+  | inr hq =>
     cases hpr with
-    | inl hp => 
+    | inl hp =>
       sorry
-    | inr hr => 
+    | inr hr =>
       right
       constructor
       · sorry
       · sorry
-    
-  
-/- 
-Each of `∧, ∨, →` is a binary operation on `Prop` (Why?). 
+
+
+/-
+Each of `∧, ∨, →` is a binary operation on `Prop` (Why?).
 
 In order to understand compound propositions such as  `P ∧ Q → P ∧ R → P ∨ Q ∨ R`
 (without using lots of brackets) we need to know how Lean parses such expressions.
@@ -54,33 +54,33 @@ expression: `P → Q → R`
 
 There are two possiblities for how this could be defined:
 
-  **left-associative**, so `P → Q → R` would be defined as `(P → Q) → R` or 
+  **left-associative**, so `P → Q → R` would be defined as `(P → Q) → R` or
   **right-associative**, so `P → Q → R` would be defined as `P → (Q → R)`?
 
 But which is it?
 
-You will face many similar situations and the key to deciphering such 
-expressions is to use the `#check` command and/or the `Infoview`. 
+You will face many similar situations and the key to deciphering such
+expressions is to use the `#check` command and/or the `Infoview`.
 -/
 variable (P Q R S : Prop)
 #check (P → Q) → R -- (P → Q) → R : Prop
 #check P → (Q → R) -- P → Q → R : Prop -- Look no brackets!
 /-
-So `→` is right-associative, since when we add brackets on the right Lean 
+So `→` is right-associative, since when we add brackets on the right Lean
 removes them in the Infoview. This tells us that they were not required.
 -/
-#check P → (Q → (R → S)) -- P → Q → R → S : Prop 
+#check P → (Q → (R → S)) -- P → Q → R → S : Prop
 
--- 04 `→` is transitive 
+-- 04 `→` is transitive
 theorem imp_is_trans : (P → Q) → (Q → R) → (P → R):=
 by
 -- We can `intro` multiple terms at the same time
   intro hpq hqr hp
   apply hqr
-  apply hpq 
+  apply hpq
   exact hp
 
-/- 
+/-
 Our last proof was a `theorem` rather than an `example` so what's the difference?
 
 An `example` is anonymous (i.e. it has no name) so we can't refer to it.
@@ -94,20 +94,20 @@ With a theorem or lemma we can use `#check` to see what its statement says.
 /-
 In our next example our goal is to prove `P → Q → P ∧ Q`.
 
-Since this involves two binary operations, `→` and `∧`, we have another potential 
+Since this involves two binary operations, `→` and `∧`, we have another potential
 source of confusion.
 
 If you can't see why there could a possible problem, consider the sum
 
-    `2 + 4 + 6 / 3 = 8` 
+    `2 + 4 + 6 / 3 = 8`
 
-We know this evaluates to `8` because of the BIDMAS rules which say that you do `/` 
-before `+` (formally we say `/` has **higher precedence** than `+`). 
+We know this evaluates to `8` because of the BIDMAS rules which say that you do `/`
+before `+` (formally we say `/` has **higher precedence** than `+`).
 
-We don't usually write `2 + 4 + (6 / 3) = 8` because the brackets are not needed 
+We don't usually write `2 + 4 + (6 / 3) = 8` because the brackets are not needed
 once you know the rules of BIDMAS.
 
-Lean follows the same basic convention. Each binary operation is either left- or 
+Lean follows the same basic convention. Each binary operation is either left- or
 right-associative, and it also has a value associated to it that allows Lean to know
 which to do first (i.e. the operation with the higher value has higher precedence).
 
@@ -117,19 +117,19 @@ This time we will use the Infoview (rather than #check)
 -/
 -- 05
 example : P → Q → P ∧ Q:=
-by 
-/- 
+by
+/-
 Click here. Now move you cursor to hover over the Infoview.
-The goal is `⊢ P → Q → P ∧ Q` 
-If you hover over the `∧` in the goal you will see that the drop-down 
+The goal is `⊢ P → Q → P ∧ Q`
+If you hover over the `∧` in the goal you will see that the drop-down
 information says `P ∧ Q : Prop`, so there are implied brackets `(P ∧ Q)`.
 
 We deduce that Lean gives `∧` higher precedence than `→` (it did `∧` first).
 
 If you now hover over each of the `→` symbols in the goal you can deduce that Lean
-parses this expression as `P → (Q → (P ∧ Q))` 
+parses this expression as `P → (Q → (P ∧ Q))`
 
-Lean follows the convention that it only displays brackets if they are required 
+Lean follows the convention that it only displays brackets if they are required
 (i.e. if they change the default meaning of an expression)
 -/
   intro hp hq
@@ -137,27 +137,26 @@ Lean follows the convention that it only displays brackets if they are required
   · exact hp
   · exact hq
 
-/- 
-In the next example our goal is `⊢ P ∨ Q ∨ R` so we first need to know whether 
-`∨` is left- or right-associative. 
+/-
+In the next example our goal is `⊢ P ∨ Q ∨ R` so we first need to know whether
+`∨` is left- or right-associative.
 -/
 
--- 06 
+-- 06
 example (hpq: P ∨ Q) (hqr: Q ∨ R) : P ∨ Q ∨ R :=
 by -- Place your cursor here and then hover over the
 -- two `v` symbols in the Infoview goal `⊢ P ∨ Q ∨ R`
 -- Can you work out where the brackets should go?
   cases hpq with
-  | inl hp => 
+  | inl hp =>
     sorry
-  | inr hq => 
+  | inr hq =>
     cases hqr with
-    | inl hq => 
+    | inl hq =>
       sorry
-    | inr hr => 
+    | inr hr =>
       sorry
-    
-variable (P Q R : Prop)
+
 -- So `∨` is right-associative
 #check P ∨ (Q ∨ R) -- P ∨ Q ∨ R : Prop
 /-
@@ -172,18 +171,18 @@ by
   constructor
   · intro h
     cases h with
-    | inl h => 
+    | inl h =>
       cases h with
-      | inl h => 
+      | inl h =>
         left; exact h
-      | inr h => 
+      | inr h =>
         right;left;
         sorry
-    | inr h => 
-      sorry     
-  · sorry  
+    | inr h =>
+      sorry
+  · sorry
 /-
-  `∧` is also defined to be right-associative 
+  `∧` is also defined to be right-associative
 -/
 #check P ∧ (Q ∧ R) -- P ∧ Q ∧ R : Prop
 -- 08 `∧` is associative
@@ -194,7 +193,7 @@ by
 /-
 The next example is something we will use a lot.
 
-As mathematicians we have lots of theorems that say things 
+As mathematicians we have lots of theorems that say things
 like `if P and Q  are both true then R is true`.
 
 Typically in Lean we express this as the equivalent proposition:
@@ -207,14 +206,14 @@ by
   · intro h
     intro hp hq
     apply h
-    --- Our goal is `⊢ P ∧ Q` and we have `hp : P` and `hq : Q` 
+    --- Our goal is `⊢ P ∧ Q` and we have `hp : P` and `hq : Q`
     --- Rather than using `constructor` we can use `exact ⟨hp,hq⟩`
     --- (This is like `obtain` but in reverse)
     exact ⟨hp,hq⟩
   · sorry
 
 
--- 10  
+-- 10
 example : (P ∨ Q → R) ↔ (P → R) ∧ (Q → R):=
 by
   sorry
