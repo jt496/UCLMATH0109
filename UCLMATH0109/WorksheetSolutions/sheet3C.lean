@@ -73,7 +73,7 @@ by
   · exact le_of_max_le_right hn -- apply? finds this
   specialize hNx n h1
   specialize hNz n h2
-  obtain ⟨hxley,hylez⟩:= hb n
+  obtain ⟨hxley, hylez⟩:= hb n
   have useful : ∀ (a b c : ℝ), |a - b| < c ↔ a - b < c ∧ b - a < c
   · exact fun a b c => abs_sub_lt_iff -- apply? finds this
   rw [useful] at *

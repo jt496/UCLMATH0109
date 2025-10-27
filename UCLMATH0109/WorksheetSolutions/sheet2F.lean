@@ -1,4 +1,4 @@
-import UCL2024._UCLMATH0109.Course._2_foundations.F_nat
+import UCLMATH0109.Course._2_foundations.F_nat
 
 namespace N
 
