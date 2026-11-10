@@ -1,5 +1,7 @@
 import Mathlib.Tactic
 
+namespace B_defining_a_class_soln
+
 /-
 A `class` is a special kind of `structure`;
 This file demonstrates how to create and use a `class`.
@@ -215,3 +217,5 @@ example (x y : G) (n : ℕ) (h : x * y = y⁻¹ * x) :
     rw [mul_add, pow_add, ←ax_assoc, ← ih, mul_one,ax_assoc, my_lemma _ _ h, ax_assoc]
 
 end MyGroup
+
+end B_defining_a_class_soln

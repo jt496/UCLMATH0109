@@ -62,7 +62,7 @@ by
   specialize hB N (by exact Nat.le_max_right Na Nb)
   have := calc
     |a - b| = |(a - x N) + (x N - b)|   := by ring
-     _      ≤ |a - x N| + |x N - b|     := by exact abs_add (a - x N) (x N - b)
+     _      ≤ |a - x N| + |x N - b|     := by exact abs_add_le (a - x N) (x N - b)
      _      = |x N - a| + |x N - b|     := by congr 1; exact abs_sub_comm a (x N)
      _      < ε + ε                     := by rel [hA,hB]
      _      = |a - b|                   := by ring

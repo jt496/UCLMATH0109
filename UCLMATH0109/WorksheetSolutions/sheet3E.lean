@@ -1,5 +1,5 @@
-import Mathlib.Data.Finset.Lattice
-import Mathlib.Algebra.BigOperators.Ring
+import Mathlib.Data.Finset.Lattice.Fold
+import Mathlib.Algebra.BigOperators.Ring.Finset
 import Mathlib.Tactic
 namespace Sheet3Esol
 /-- xₙ → a if for any ε > 0 there is N ∈ ℕ such that for all n ≥ N we have |xₙ - a| < ε  -/
@@ -47,7 +47,8 @@ example : ∑ n ∈ range N, 1 / ((n+1)*(n+2) : ℝ) = N / (N+1) :=by
   | succ N ih =>
     rw [sum_range_succ, ih, partial_frac]
     field_simp
-    linarith
+    push_cast
+    ring
 
 /- Recall that if `s` is a Finset then `s.card` is the cardinality of s.
 Note this can also be written `card s`-/
@@ -57,7 +58,7 @@ example (s t : Finset ℕ)  : card (s ∪ t) + card (s ∩ t) = card s + card t 
   exact card_union_add_card_inter s t -- apply? finds this
 
 
-#check add_le_add_right
+#check add_le_add_left
 
 /- The next example is easy to solve using a `calc` block if you first find the
 correct lemma from Mathlib.
@@ -68,11 +69,11 @@ example (s t u : Finset ℕ) : (s ∪ t ∪ u).card ≤ s.card  + t.card + u.car
   _  ≤ (s ∪ t).card + u.card := by
     exact card_union_le (s ∪ t) u -- apply? finds this
   _  ≤  _ := by
-    apply add_le_add_right
+    apply add_le_add_left
     exact card_union_le s t
 
 
-#check sum_le_sum -- if `f i ≤ g i` for all `i ∈ s` then `∑ i in s, f i ≤ ∑ i in s, g i`
+#check sum_le_sum -- if `f i ≤ g i` for all `i ∈ s` then `∑ i ∈ s, f i ≤ ∑ i ∈ s, g i`
 
 -- 06
 example (n : ℕ) (x y : ℕ → ℝ) :
@@ -82,7 +83,7 @@ example (n : ℕ) (x y : ℕ → ℝ) :
       exact abs_sum_le_sum_abs (fun i => x i + y i) (range n)  -- apply? finds this
     _ ≤ ∑ i ∈ range n, (|x i| + |y i|)  := by
       apply sum_le_sum
-      exact fun i _ => abs_add (x i) (y i) --  apply? finds this
+      exact fun i _ => abs_add_le (x i) (y i) --  apply? finds this
     _ = _                                := by
       exact sum_add_distrib   -- apply? finds this
 
@@ -110,7 +111,7 @@ lemma Bounded_of_EventuallyBounded (h: EventuallyBounded x) : Bounded x :=by
   obtain ⟨B,N,hB⟩:= h
   let I :=range N.succ
   have hIne: I.Nonempty
-  · exact nonempty_range_succ  -- apply? finds this
+  · exact nonempty_range_add_one  -- apply? finds this
   let J :=I.image (fun i => x i)
   have hJne : J.Nonempty
   · exact Nonempty.image hIne fun i => x i -- apply? finds this

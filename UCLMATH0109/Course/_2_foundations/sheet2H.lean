@@ -56,9 +56,9 @@ Note that if `h1 : x ≤ y` then `h1.trans` is `le_trans h1`
 So if we have `h1 : x ≤ y` and `h2 : y ≤ z` then `h1.trans h2` is `x ≤ z` -/
 
 -- If `b ≤ c` then  `∀ a, a + b ≤ a + c`
-#check add_le_add_left --  b ≤ c →  ∀ (a : α), a + b ≤ a + c`
--- Note that if you `Ctrl + click` on `add_le_add_left` above then you will be taken to
--- `mul_le_mul_left` in Mathlib.
+#check add_le_add_right --  b ≤ c →  ∀ (a : α), a + b ≤ a + c`
+-- Note that if you `Ctrl + click` on `add_le_add_right` above then you will be taken to
+-- `mul_le_mul_right` in Mathlib.
 -- 06
 example (h1 : x ≤ z) (h2 : 2 ≤ x)  : x + 2 ≤ x + z :=
 by

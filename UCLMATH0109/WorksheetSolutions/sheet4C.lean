@@ -49,10 +49,9 @@ the map `a ↦ a ^ 2` is a group homomorphism from `A` to `A`.
 example (A : Type) [CommGroup A] : A →* A where
   toFun     := fun a ↦ a ^ 2
   map_one'  := by
-    dsimp; rw [pow_two,one_mul]
+    rw [pow_two,one_mul]
   map_mul'  := by
     intro x y
-    dsimp
     rw [pow_two,mul_assoc,mul_comm x y,←mul_assoc y,←pow_two,mul_comm _ x,← mul_assoc,
         pow_two x]
 
@@ -64,11 +63,9 @@ two homomorphisms `G →* A` is a homomorphism.
 example {A : Type} [CommGroup A] (φ ψ : G →* A) : G →* A where
   toFun     := fun g ↦ (φ g) * (ψ g)
   map_one'  :=by
-    dsimp
     rw [φ.map_one,ψ.map_one,one_mul]
   map_mul'  :=by
     intro x y
-    dsimp
     rw [φ.map_mul,ψ.map_mul,mul_comm (ψ x),←mul_assoc,mul_comm,
       ←mul_assoc,←mul_assoc,←mul_assoc, mul_comm (ψ x)]
 
@@ -80,12 +77,11 @@ then the map `g ↦ (φ g)⁻¹` is also a homomorphism.
 def homomorphism_inv {A : Type} [CommGroup A] (φ : G →* A) : G →* A where
   toFun     := fun g ↦ (φ g)⁻¹
   map_one'  :=by
-    dsimp
     rw [φ.map_one]
     exact inv_one
   map_mul'  :=by
     intro x y
-    dsimp; rw [φ.map_mul]
+    rw [φ.map_mul]
     rw [mul_inv]
 
 --09
@@ -119,7 +115,7 @@ def Ker (φ : G →* H) : Subgroup G where
     intro x hx
     have : φ (x⁻¹) = 1
     · have : φ (x * x⁻¹) = 1
-      · rw [mul_inv_self,φ.map_one]
+      · rw [mul_inv_cancel,φ.map_one]
       rw [← this,φ.map_mul,hx,one_mul]
     exact this
 
@@ -218,9 +214,9 @@ example {x y : G} (h : x * y = y⁻¹ * x) : x ^ (2 * n) * y = y * x^(2 * n) :=b
   · nth_rw 1 [← h1, pow_two]
     rw [mul_assoc y x y]
     nth_rw 2 [h]
-    rw [←mul_assoc y (y⁻¹),mul_right_inv,one_mul,mul_assoc]
+    rw [←mul_assoc y (y⁻¹),mul_inv_cancel,one_mul,mul_assoc]
     nth_rw 2 [h]
-    rw [← mul_assoc,←mul_assoc,mul_assoc (y*x),mul_right_inv,mul_one,pow_two,mul_assoc]
+    rw [← mul_assoc,←mul_assoc,mul_assoc (y*x),mul_inv_cancel,mul_one,pow_two,mul_assoc]
   induction n with
   | zero =>
     rw [pow_zero,one_mul,mul_one]

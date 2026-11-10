@@ -1,5 +1,5 @@
 import Mathlib.Tactic
-import Mathlib.Data.Real.Basic
+import Mathlib.Basic.Real.Basic
 
 /-- xₙ → a if for any ε > 0 there is N ∈ ℕ such that for all n ≥ N we have |xₙ - a| < ε  -/
 def sLim (x : ℕ → ℝ) (a : ℝ) : Prop :=
@@ -26,6 +26,6 @@ by
   have : n+1 > ε⁻¹
   · trans (N:ℝ)
     · norm_cast
-      exact Nat.lt_succ.mpr hn
+      exact Nat.lt_succ_iff.mpr hn
     · assumption
-  exact inv_lt_of_inv_lt hε this
+  exact inv_lt_of_inv_lt₀ hε this

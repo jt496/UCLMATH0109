@@ -2,6 +2,8 @@ import Mathlib.Tactic
 
 noncomputable section
 
+namespace Sheet4Bsol
+
 class VectorSpace (V : Type) extends Zero V, Neg V, Add V, SMul ℝ V where
   add_zero (v : V)              : v + 0 = v
   neg_add_self (v : V)          : -v + v = 0
@@ -163,7 +165,7 @@ instance : VectorSpace SpaceTime where
     intro v
     rw [zero_def,add_def,neg_def]; dsimp;
     ext
-    all_goals dsimp ; apply add_left_neg
+    all_goals dsimp ; apply neg_add_cancel
   add_comm :=by
     intro v w
     rw [add_def,add_def]
@@ -190,3 +192,5 @@ instance : VectorSpace SpaceTime where
 
 end SpaceTime
 end VectorSpace
+
+end Sheet4Bsol

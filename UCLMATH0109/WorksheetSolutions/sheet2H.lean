@@ -68,13 +68,13 @@ Note that if `h1 : x ≤ y` then `h1.trans` is `le_trans h1`
 So if we have `h1 : x ≤ y` and `h2 : y ≤ z` then `h1.trans h2` is `x ≤ z` -/
 
 -- If `b ≤ c` then  `∀ a, a + b ≤ a + c`
-#check add_le_add_left --  b ≤ c →  ∀ (a : α), a + b ≤ a + c`
--- Note that if you `Ctrl + click` on `add_le_add_left` above then you will be taken to
--- `mul_le_mul_left` in Mathlib.
+#check add_le_add_right --  b ≤ c →  ∀ (a : α), a + b ≤ a + c`
+-- Note that if you `Ctrl + click` on `add_le_add_right` above then you will be taken to
+-- `mul_le_mul_right` in Mathlib.
 -- 06
 example (h1 : x ≤ z) (h2 : 2 ≤ x)  : x + 2 ≤ x + z :=
 by
-  apply add_le_add_left <|  h2.trans h1
+  apply add_le_add_right <|  h2.trans h1
 
 
 -- If `a ≤ b` and `c ≤ d` then `a + c ≤ b + d`
@@ -114,19 +114,19 @@ example : |x - u| ≤  |x - y| + |y - z| + |z - u| :=
 by
   apply le_trans
   · apply abs_sub_le x z u
-  · apply add_le_add_right
+  · apply add_le_add_left
     · apply abs_sub_le x y z
 
 
 -- 10' we can do this in one line.. but you need to put in an underscore to tell Lean to work
--- out the final explicit input to `add_le_add_right`
+-- out the final explicit input to `add_le_add_left`
 example : |x - u| ≤  |x - y| + |y - z| + |z - u| :=
 by
-  apply (abs_sub_le x z u).trans (add_le_add_right (abs_sub_le x y z) _)
+  apply (abs_sub_le x z u).trans (add_le_add_left (abs_sub_le x y z) _)
 
 
 -- 10'' in fact Lean can work out all the explicit inputs...
 -- If the inputs had been complicated expressions then this would have been very useful!
 example : |x - u| ≤  |x - y| + |y - z| + |z - u| :=
 by
-  apply (abs_sub_le _ _ _).trans (add_le_add_right (abs_sub_le _ _ _) _)
+  apply (abs_sub_le _ _ _).trans (add_le_add_left (abs_sub_le _ _ _) _)

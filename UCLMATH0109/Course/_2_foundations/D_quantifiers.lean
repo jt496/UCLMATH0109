@@ -83,13 +83,13 @@ by
 
 
 /-
-# Negated quantifiers (tactics: push_neg / by_contra)
+# Negated quantifiers (tactics: push Not / by_contra)
 
-We saw that `push_neg` can simplify goals such as `⊢ ¬¬P`.
+We saw that `push Not` can simplify goals such as `⊢ ¬¬P`.
 
-More generally we can use `push_neg` to move negations inside a goal.
+More generally we can use `push Not` to move negations inside a goal.
 
-We can also use it to simplify a hypothesis `h` with `push_neg at h`
+We can also use it to simplify a hypothesis `h` with `push Not at h`
 
 Lean also has a proof by contradiction tactic: `by_contra h`, 
 this takes the negation of the goal and adds it as a hypothesis to the 
@@ -103,7 +103,7 @@ by
   -- Goal is now `⊢ False`, and we have a new hypothesis
   -- `h : ¬((∀ (z : A), Q z) ∨ ∀ (z : A), ¬P z)` 
   -- We can simplify `h` by pushing the negation inside 
-  push_neg at h
+  push Not at h
   -- Now have `h : (∃ (z : A), ¬Q z) ∧ ∃ (z : A), P z`
   obtain ⟨hq,hp⟩:=h
   obtain ⟨b, hb⟩:= hq

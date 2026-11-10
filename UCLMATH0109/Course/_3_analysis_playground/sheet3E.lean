@@ -1,5 +1,5 @@
-import Mathlib.Data.Finset.Lattice
-import Mathlib.Algebra.BigOperators.Ring
+import Mathlib.Data.Finset.Lattice.Fold
+import Mathlib.Algebra.BigOperators.Ring.Finset
 import Mathlib.Tactic
 namespace Sheet3E
 /-- xₙ → a if for any ε > 0 there is N ∈ ℕ such that for all n ≥ N we have |xₙ - a| < ε  -/
@@ -51,7 +51,7 @@ by
   sorry
 
 
-#check add_le_add_right
+#check add_le_add_left
 /-
 The next example is easy to solve using a `calc` block if you first find the
 correct lemma from Mathlib.-/
@@ -63,15 +63,15 @@ by
   _  ≤ (s ∪ t).card + u.card := by sorry
   _  ≤  _                    := by sorry
 
-#check sum_le_sum -- if `f i ≤ g i` for all `i ∈ s` then `∑ i in s, f i ≤ ∑ i in s, g i`
+#check sum_le_sum -- if `f i ≤ g i` for all `i ∈ s` then `∑ i ∈ s, f i ≤ ∑ i ∈ s, g i`
 
 -- 06
 example (n : ℕ) (x y : ℕ → ℝ) :
 |∑ i ∈ range n, (x i + y i)| ≤ ∑ i ∈ range n, |x i| + ∑ i ∈ range n, |y i|:=by
-calc
-  _ ≤ ∑ i ∈ range n, |x i + y i|      := by sorry
-  _ ≤ ∑ i ∈ range n, (|x i| + |y i|)  := by sorry
-  _ = _                                := by sorry
+  calc
+    _ ≤ ∑ i ∈ range n, |x i + y i|      := by sorry
+    _ ≤ ∑ i ∈ range n, (|x i| + |y i|)  := by sorry
+    _ = _                                := by sorry
 
 
 

@@ -1,5 +1,5 @@
 import Mathlib.Tactic
-import Mathlib.Data.Real.Basic
+import Mathlib.Basic.Real.Basic
 
 /-
   #  Higher-level tactics: ring / norm_num / decide / linarith / nlinarith

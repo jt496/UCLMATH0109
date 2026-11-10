@@ -27,11 +27,11 @@ by
 
 example (x : G) : x * x⁻¹ = 1 :=
 by
-  exact mul_inv_self x
+  exact mul_inv_cancel x
 
 example (x : G): x⁻¹ * x = 1 :=
 by
-  exact mul_left_inv x
+  exact inv_mul_cancel x
 
 /-
 Many simple consequences of the axioms can also be
@@ -53,7 +53,7 @@ by
   have : y = x⁻¹
   · exact eq_inv_of_mul_eq_one_right h
   rw [this]
-  exact mul_left_inv x
+  exact inv_mul_cancel x
 
 --To prove a complicated equation which is true in any group
 --(with no other hypotheses than the group axioms),
@@ -97,7 +97,6 @@ def Trivial_subgroup : Subgroup G where
   one_mem' := rfl
   inv_mem' := by
     intro a ha
-    dsimp at ha ⊢
     rw [mem_singleton_iff] at *
     rw [ha, inv_one]
 
@@ -134,8 +133,7 @@ def trivial_hom : G →* H where
   map_one' := rfl
   map_mul' := by
     intro x y
-    dsimp
-    exact self_eq_mul_left.mpr rfl
+    exact right_eq_mul.mpr rfl
 
 /-
 Show that the identity is a homomorphism.
@@ -159,12 +157,10 @@ def Im (φ : G →* H): Subgroup H where
     use x*y
     rw [map_mul, hx, hy]
   one_mem' := by
-    dsimp
     use 1
     exact MonoidHom.map_one φ
   inv_mem' := by
     intro x hx
-    dsimp at *
     obtain ⟨a , ha⟩ := hx
     use a⁻¹
     rw [map_inv, ha]

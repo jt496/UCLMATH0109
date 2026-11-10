@@ -1,6 +1,6 @@
 import UCLMATH0109.Course._3_analysis_playground.C_have
-import Mathlib.Data.Finset.Lattice
-import Mathlib.Algebra.BigOperators.Ring
+import Mathlib.Data.Finset.Lattice.Fold
+import Mathlib.Algebra.BigOperators.Ring.Finset
 import Mathlib.Tactic
 
 variable (α β : Type)
@@ -65,7 +65,7 @@ that it has no duplicate elements.
 /- {0,1,..,a - 1} ⊆ {0,1,..,b - 1} -/
 example (a b : ℕ) (h: a ≤ b) : range a ⊆ range b  :=
 by
-  exact range_subset.mpr h
+  exact range_subset_range.mpr h
 
 /-
 One obvious use of Finsets is for finite sums and products.

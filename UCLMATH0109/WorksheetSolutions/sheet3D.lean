@@ -1,5 +1,5 @@
 import Mathlib.Tactic
-import Mathlib.Data.Real.Basic
+import Mathlib.Basic.Real.Basic
 
 example (a b x : ℕ) (h₁ : a + b = 5) (h₂ : a * b = 6) :
   x ^ 2 + 5 * x + 6 = (x + a) * (x + b) :=
@@ -46,7 +46,7 @@ You might find the following lemmas from Mathlib useful:
   `lt_min`
   `min_le_left`
   `min_le_right`
-  `abs_add`
+  `abs_add_le`
   `abs_mul`
 -/
 example (x ε : ℝ) (hε : 0 < ε) :
@@ -64,7 +64,7 @@ example (x ε : ℝ) (hε : 0 < ε) :
     · -- use a `calc`-block here.
       calc
         |x + 1| = |(x-1) + 2|       := by ring
-        _       ≤ |x-1| + |2|       := by exact abs_add (x - 1) 2 -- used `exact?`
+        _       ≤ |x-1| + |2|       := by exact abs_add_le (x - 1) 2 -- used `exact?`
         _       < δ + |2|           := by rel [hx]
         _       = δ + 2             := by norm_num
         _       ≤ 1 + 2             := by rel [min_le_left 1 (ε/3)]

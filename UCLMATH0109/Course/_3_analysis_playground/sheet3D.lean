@@ -1,5 +1,5 @@
 import Mathlib.Tactic
-import Mathlib.Data.Real.Basic
+import Mathlib.Basic.Real.Basic
 
 example (a b x : ℕ) (h₁ : a + b = 5) (h₂ : a * b = 6) :
   x ^ 2 + 5 * x + 6 = (x + a) * (x + b) :=
@@ -38,7 +38,7 @@ You might find the following lemmas from Mathlib useful:
   `lt_min`
   `min_le_left`
   `min_le_right`
-  `abs_add`
+  `abs_add_le`
   `abs_mul`
 -/
 example (x ε : ℝ) (hε : 0 < ε) :

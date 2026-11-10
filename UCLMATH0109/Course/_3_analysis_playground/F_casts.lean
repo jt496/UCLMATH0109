@@ -115,7 +115,7 @@ by
   ring
   rw [inv_inv]
   congr
-  rw [mul_comm,←mul_assoc,inv_mul_cancel,one_mul]
+  rw [mul_comm,←mul_assoc,inv_mul_cancel₀,one_mul]
   norm_cast
 
 
@@ -141,7 +141,7 @@ open scoped BigOperators
 open Finset
 
 -- 14
-example (n : ℕ) : ∑ i in range n.succ, (i : ℝ)^(3 : ℕ) = (n : ℝ)^2 * (n + 1 : ℝ)^2/4 :=
+example (n : ℕ) : ∑ i ∈ range n.succ, (i : ℝ)^(3 : ℕ) = (n : ℝ)^2 * (n + 1 : ℝ)^2/4 :=
 by
   cancel_denoms
   induction n with

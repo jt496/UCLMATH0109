@@ -1,6 +1,7 @@
 import UCLMATH0109.Course._2_foundations.F_nat
 
 namespace N
+namespace Sheet2Fsol
 
 
 theorem one_pow (n : N) : 1 ^ n = 1:=
@@ -45,3 +46,6 @@ by
 theorem pow_pow (a b c : N) : (a ^ b) ^ c = a ^(b * c) :=
 by
   rw [pow_mul]
+
+end Sheet2Fsol
+end N

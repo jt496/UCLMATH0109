@@ -46,7 +46,7 @@ be done if `simp` does not completely close the goal.
 -/
 example : ((-1) ^ n) ^ 2 = 1 :=
 by
-  simp only [Nat.odd_iff_not_even, sq_eq_one_iff]
+  simp only [sq_eq_one_iff]
   exact neg_one_pow_eq_or ℤ n
 
 

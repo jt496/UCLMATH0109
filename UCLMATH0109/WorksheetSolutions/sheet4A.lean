@@ -1,4 +1,5 @@
 import Mathlib.Tactic
+namespace Sheet4Asol
 namespace UCL
 /-
 Define a structure, whose terms are points on the circle
@@ -122,7 +123,7 @@ lemma inv.y (a : circle ) : (a⁻¹).y = -a.y :=rfl
 /-
 #13
 -/
-lemma mul_left_inv (a : circle) : a⁻¹ * a = 1 :=by
+lemma inv_mul_cancel (a : circle) : a⁻¹ * a = 1 :=by
   ext
   · rw [mul.x,one.x,inv.x,inv.y]; ring
     exact a.property
@@ -141,5 +142,9 @@ instance : CommGroup circle where
     intro a; rw [mul_comm]; exact mul_one _
   mul_one := mul_one
   inv := inv
-  mul_left_inv :=mul_left_inv
+  inv_mul_cancel := inv_mul_cancel
   mul_comm := mul_comm
+
+end circle
+end UCL
+end Sheet4Asol

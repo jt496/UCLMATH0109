@@ -15,16 +15,16 @@ by
 
 
 /-
-We used the tactic `push_neg` to push negations inside a goal.
+We used the tactic `push Not` to push negations inside a goal.
 
 We can also use it to simplify a negated hypothesis `h : ¬ P`
-with `push_neg at h`
+with `push Not at h`
 -/
 
 -- 03
 example (h : ¬ ∀ a, ¬P a)  : ∃ x, P x:=
 by
-  push_neg at h
+  push Not at h
   sorry
 
 -- 04

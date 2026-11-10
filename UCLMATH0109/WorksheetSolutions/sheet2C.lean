@@ -93,7 +93,7 @@ by
 Lean has a built-in tactic `contrapose` that converts any goal `P → Q`
 into its contrapositive
 
-Lean also has a tactic `push_neg` for pushing negations inside expressions.
+Lean also has a tactic `push Not` for pushing negations inside expressions.
 
 Remember this tactic for when we introduce quantifiers!
 -/
@@ -102,7 +102,7 @@ example (P Q R : Prop): (P → Q ∨ R) → (P → Q) ∨ (P → R):=
 by
   contrapose
   -- Goal is: `⊢ ¬((P → Q) ∨ (P → R)) → ¬(P → Q ∨ R)`
-  push_neg
+  push Not
   -- Goal is now : `⊢ (P ∧ ¬Q) ∧ P ∧ ¬R → P ∧ ¬Q ∧ ¬R`
   intro ⟨⟨hp,hnq⟩,_,hnr⟩
   exact ⟨hp,hnq,hnr⟩
@@ -122,7 +122,7 @@ example : ¬(P → Q) ↔ P ∧ ¬Q:=
 by
   constructor
   · contrapose
-    push_neg
+    push Not
     intro hpq hp
     apply hpq hp
   · intro ⟨hp,hnq⟩ hpq

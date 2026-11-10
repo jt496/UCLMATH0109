@@ -13,21 +13,21 @@ by
 -- 02
 example (h : ∃ x, ¬ P x) : ¬ ∀ a, P a:=
 by
-  push_neg
+  push Not
   exact h
 
 
 /-
-We used the tactic `push_neg` to push negations inside a goal.
+We used the tactic `push Not` to push negations inside a goal.
 
 We can also use it to simplify a negated hypothesis `h : ¬ P`
-with `push_neg at h`
+with `push Not at h`
 -/
 
 -- 03
 example (h : ¬ ∀ a, ¬P a)  : ∃ x, P x:=
 by
-  push_neg at h
+  push Not at h
   exact h
 
 -- 04
@@ -99,7 +99,7 @@ by
 -- 09
 example : (¬∀a, (P a → Q a)) ↔ ∃x, (¬Q x ∧ P x):=
 by
-  push_neg
+  push Not
   constructor
   · intro ⟨a,hpa,hnqa⟩
     use a
@@ -112,7 +112,7 @@ by
 -- 09'
 example : (¬∀a, (P a → Q a)) ↔ ∃x, (¬Q x ∧ P x):=
 by
-  push_neg
+  push Not
   constructor
   · intro ⟨a,_,_⟩
     use a
@@ -124,7 +124,7 @@ by
 -- 09''
 example : (¬∀a, (P a → Q a)) ↔ ∃x, (¬Q x ∧ P x):=
 by
-  push_neg
+  push Not
   constructor ; all_goals -- this applies the next `·` block to all open goals
   · intro ⟨a,_,_⟩
     use a

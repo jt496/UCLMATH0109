@@ -1,5 +1,5 @@
 import Mathlib.Tactic
-import Mathlib.Data.Real.Basic
+import Mathlib.Basic.Real.Basic
 namespace UCL
 /-
 Lean is a programming language which can be used to prove maths theorems.
@@ -44,7 +44,7 @@ by
   have rearrange : x n + y n - (s + t) = (x n - s) + (y n - t) := by ring
   rw [rearrange]  -- rewrite this rearranged expression in the goal
   -- Now apply triangle-inequality
-  have tri : |x n - s + (y n - t)| ≤ |x n - s| + |y n - t| := abs_add _ _
+  have tri : |x n - s + (y n - t)| ≤ |x n - s| + |y n - t| := abs_add_le _ _
   linarith   -- finally result follows from linear inequalities in our context.
 
 

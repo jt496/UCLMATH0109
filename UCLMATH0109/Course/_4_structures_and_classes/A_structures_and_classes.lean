@@ -42,7 +42,7 @@ Give a term `P : Plane`, we can write `P.x` and `P.y` for its `x`- and `y`-coord
 -- Look back at line 18. This line automatically generates  a lemma `Plane.ext`,
 -- which gives us a way of Proving that two terms of type `Plane` are equal.
 -- The lemma is used by the `ext` tactic.
-#check Plane.ext A B
+#check Plane.ext
 
 example : (⟨1,2⟩ : Plane) = ⟨1,n - n + 2⟩ := by
   ext
@@ -158,13 +158,13 @@ lemma neg_y (P : Plane) : (-P).y = -P.y := rfl
 
 lemma my_add_neg_self (P : Plane) : P + (-P) = 0 := by
   ext
-  · rw [add_x, neg_x, zero_x, add_neg_self]
-  · rw [add_y, neg_y, zero_y, add_neg_self]
+  · rw [add_x, neg_x, zero_x, add_neg_cancel]
+  · rw [add_y, neg_y, zero_y, add_neg_cancel]
 
 lemma my_neg_add_self (P : Plane) : -P + P = 0 := by
   ext
-  · rw [add_x, neg_x, zero_x, neg_add_self]
-  · rw [add_y, neg_y, zero_y, neg_add_self]
+  · rw [add_x, neg_x, zero_x, neg_add_cancel]
+  · rw [add_y, neg_y, zero_y, neg_add_cancel]
 
 lemma my_add_comm (P Q : Plane) : P + Q = Q + P := by
   ext
@@ -183,7 +183,7 @@ instance : AddCommGroup Plane where
   add_assoc     := my_add_assoc
   zero_add      := my_zero_add
   add_zero      := my_add_zero
-  add_left_neg  := my_neg_add_self
+  neg_add_cancel := my_neg_add_self
   add_comm      := my_add_comm
   nsmul := nsmulRec
   zsmul := zsmulRec

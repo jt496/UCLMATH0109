@@ -37,7 +37,9 @@ example (h : Even n ) (x : ℝ) : (-x)^(3*n) * x^(n + n)= x ^(5*n)  :=by
 -- If G is a Group with elements x,y then `Commute x y` means `x * y = y * x`
 -- 03
 example [Group G] (x y : G) (h : Commute x y)  : Commute (y^3*x) (y^2):=by
-  simp [h]
+  apply Commute.mul_left
+  · simp
+  · simp [h]
 
 -- 04
 example [Group G] [Group H] (x y : G) (φ : G →* H) (h : φ x = φ y) : φ (y⁻¹*x) =1 :=by
@@ -141,7 +143,7 @@ example (A B C : Finset ℕ) (hab : x ∈ A ∩ B) (hac : x ∈ B ∩ C) : (A �
 -- 12
 example (A B   : Finset ℕ) (hx : x ∈ A ∩ B) (hy : y ∈ B) (hne : x ≠ y) : 2 ≤ B.card :=by
   have  hc2: ({x ,y} : Finset ℕ).card = 2
-  · simp only [Finset.mem_singleton, hne, not_false_eq_true, Finset.card_insert_of_not_mem, Finset.card_singleton]
+  · simp only [Finset.mem_singleton, hne, not_false_eq_true, Finset.card_insert_of_notMem, Finset.card_singleton]
   rw [← hc2]
   have hxy : {x,y} ⊆ B
   · intro a ha

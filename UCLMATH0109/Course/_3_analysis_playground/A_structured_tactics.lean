@@ -40,7 +40,7 @@ by
 example (n : ℕ) : n < (n + 1) + 1 :=
 by
   refine Nat.lt_add_right  1 ?h
-  exact Nat.lt.base n
+  exact Nat.lt_add_one n
 
 
 /-

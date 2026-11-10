@@ -102,7 +102,7 @@ lemma inv.y (a : circle ) : (a⁻¹).y = sorry := sorry
 /-
 #13
 -/
-lemma mul_left_inv (a : circle) : a⁻¹ * a = 1 := sorry
+lemma inv_mul_cancel (a : circle) : a⁻¹ * a = 1 := sorry
 
 /-
 #14
@@ -114,5 +114,5 @@ instance : CommGroup circle where
   one_mul := sorry
   mul_one := sorry
   inv := sorry
-  mul_left_inv := sorry
+  inv_mul_cancel := sorry
   mul_comm := sorry

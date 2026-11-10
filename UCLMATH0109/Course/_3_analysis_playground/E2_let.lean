@@ -1,5 +1,5 @@
 import UCLMATH0109.Course._3_analysis_playground.C_have
-import Mathlib.Data.Finset.Lattice
+import Mathlib.Data.Finset.Lattice.Fold
 
 
 
@@ -43,7 +43,7 @@ by
 -- Let I = {0,1,...,K}
   let I := range K.succ
 -- I is Nonempty
-  have hne : I.Nonempty := by exact nonempty_range_succ
+  have hne : I.Nonempty := by exact nonempty_range_add_one
 -- J = {|x 0|, |x 1|,... ,|x K|} the image of I under |x|
   let J := I.image |x|
 -- Let B = max' J (exists since J is a Nonempty Finset ℕ)

@@ -1,5 +1,7 @@
 import Mathlib.Tactic
 
+namespace Sheet2Bsol
+
 /-
 Use the tactics described in _2_foundations/B_or_and_imp.lean
 to complete the following proofs.
@@ -287,3 +289,5 @@ by
     cases hpq with
     | inl hp => apply hpr hp
     | inr hq => apply hqr hq
+
+end Sheet2Bsol

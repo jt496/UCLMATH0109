@@ -45,10 +45,10 @@ variable {α : Type} [HMul ℕ α α]
 -- This multiplication satisfies two axioms:
 
 -- Two is a left-identity
-(h2id: ∀ a : α, a = 2 * a)
+variable (h2id: ∀ a : α, a = 2 * a)
 
 -- Left-multiplication by ℕ is associative
-(hmul_assoc : ∀ i j : ℕ, ∀ a : α, i * (j * a) = (i * j ) * a)
+variable (hmul_assoc : ∀ i j : ℕ, ∀ a : α, i * (j * a) = (i * j ) * a)
 /-
 Note that `i * j` in the RHS of `hmul_assoc` is standard multiplication of two natural numbers,
 while all other occurrences of `*` refer to our newly defined multiplication.
